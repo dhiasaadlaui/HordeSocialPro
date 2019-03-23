@@ -5,6 +5,7 @@
  */
 package tn.esprit.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,8 +13,9 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Job {
+public class Job implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     /**
      *
      */
