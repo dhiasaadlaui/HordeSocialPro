@@ -5,14 +5,16 @@
  */
 package tn.esprit.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Dhia
  */
-public class Comment {
+public class Comment implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     /**
      *
      */
