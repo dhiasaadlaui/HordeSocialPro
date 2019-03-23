@@ -119,9 +119,11 @@ public class TestDhia {
         } catch (ObjectNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+        
 //testing commit
-//        IUserDao userDao = new UserDaoImpl();
-//           User user1 =new User.Builder()
+        IUserDao userDao = new UserDaoImpl();
+        try {
+            System.out.println(userDao.findByID(1));
 //                        .firstName("mokhtar")
 //                        .lastName("chaouech")
 //                        .userName("usernameee")
@@ -145,6 +147,9 @@ public class TestDhia {
 //        } catch (MessagingException ex) {
 //            Logger.getLogger(TestDhia.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+        } catch (DataBaseException ex) {
+            Logger.getLogger(TestDhia.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }
