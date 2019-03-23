@@ -31,13 +31,14 @@ public class UserDaoImpl extends GenericDaoImpl implements IUserDao {
         User user = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
+                .from("user")
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
 
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
-            preparedStatement.setInt(insertQuery.getPlaceholderIndex(":id"), id);
-            resultSet = cnx.getResult(selectQuery.getQueryString());
+            preparedStatement.setInt(selectQuery.getPlaceholderIndex(":id"), id);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 user = new User.Builder()
                         .id(resultSet.getInt("id"))
