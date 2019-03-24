@@ -5,7 +5,6 @@
  */
 package tn.esprit.dao.interfaces;
 
-import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.User;
 
