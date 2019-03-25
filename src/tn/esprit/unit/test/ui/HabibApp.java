@@ -6,23 +6,10 @@
 package tn.esprit.unit.test.ui;
 
 import tn.esprit.gui.login.LoginGUI;
-import java.util.Optional;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import tn.esprit.entities.User;
 
