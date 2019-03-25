@@ -5,15 +5,11 @@
  */
 package tn.esprit.unit.test.business;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.dao.implementation.Connexion;
 import tn.esprit.dao.implementation.UserDaoImpl;
 import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.Apply;
@@ -30,7 +26,6 @@ import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
-import tn.esprit.services.util.ServiceMail;
 
 /**
  *
