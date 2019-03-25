@@ -29,11 +29,6 @@ public enum UserRole {
     /**
      *
      */
-    FREELANCER,
-
-    /**
-     *
-     */
-    PROFESSIONAL
+    RECRUITER
     
 }
