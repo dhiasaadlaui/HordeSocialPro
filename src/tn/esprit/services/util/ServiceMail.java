@@ -23,12 +23,12 @@ public class ServiceMail {
     /**
      *
      */
-    private static String FROM = "hordesocialho@gmail.com";
+    private static final String FROM = "hordesocialho@gmail.com";
 
     /**
      *
      */
-    private static String PASSWORD = "dhiasaadlaui";
+    private static final String PASSWORD = "dhiasaadlaui";
 
     /**
      *
