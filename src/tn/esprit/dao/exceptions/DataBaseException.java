@@ -5,7 +5,7 @@
  */
 package tn.esprit.dao.exceptions;
 
-import java.sql.SQLException;
+
 
 /**
  *

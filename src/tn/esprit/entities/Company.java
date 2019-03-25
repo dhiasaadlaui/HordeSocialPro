@@ -14,6 +14,9 @@ import java.util.Objects;
  */
 public class Company implements Serializable{
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
     /**
      *
