@@ -32,7 +32,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                 .set(queriesFactory.newStdField("domain"), ":domain")
                 .set(queriesFactory.newStdField("phone"), ":phone")
                 .set(queriesFactory.newStdField("description"), ":description")
-                .set(queriesFactory.newStdField("adress"), ":adress")
                 .set(queriesFactory.newStdField("image"), ":image")
            
                 .inTable("company");
@@ -44,12 +43,9 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":domain"), entity.getDomain());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":phone"), entity.getPhone());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":description"), entity.getDescription());
-        
+            preparedStatement.setString(insertQuery.getPlaceholderIndex(":image"), entity.getImage());
             rowsCreated = preparedStatement.executeUpdate();
-            resultSet = preparedStatement.getGeneratedKeys();
-            if (resultSet.next()) {
-                entity.getName();
-            }
+       
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
