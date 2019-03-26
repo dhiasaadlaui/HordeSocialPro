@@ -38,7 +38,7 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                 .inTable("company");
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
-             preparedStatement.setObject(insertQuery.getPlaceholderIndex(":recruiter"), entity.getRecruiter());
+             preparedStatement.setObject(insertQuery.getPlaceholderIndex(":recruiter"), entity.getRecruiter().getId());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":name"), entity.getName());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":adress"), entity.getAdress());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":domain"), entity.getDomain());
