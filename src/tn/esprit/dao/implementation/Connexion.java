@@ -87,7 +87,7 @@ public class Connexion {
 			FileInputStream fis = new FileInputStream(PROPERTIES_URL);
 			Properties p = new Properties();
 			p.load(fis);
-			DB_URL = (String) p.get("url");
+			 DB_URL =  (String) p.get("url");
 			DB_USER = (String) p.get("user");
 			DB_PASSWORD = (String) p.get("password");
 			DRIVER = (String) p.get("driver");
