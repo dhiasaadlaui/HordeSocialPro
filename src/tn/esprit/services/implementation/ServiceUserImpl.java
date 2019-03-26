@@ -11,7 +11,9 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.UserDaoImpl;
 import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.User;
+import tn.esprit.entities.UserRole;
 import tn.esprit.gui.login.LanguageToolBar;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceUser;
 
@@ -119,6 +121,26 @@ public class ServiceUserImpl implements IServiceUser {
         
         
        
+    }
+
+    @Override
+    public Boolean SignUp(User user) throws ConstraintViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean banUser(User user) throws ConstraintViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean changeRole(User user, UserRole to) throws ConstraintViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Boolean accountActivation(User user, String code) throws ConstraintViolationException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
