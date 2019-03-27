@@ -84,7 +84,7 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
 
     @Override
     public Integer delete(Company entity) throws DataBaseException {
-        
+            
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
