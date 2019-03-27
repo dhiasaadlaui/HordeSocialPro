@@ -33,12 +33,12 @@ public interface IServiceUser extends IGenericService<User>{
      */
     User findByID(Integer id) throws ObjectNotFoundException;
     
-    Boolean SignUp(User user) throws ConstraintViolationException;
+    void signUp(User user) throws ConstraintViolationException;
     
-    Boolean banUser(User user) throws ConstraintViolationException;
+    void banUser(User user) throws ConstraintViolationException;
     
-    Boolean changeRole(User user, UserRole to) throws ConstraintViolationException;
+    void changeRole(User user, UserRole to) throws ConstraintViolationException;
     
-    Boolean accountActivation(User user,String code) throws ConstraintViolationException;
+    void accountActivation(User user,String code) throws ConstraintViolationException;
 
 }
