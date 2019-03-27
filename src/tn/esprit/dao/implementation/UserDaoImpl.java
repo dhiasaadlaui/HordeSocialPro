@@ -157,6 +157,7 @@ public class UserDaoImpl extends GenericDaoImpl implements IUserDao {
     @Override
     public Integer edit(User entity) throws DataBaseException {
         Integer rowUpdated = 0;
+        updateQuery = queriesFactory.newUpdateQuery();
         updateQuery.set(queriesFactory.newStdField("firstname"), ":firstname")
                 .set(queriesFactory.newStdField("lastname"), ":lastname")
                 .set(queriesFactory.newStdField("username"), ":username")
@@ -186,10 +187,7 @@ public class UserDaoImpl extends GenericDaoImpl implements IUserDao {
             rowUpdated = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
-        } finally {
-            updateQuery = queriesFactory.newUpdateQuery();
         }
-
         return rowUpdated;
     }
 
