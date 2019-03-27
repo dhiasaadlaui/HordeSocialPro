@@ -30,12 +30,10 @@ public class TestMehdi {
      * @param args
      */
     public static void main(String[] args) {
-        IServiceComment serv0  = new ServiceCommentImpl();
-        
-        
+        IServiceComment serv0 = new ServiceCommentImpl();
+
 //        
 //        CREATE COMMENT 
-        
 //        User user1 = new User.Builder().id(1).build() ;
 //        user1.setId(1);
 //        System.out.println(user1);
@@ -55,8 +53,7 @@ public class TestMehdi {
 //        } catch (DataBaseException ex) {
 //            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-       
-            // FINDALL TEST
+        // FINDALL TEST
 //        
 //        List<Comment> ls = new ArrayList<>() ;
 //        
@@ -70,31 +67,21 @@ public class TestMehdi {
 //        {
 //            System.out.println(c);
 //       }
-            
-            // UPDATE TEST
-            
-            Comment mc = new Comment.Builder().build() ;
-             try {
-             mc = serv0.findByID(1) ;
-              } catch (DataBaseException ex) {
-            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        System.out.println(mc);
-        
-     
-        
-       mc.setContent("WORKING");
-        
+        // UPDATE TEST
+        Comment mc = new Comment.Builder().build();
         try {
-           int c = serv0.edit(mc) ;
-            
-            } catch (DataBaseException ex) {
+            mc = serv0.findByID(2);
+            System.out.println(mc);
+            mc.setContent("WORKING");
+            mc.setUser(new User.Builder().id(2).build());
+            mc.setJob(new Job.Builder().id(1).build());
+            System.out.println(serv0.edit(mc));
+        } catch (DataBaseException ex) {
             Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            
-            
+
+        System.out.println(mc);
+
 //            // DELETE TEST
 //        
 //        Comment mc = new Comment.Builder().id(2).build() ;
@@ -104,9 +91,5 @@ public class TestMehdi {
 //            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //       
-        
-      
-        
-        
     }
 }

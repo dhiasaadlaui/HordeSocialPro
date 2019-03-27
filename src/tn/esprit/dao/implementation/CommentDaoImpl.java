@@ -91,6 +91,7 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
     @Override
     public Integer edit(Comment entity) throws DataBaseException {
         Integer rowUpdated = 0;
+        updateQuery=queriesFactory.newUpdateQuery();
         updateQuery.set(queriesFactory.newStdField("user"), ":user")
                 .set(queriesFactory.newStdField("job"), ":job")
                 .set(queriesFactory.newStdField("content"), ":content")
@@ -106,9 +107,7 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
             rowUpdated = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
-        } finally {
-            updateQuery = queriesFactory.newUpdateQuery();
-        }
+        } 
 
         return rowUpdated;
     }
