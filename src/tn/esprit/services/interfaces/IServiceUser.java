@@ -6,6 +6,8 @@
 package tn.esprit.services.interfaces;
 
 import tn.esprit.entities.User;
+import tn.esprit.entities.UserRole;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
@@ -30,5 +32,13 @@ public interface IServiceUser extends IGenericService<User>{
      * @throws ObjectNotFoundException
      */
     User findByID(Integer id) throws ObjectNotFoundException;
+    
+    void signUp(User user) throws ConstraintViolationException;
+    
+    void banUser(User user) throws ConstraintViolationException;
+    
+    void changeRole(User user, UserRole to) throws ConstraintViolationException;
+    
+    void accountActivation(User user,String code) throws ConstraintViolationException;
 
 }
