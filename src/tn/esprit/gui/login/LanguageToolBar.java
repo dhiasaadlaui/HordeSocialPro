@@ -66,7 +66,7 @@ public class LanguageToolBar extends HBox {
     /**
      *
      */
-    public static ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.language.lang", new Locale("en"));
+    public static ResourceBundle BUNDLE = ResourceBundle.getBundle("resources.language.lang_en");
     ;
 
     /**
