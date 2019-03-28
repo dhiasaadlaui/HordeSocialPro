@@ -142,7 +142,7 @@ public class Comment implements Serializable{
 
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", user=" + user.getUserName() + ", job id=" + job.getId() + ", content=" + content + '}';
+        return "Comment{" + "id=" + id + ", user=" + user.getId()+ ", job id=" + job.getId() + ", content=" + content + '}';
     }
 
     /**
