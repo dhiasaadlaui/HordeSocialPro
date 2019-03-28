@@ -5,7 +5,9 @@
  */
 package tn.esprit.dao.interfaces;
 
+import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.User;
 
 /**
  *
@@ -13,4 +15,5 @@ import tn.esprit.entities.Company;
  */
 public interface ICompanyDao extends IGenericDao<Company>{
     
+    Company findByRecruter(User recruiter) throws DataBaseException;
 }

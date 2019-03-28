@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package tn.esprit.unit.test.business;
+
 import static com.sun.scenario.effect.impl.prism.PrImage.create;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,31 +30,63 @@ public class TestMarwen {
      * @param args
      * @throws tn.esprit.services.exceptions.ObjectNotFoundException
      */
-    public static void main(String[] args)  {
-     
-           
-           IServiceUser serviceUser = new ServiceUserImpl();
-            try {
-           ICompanyDao companyDao = new CompanyDaoImpl() ;
-           User user = serviceUser.authentication("vansword", "abcd1234");
-           
-         Company company = new Company.Builder() 
-                    .recruiter(user)
-                    .name("company name")
-                    .description("desc company")
-                    .adress("240 ghazela technopole")
-                    .domain("IT")
-                    .image("img44.png")
-                    .phone("55 666 777")
-                    .build();
-            System.out.println(company);
+    public static void main(String[] args) throws ObjectNotFoundException {
+
+        IServiceUser serviceUser = new ServiceUserImpl();
+        ICompanyDao companyDao = new CompanyDaoImpl();
         
-        companyDao.create(company) ;
-        System.out.println("created");
-        } catch (ObjectNotFoundException ex) {
-            System.out.println(ex.getMessage());
+        try {
+          //  System.out.println(companyDao.findByRecruter(serviceUser.findByID(1)));
+            
+            System.out.println(companyDao.findAll());
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            /* try {
+            User user = serviceUser.authentication("vansword", "abcd1234");
+
+            try {
+            
+            companyDao.edit(
+            new Company.Builder()
+            .recruiter(user)
+            .name("Vermeg edited")
+            .description("it company edited")
+            .adress("lac 1 edited")
+            .domain("java jee edited")
+            .image("/img_8.jpg edited")
+            .phone("+22 222 222 edited")
+            .build()
+            );
+            
+            
+            
+            
+            } catch (DataBaseException ex) {
+            System.out.println("marwen error" + ex.getMessage());
+            }
+            } catch (ObjectNotFoundException ex) {
+            System.out.println("authentification error" + ex.getMessage());
+            }*/
         } catch (DataBaseException ex) {
-            Logger.getLogger(TestMarwen.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         }
+       
+       
+       
+       
     }
+    
+    
+    
+    
+    
+    
 }
