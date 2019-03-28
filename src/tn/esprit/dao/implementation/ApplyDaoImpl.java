@@ -11,6 +11,8 @@ import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.IApplyDao;
 import tn.esprit.entities.Apply;
+import tn.esprit.entities.Job;
+import tn.esprit.entities.User;
 
 /**
  *
@@ -29,10 +31,10 @@ public class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
                 list.add(new Apply.Builder()
-                        //.job(resultSet.("candidate"))
-                        //.candidate(resultSet.
+                        .job (new Job.Builder().id(resultSet.getInt("job")).build())
+                        .candidate(new User.Builder().id(resultSet.getInt("candidate")).build())
                         .letter(resultSet.getString("lastname"))
-                                                .build());
+                        .build());
 
             }
 
@@ -63,7 +65,7 @@ public class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":letter"), entity.getLetter());
            
             rowsCreated = preparedStatement.executeUpdate();
-            //resultSet = preparedStatement.getGeneratedKeys();
+            resultSet = preparedStatement.getGeneratedKeys();
             
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
@@ -76,7 +78,27 @@ public class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
 
     @Override
     public Integer edit(Apply entity) throws DataBaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Integer rowUpdated = 0;
+        updateQuery=queriesFactory.newUpdateQuery();
+        updateQuery.set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField("candidate"), ":candidate")
+                .set(queriesFactory.newStdField("letter"), ":letter")
+                .inTable("apply")
+                .where()
+                .where(queriesFactory.newStdField("job"), ":job")
+                .where(queriesFactory.newStdField("candidate"), ":candidate");
+        try {
+            preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
+            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
+            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":candidate"), entity.getCandidate().getId());
+            preparedStatement.setString(updateQuery.getPlaceholderIndex(":letter"), entity.getLetter());
+            
+            rowUpdated = preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataBaseException(ex.getMessage());
+        } 
+
+        return rowUpdated;    
     }
 
     @Override

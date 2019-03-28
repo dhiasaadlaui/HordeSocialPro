@@ -13,4 +13,5 @@ import tn.esprit.entities.Apply;
  */
 public interface IApplyDao extends IGenericDao<Apply> {
     
+    
 }
