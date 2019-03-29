@@ -253,8 +253,9 @@ public class Reclamation implements Serializable{
 
     @Override
     public String toString() {
-        return "Reclamation{" + "id=" + id + ", type=" + type + ", details=" + details + ", job_id=" + job.getId() + ", comment_id=" + comment.getId() + ", claimer=" + claimer.getUserName() + ", staff=" + staff.getUserName() + ", feedback=" + feedback + ", status=" + status + '}';
+        return "Reclamation{" + "id=" + id + ", type=" + type + ", details=" + details + ", job=" + job + ", comment=" + comment + ", claimer=" + claimer + ", staff=" + staff + ", feedback=" + feedback + ", status=" + status + '}';
     }
+
 
     /**
      *

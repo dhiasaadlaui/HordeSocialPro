@@ -6,9 +6,7 @@
 package tn.esprit.dao.interfaces;
 
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Company;
 import tn.esprit.entities.Reclamation;
-import tn.esprit.entities.User;
 
 /**
  *

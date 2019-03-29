@@ -13,8 +13,6 @@ import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.User;
-import tn.esprit.entities.UserAccountStatus;
-import tn.esprit.entities.UserRole;
 
 /**
  *

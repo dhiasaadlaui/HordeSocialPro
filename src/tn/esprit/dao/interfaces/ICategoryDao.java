@@ -6,11 +6,14 @@
 package tn.esprit.dao.interfaces;
 
 import tn.esprit.entities.Category;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
  *
  * @author Alai Zid
  */
 public interface ICategoryDao extends IGenericDao<Category> {
+    
+    Category findByID(Integer id) throws ObjectNotFoundException;
     
 }

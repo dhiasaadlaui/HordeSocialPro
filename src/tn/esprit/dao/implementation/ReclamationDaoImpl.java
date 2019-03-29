@@ -8,12 +8,11 @@ package tn.esprit.dao.implementation;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import sun.plugin.dom.core.Comment;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.ICommentDao;
+import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.dao.interfaces.IReclamationDao;
 import tn.esprit.dao.interfaces.IUserDao;
-import tn.esprit.entities.Company;
 import tn.esprit.entities.Reclamation;
 import tn.esprit.entities.ReclamationStatus;
 import tn.esprit.entities.ReclamationType;
@@ -26,10 +25,14 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
 
     private ICommentDao cammentDao;
     private IUserDao userDao;
+    private IJobDao jobDao;
+   
 
     public ReclamationDaoImpl() {
         super();
         userDao = new UserDaoImpl();
+        cammentDao = new CommentDaoImpl();
+        jobDao = new JobDaoImpl();
     }
 
     @Override
@@ -54,7 +57,7 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
                         .comment(cammentDao.findByID(resultSet.getInt("comment")))
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
-                        // job
+                        .job(jobDao.findByID(resultSet.getInt("job")))
 
                         .build();
 
@@ -87,7 +90,7 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
                         .comment(cammentDao.findByID(resultSet.getInt("comment")))
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
-                        // job
+                        .job(jobDao.findByID(resultSet.getInt("job")))
 
                         .build());
 
@@ -108,22 +111,23 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
                 .set(queriesFactory.newStdField("type"), ":type")
                 .set(queriesFactory.newStdField("details"), ":details")
                 .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField("claimer"), ":claimer")
                 .set(queriesFactory.newStdField("comment"), ":comment")
                 .set(queriesFactory.newStdField("staff"), ":staff")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable(Reclamation.class.getSimpleName().toLowerCase());
+                .inTable("reclamation");
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
-
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":claimer"), entity.getClaimer() != null ? entity.getClaimer().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":type"), entity.getType());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":details"), entity.getDetails());
-            preparedStatement.setInt(insertQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
-            preparedStatement.setInt(insertQuery.getPlaceholderIndex(":comment"), entity.getComment().getId());
-            preparedStatement.setInt(insertQuery.getPlaceholderIndex(":staff"), entity.getStaff().getId());
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":comment"), entity.getComment() != null ? entity.getComment().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":staff"), entity.getStaff() != null ? entity.getStaff().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":feedback"), entity.getFeedback());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":status"), entity.getStatus());
-            
+
             rowsCreated = preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -138,26 +142,27 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
 
         Integer rowUpdated = 0;
         updateQuery = queriesFactory.newUpdateQuery();
-        updateQuery.set(queriesFactory.newStdField("id"), ":id")
+        updateQuery
                 .set(queriesFactory.newStdField("type"), ":type")
                 .set(queriesFactory.newStdField("details"), ":details")
                 .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField("claimer"), ":claimer")
                 .set(queriesFactory.newStdField("comment"), ":comment")
                 .set(queriesFactory.newStdField("staff"), ":staff")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable(Company.class.getClass().getSimpleName().toLowerCase())
+                .inTable("reclamation")
                 .where()
-                .where(queriesFactory.newStdField("recruiter"), ":idrecruiter");
+                .where(queriesFactory.newStdField("id"), ":id");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
-            preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
-            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":id"), entity.getId());
+            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":id"), entity.getId());
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":claimer"), entity.getClaimer() != null ? entity.getClaimer().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":type"), entity.getType());
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":details"), entity.getDetails());
-            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":job"), entity.getJob());
-            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":comment"), entity.getComment());
-            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":staff"), entity.getStaff());
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":comment"), entity.getComment() != null ? entity.getComment().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":staff"), entity.getStaff() != null ? entity.getStaff().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":feedback"), entity.getFeedback());
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":status"), entity.getStatus());
             rowUpdated = preparedStatement.executeUpdate();
