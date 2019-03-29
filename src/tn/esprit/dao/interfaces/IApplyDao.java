@@ -5,6 +5,7 @@
  */
 package tn.esprit.dao.interfaces;
 
+import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Apply;
 
 /**
@@ -12,6 +13,8 @@ import tn.esprit.entities.Apply;
  * @author ali
  */
 public interface IApplyDao extends IGenericDao<Apply> {
+    Apply findByjob(Integer id)throws DataBaseException;
+    Apply findBycandidate(Integer id)throws DataBaseException;
     
     
 }
