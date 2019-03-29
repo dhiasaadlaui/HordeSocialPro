@@ -24,7 +24,7 @@ public class Company implements Serializable{
     private User recruiter;
 
     /**
-     *
+     *e User recruiter;
      */
     private String name;
 
