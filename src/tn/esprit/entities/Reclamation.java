@@ -81,7 +81,7 @@ public class Reclamation implements Serializable{
         this.details = details;
         this.job = job;
         this.comment = comment;
-        this.claimer = claimer;
+        this.claimer = claimer; 
         this.staff = staff;
         this.feedback = feedback;
         this.status = status;

@@ -146,7 +146,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                 .inTable(Company.class.getClass().getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("recruiter"), ":idrecruiter");
-
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":name"), entity.getName());
