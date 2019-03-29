@@ -194,7 +194,7 @@ public class Apply implements Serializable{
 
     @Override
     public String toString() {
-        return "Apply{" + "job id=" + job.getId() +", job title=" + job.getTitle() + ", candidate=" + candidate.getUserName() + ", letter=" + letter + '}';
+        return "Apply{" + "job_id=" + job.getId() +", title=" + job.getTitle() + ", candidate=" + candidate.getUserName() + ", letter=" + letter + '}';
     }
 
 }

@@ -100,8 +100,8 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":user"), entity.getUser().getId());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":user"), entity.getUser() != null ? entity.getUser().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":content"), entity.getContent());
             preparedStatement.setInt(updateQuery.getPlaceholderIndex(":id"), entity.getId());
             rowUpdated = preparedStatement.executeUpdate();
