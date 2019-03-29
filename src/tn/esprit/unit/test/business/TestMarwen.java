@@ -11,9 +11,17 @@ import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.implementation.CompanyDaoImpl;
+import tn.esprit.dao.implementation.ReclamationDaoImpl;
+
 import tn.esprit.dao.implementation.UserDaoImpl;
+import tn.esprit.dao.interfaces.IReclamationDao;
 import tn.esprit.dao.interfaces.IUserDao;
+import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.Job;
+import tn.esprit.entities.Reclamation;
+import tn.esprit.entities.ReclamationStatus;
+import tn.esprit.entities.ReclamationType;
 import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
@@ -34,50 +42,24 @@ public class TestMarwen {
 
         IServiceUser serviceUser = new ServiceUserImpl();
         ICompanyDao companyDao = new CompanyDaoImpl();
-        
-        try {
-          //  System.out.println(companyDao.findByRecruter(serviceUser.findByID(1)));
-            
-            System.out.println(companyDao.findAll());
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            /* try {
-            User user = serviceUser.authentication("vansword", "abcd1234");
+        IReclamationDao reclamationdao = new ReclamationDaoImpl();
+        Reclamation reclamation =new Reclamation.Builder()
+                .type(ReclamationType.SCAM)
+                .details("this guy scammed me")
+                .comment(new Comment.Builder().id(1).build())
+                .claimer(serviceUser.findByID(1))
+                .staff(serviceUser.findByID(1))
+                .job(new Job.Builder().id(1).build())
+                .feedback("this is feedback text")
+                .status(ReclamationStatus.OPEN)
+                .build();
 
-            try {
-            
-            companyDao.edit(
-            new Company.Builder()
-            .recruiter(user)
-            .name("Vermeg edited")
-            .description("it company edited")
-            .adress("lac 1 edited")
-            .domain("java jee edited")
-            .image("/img_8.jpg edited")
-            .phone("+22 222 222 edited")
-            .build()
-            );
-            
-            
-            
-            
-            } catch (DataBaseException ex) {
-            System.out.println("marwen error" + ex.getMessage());
-            }
-            } catch (ObjectNotFoundException ex) {
-            System.out.println("authentification error" + ex.getMessage());
-            }*/
+        try {
+            reclamationdao.create(reclamation);
         } catch (DataBaseException ex) {
             System.out.println(ex.getMessage());
         }
+        
        
        
        
