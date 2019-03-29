@@ -95,7 +95,7 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
         updateQuery.set(queriesFactory.newStdField("user"), ":user")
                 .set(queriesFactory.newStdField("job"), ":job")
                 .set(queriesFactory.newStdField("content"), ":content")
-                .inTable("comment")
+                .inTable("category")
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
