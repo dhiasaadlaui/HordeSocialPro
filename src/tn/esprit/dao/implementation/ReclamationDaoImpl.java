@@ -21,13 +21,15 @@ import tn.esprit.entities.ReclamationType;
  *
  * @author mghozzi
  */
-public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDao {
+public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDao {
 
-    private ICommentDao cammentDao;
-    private IUserDao userDao;
-    private IJobDao jobDao;
-   
+    private final ICommentDao cammentDao;
+    private final IUserDao userDao;
+    private final IJobDao jobDao;
 
+    /**
+     *
+     */
     public ReclamationDaoImpl() {
         super();
         userDao = new UserDaoImpl();
@@ -35,6 +37,12 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
         jobDao = new JobDaoImpl();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public Reclamation findById(int id) throws DataBaseException {
         Reclamation reclamation = null;
@@ -58,7 +66,6 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
                         .job(jobDao.findByID(resultSet.getInt("job")))
-
                         .build();
 
             }
@@ -91,7 +98,6 @@ public class ReclamationDaoImpl extends GenericDaoImpl implements IReclamationDa
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
                         .job(jobDao.findByID(resultSet.getInt("job")))
-
                         .build());
 
             }

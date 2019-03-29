@@ -17,14 +17,23 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  *
  * @author Alai Zid
  */
-public class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDao {
+public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDao {
 
     private UserDaoImpl userDao;
 
+    /**
+     *
+     */
     public CategoryDaoImpl() {
         userDao = new UserDaoImpl();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public Category findByID(Integer id) throws ObjectNotFoundException {
         Category category = null;

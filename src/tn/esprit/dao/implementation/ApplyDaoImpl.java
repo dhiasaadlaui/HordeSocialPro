@@ -20,16 +20,25 @@ import tn.esprit.entities.User;
  *
  * @author ali
  */
-public class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
+public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
 
     IJobDao jobDao;
     IUserDao userDao;
 
+    /**
+     *
+     */
     public ApplyDaoImpl() {
         jobDao = new JobDaoImpl();
         userDao = new UserDaoImpl();
     }
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Apply> findByjob(Job job) throws DataBaseException {
 
@@ -61,6 +70,12 @@ public class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         return list;
     }
 
+    /**
+     *
+     * @param candidate
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Apply> findBycandidate(User candidate) throws DataBaseException {
         List<Apply> list = new ArrayList<>();

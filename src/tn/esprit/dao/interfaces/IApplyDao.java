@@ -17,7 +17,20 @@ import tn.esprit.entities.User;
  */
 public interface IApplyDao extends IGenericDao<Apply> {
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws DataBaseException
+     */
     List<Apply> findByjob(Job job) throws DataBaseException;
+
+    /**
+     *
+     * @param candidate
+     * @return
+     * @throws DataBaseException
+     */
     List<Apply> findBycandidate(User candidate) throws DataBaseException;
 
 }

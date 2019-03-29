@@ -23,15 +23,21 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  *
  * @author habib
  */
-public class JobDaoImpl extends GenericDaoImpl implements IJobDao {
+public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
 
-    private ICompanyDao companyDao;
-    private ICategoryDao categoryDao;
+    private final ICompanyDao companyDao;
+    private final ICategoryDao categoryDao;
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public Job findByID(Integer id) throws DataBaseException {
-    
-                Job job = null;
+
+        Job job = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
                 .from("job")
@@ -63,14 +69,23 @@ public class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         }
 
         return job;
-        
+
     }
 
+    /**
+     *
+     */
     public JobDaoImpl() {
         companyDao = new CompanyDaoImpl();
         categoryDao = new CategoryDaoImpl();
     }
 
+    /**
+     *
+     * @param company
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Job> findByCompany(Company company) throws DataBaseException {
 
@@ -81,7 +96,6 @@ public class JobDaoImpl extends GenericDaoImpl implements IJobDao {
                 .from("job")
                 .where()
                 .where(queriesFactory.newStdField("company"), ":idcompany");
-        ;
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":idcompany"), company.getRecruiter().getId());
@@ -110,6 +124,12 @@ public class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         return list;
     }
 
+    /**
+     *
+     * @param category
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Job> findByCategory(Category category) throws DataBaseException {
 

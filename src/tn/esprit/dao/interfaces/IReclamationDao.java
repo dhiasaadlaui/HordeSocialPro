@@ -12,7 +12,14 @@ import tn.esprit.entities.Reclamation;
  *
  * @author mghozzi
  */
-public interface IReclamationDao extends IGenericDao<Reclamation>{
-      public Reclamation findById(int id) throws DataBaseException ;
-          
-      }
+public interface IReclamationDao extends IGenericDao<Reclamation> {
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
+    public Reclamation findById(int id) throws DataBaseException;
+
+}

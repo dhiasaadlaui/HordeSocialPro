@@ -14,13 +14,12 @@ import tn.esprit.dao.exceptions.DataBaseException;
  * @param <T>
  */
 public interface IGenericDao<T> {
-    
+
     /**
      *
-     * @return
-     * @throws DataBaseException
+     * @return @throws DataBaseException
      */
-    List<T> findAll()throws DataBaseException;
+    List<T> findAll() throws DataBaseException;
 
     /**
      *
@@ -28,7 +27,7 @@ public interface IGenericDao<T> {
      * @return
      * @throws DataBaseException
      */
-    Integer create (T entity)throws DataBaseException;
+    Integer create(T entity) throws DataBaseException;
 
     /**
      *
@@ -36,7 +35,7 @@ public interface IGenericDao<T> {
      * @return
      * @throws DataBaseException
      */
-    Integer edit (T entity)throws DataBaseException;
+    Integer edit(T entity) throws DataBaseException;
 
     /**
      *
@@ -44,6 +43,6 @@ public interface IGenericDao<T> {
      * @return
      * @throws DataBaseException
      */
-    Integer delete(T entity)throws DataBaseException;
-        
+    Integer delete(T entity) throws DataBaseException;
+
 }
