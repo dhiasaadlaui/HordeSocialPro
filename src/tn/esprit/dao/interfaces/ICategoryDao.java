@@ -5,21 +5,21 @@
  */
 package tn.esprit.dao.interfaces;
 
-import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.User;
+import tn.esprit.entities.Category;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
  *
- * @author Dhia
+ * @author Alai Zid
  */
-public interface IUserDao extends IGenericDao<User> {
+public interface ICategoryDao extends IGenericDao<Category> {
 
     /**
      *
      * @param id
      * @return
-     * @throws DataBaseException
+     * @throws ObjectNotFoundException
      */
-    User findByID(Integer id) throws DataBaseException;
+    Category findByID(Integer id) throws ObjectNotFoundException;
 
 }

@@ -477,15 +477,19 @@ public final class User implements Serializable {
         this.accountStatus = accountStatus.name();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", userName=" + userName + ", password=" + password + ", email=" + email + ", adress=" + adress + ", authorization=" + authorization + ", photo=" + photo + ", accountStatus=" + accountStatus + ", activationCode=" + activationCode + '}';
     }
 
-
-
-
-
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 3;
@@ -493,6 +497,11 @@ public final class User implements Serializable {
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
