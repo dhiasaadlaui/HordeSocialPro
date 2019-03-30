@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Comment implements Serializable{
+public final class Comment implements Serializable {
 
     /**
      *
@@ -82,14 +82,14 @@ public class Comment implements Serializable{
          */
         public Builder() {
         }
-        
+
         /**
          *
          * @param id
          * @return
          */
-        public Builder id(Integer id){
-            this.id=id;
+        public Builder id(Integer id) {
+            this.id = id;
             return this;
         }
 
@@ -98,8 +98,8 @@ public class Comment implements Serializable{
          * @param user
          * @return
          */
-        public Builder user(User user){
-            this.user=user;
+        public Builder user(User user) {
+            this.user = user;
             return this;
         }
 
@@ -108,8 +108,8 @@ public class Comment implements Serializable{
          * @param job
          * @return
          */
-        public Builder job(Job job){
-            this.job=job;
+        public Builder job(Job job) {
+            this.job = job;
             return this;
         }
 
@@ -118,31 +118,32 @@ public class Comment implements Serializable{
          * @param content
          * @return
          */
-        public Builder content(String content){
-            this.content=content;
+        public Builder content(String content) {
+            this.content = content;
             return this;
         }
-        
+
         /**
          *
          * @return
          */
-        public Comment build(){
+        public Comment build() {
             return new Comment(
-                    this.id, 
-                    this.user, 
-                    this.job, 
+                    this.id,
+                    this.user,
+                    this.job,
                     this.content);
         }
 
-        
-        
-        
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", user=" + user.getId()+ ", job id=" + job.getId() + ", content=" + content + '}';
+        return "Comment{" + "id=" + id + ", user=" + user.getId() + ", job id=" + job.getId() + ", content=" + content + '}';
     }
 
     /**
@@ -209,7 +210,10 @@ public class Comment implements Serializable{
         this.content = content;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -217,6 +221,11 @@ public class Comment implements Serializable{
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -229,10 +238,7 @@ public class Comment implements Serializable{
             return false;
         }
         final Comment other = (Comment) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
 }

@@ -18,15 +18,13 @@ import tn.esprit.entities.User;
  *
  * @author Mehdi Sarray
  */
-public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
+public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao {
 
-    
-    private Job job ;
-    private User user ;
-    
+    private Job job;
+    private User user;
+
     @Override
     public List<Comment> findAll() throws DataBaseException {
-        
         List<Comment> list = new ArrayList<>();
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
@@ -35,30 +33,21 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
         try {
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
-                
-                job= new Job.Builder().build();
-                user= new User.Builder().build();
-                
-                user.setId(resultSet.getInt("user")) ;
+                job = new Job.Builder().build();
+                user = new User.Builder().build();
+                user.setId(resultSet.getInt("user"));
                 job.setId(resultSet.getInt("job"));
-                
                 list.add(new Comment.Builder()
                         .id(resultSet.getInt("id"))
-                        .user(user) 
+                        .user(user)
                         .job(job)
                         .content(resultSet.getString("content"))
                         .build());
-
             }
-
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
-        
-        
         return list;
-        
-        
     }
 
     @Override
@@ -76,11 +65,10 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
             preparedStatement.setInt(insertQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":content"), entity.getContent());
             rowsCreated = preparedStatement.executeUpdate();
-            
             resultSet = preparedStatement.getGeneratedKeys();
-//            if (resultSet.next()) {
-//                entity.setId(resultSet.getInt(1));
-//            }
+            if (resultSet.next()) {
+                entity.setId(resultSet.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
@@ -91,7 +79,7 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
     @Override
     public Integer edit(Comment entity) throws DataBaseException {
         Integer rowUpdated = 0;
-        updateQuery=queriesFactory.newUpdateQuery();
+        updateQuery = queriesFactory.newUpdateQuery();
         updateQuery.set(queriesFactory.newStdField("user"), ":user")
                 .set(queriesFactory.newStdField("job"), ":job")
                 .set(queriesFactory.newStdField("content"), ":content")
@@ -100,21 +88,19 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":user"), entity.getUser().getId());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":user"), entity.getUser() != null ? entity.getUser().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(updateQuery.getPlaceholderIndex(":content"), entity.getContent());
             preparedStatement.setInt(updateQuery.getPlaceholderIndex(":id"), entity.getId());
             rowUpdated = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
-        } 
-
+        }
         return rowUpdated;
     }
 
-    
-   @Override 
-   public Integer delete(Comment entity) throws DataBaseException {
+    @Override
+    public Integer delete(Comment entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
         deleteQuery.from("Comment")
@@ -126,20 +112,24 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
             rowDeleted = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
-        } 
-
+        }
         return rowDeleted;
     }
-   
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
     @Override
-   public Comment findByID(Integer id) throws DataBaseException {
-         Comment comment = null;
+    public Comment findByID(Integer id) throws DataBaseException {
+        Comment comment = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
                 .from("Comment")
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
-
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":id"), id);
@@ -151,12 +141,10 @@ public class CommentDaoImpl extends GenericDaoImpl implements ICommentDao{
                         .job(new Job.Builder().id(resultSet.getInt("job")).build())
                         .content(resultSet.getString("content"))
                         .build();
-
             }
-
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
         return comment;
-   }
+    }
 }

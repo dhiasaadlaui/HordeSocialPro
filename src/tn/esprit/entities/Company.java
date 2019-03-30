@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Company implements Serializable{
+public final class Company implements Serializable {
 
     /**
      *
@@ -24,7 +24,7 @@ public class Company implements Serializable{
     private User recruiter;
 
     /**
-     *e User recruiter;
+     * e User recruiter;
      */
     private String name;
 
@@ -206,11 +206,19 @@ public class Company implements Serializable{
 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Company{" + "recruiter=" + recruiter.getUserName() + ", name=" + name + ", description=" + description + ", adress=" + adress + ", domain=" + domain + ", image=" + image + ", phone=" + phone + '}';
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 5;
@@ -218,6 +226,11 @@ public class Company implements Serializable{
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -230,10 +243,7 @@ public class Company implements Serializable{
             return false;
         }
         final Company other = (Company) obj;
-        if (!Objects.equals(this.recruiter, other.recruiter)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.recruiter, other.recruiter);
     }
 
     /**

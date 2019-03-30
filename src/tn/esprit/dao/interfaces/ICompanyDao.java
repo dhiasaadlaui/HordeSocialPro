@@ -13,7 +13,13 @@ import tn.esprit.entities.User;
  *
  * @author mghozzi
  */
-public interface ICompanyDao extends IGenericDao<Company>{
-    
+public interface ICompanyDao extends IGenericDao<Company> {
+
+    /**
+     *
+     * @param recruiter
+     * @return
+     * @throws DataBaseException
+     */
     Company findByRecruter(User recruiter) throws DataBaseException;
 }

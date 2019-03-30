@@ -7,38 +7,30 @@ package tn.esprit.dao.interfaces;
 
 import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Category;
-import tn.esprit.entities.Company;
+import tn.esprit.entities.Apply;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.User;
 
 /**
  *
- * @author habib
+ * @author ali
  */
-public interface IJobDao extends IGenericDao<Job> {
+public interface IApplyDao extends IGenericDao<Apply> {
 
     /**
      *
-     * @param id
+     * @param job
      * @return
      * @throws DataBaseException
      */
-    Job findByID(Integer id) throws DataBaseException;
+    List<Apply> findByjob(Job job) throws DataBaseException;
 
     /**
      *
-     * @param company
+     * @param candidate
      * @return
      * @throws DataBaseException
      */
-    List<Job> findByCompany(Company company) throws DataBaseException;
-
-    /**
-     *
-     * @param category
-     * @return
-     * @throws DataBaseException
-     */
-    List<Job> findByCategory(Category category) throws DataBaseException;
+    List<Apply> findBycandidate(User candidate) throws DataBaseException;
 
 }
