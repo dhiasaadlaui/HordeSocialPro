@@ -1,6 +1,8 @@
 # HordeSocialPro
 Projet d’intégration esprit.
 
-# Initial dependencies jars and database can be found here
-
-## https://ufile.io/cobqq
+# follow steps to config the project on your local ide
+## 1-download database sql file from the link below
+## 2- open your xampp and create database and name it 'pidev' and utf8_general_ci as encoding
+### https://ufile.io/4xteu
+## 3- Clone the project and have fun =)

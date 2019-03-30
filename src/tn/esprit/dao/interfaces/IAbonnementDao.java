@@ -7,23 +7,15 @@ package tn.esprit.dao.interfaces;
 
 import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Apply;
-import tn.esprit.entities.Job;
+import tn.esprit.entities.Abonnement;
+import tn.esprit.entities.Company;
 import tn.esprit.entities.User;
 
 /**
  *
- * @author ali
+ * @author Alai Zid
  */
-public interface IApplyDao extends IGenericDao<Apply> {
-
-    /**
-     *
-     * @param job
-     * @return
-     * @throws DataBaseException
-     */
-    List<Apply> findByjob(Job job) throws DataBaseException;
+public interface IAbonnementDao extends IGenericDao<Abonnement> {
 
     /**
      *
@@ -31,6 +23,14 @@ public interface IApplyDao extends IGenericDao<Apply> {
      * @return
      * @throws DataBaseException
      */
-    List<Apply> findBycandidate(User candidate) throws DataBaseException;
+    List<Abonnement> findByCandidate(User candidate) throws DataBaseException;
+
+    /**
+     *
+     * @param company
+     * @return
+     * @throws DataBaseException
+     */
+    List<Abonnement> findByCompany(Company company) throws DataBaseException;
 
 }

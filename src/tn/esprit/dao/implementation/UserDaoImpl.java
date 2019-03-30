@@ -18,7 +18,7 @@ import tn.esprit.entities.UserRole;
  *
  * @author Dhia
  */
-public class UserDaoImpl extends GenericDaoImpl implements IUserDao {
+public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
 
     /**
      *
@@ -210,7 +210,7 @@ public class UserDaoImpl extends GenericDaoImpl implements IUserDao {
             rowDeleted = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
-        } 
+        }
 
         return rowDeleted;
     }

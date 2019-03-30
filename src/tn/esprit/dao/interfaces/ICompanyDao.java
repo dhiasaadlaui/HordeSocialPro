@@ -6,20 +6,20 @@
 package tn.esprit.dao.interfaces;
 
 import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Company;
 import tn.esprit.entities.User;
 
 /**
  *
- * @author Dhia
+ * @author mghozzi
  */
-public interface IUserDao extends IGenericDao<User> {
+public interface ICompanyDao extends IGenericDao<Company> {
 
     /**
      *
-     * @param id
+     * @param recruiter
      * @return
      * @throws DataBaseException
      */
-    User findByID(Integer id) throws DataBaseException;
-
+    Company findByRecruter(User recruiter) throws DataBaseException;
 }

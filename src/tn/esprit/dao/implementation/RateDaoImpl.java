@@ -9,28 +9,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.dao.interfaces.IApplyDao;
 import tn.esprit.dao.interfaces.IJobDao;
+import tn.esprit.dao.interfaces.IRateDao;
 import tn.esprit.dao.interfaces.IUserDao;
-import tn.esprit.entities.Apply;
+import tn.esprit.entities.Abonnement;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.Rate;
 import tn.esprit.entities.User;
 
 /**
  *
- * @author ali
+ * @author Mehdi Sarray
  */
-public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
+public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
 
-    IJobDao jobDao;
     IUserDao userDao;
+    IJobDao jobDao;
 
     /**
      *
      */
-    public ApplyDaoImpl() {
-        jobDao = new JobDaoImpl();
-        userDao = new UserDaoImpl();
+    public RateDaoImpl() {
+        this.userDao = new UserDaoImpl();
+        this.jobDao = new JobDaoImpl();
     }
 
     /**
@@ -40,13 +41,12 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
      * @throws DataBaseException
      */
     @Override
-    public List<Apply> findByjob(Job job) throws DataBaseException {
-
-        List<Apply> list = new ArrayList<>();
+    public List<Rate> findByJob(Job job) throws DataBaseException {
+        List<Rate> list = new ArrayList<>();
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("apply")
+                .from("rate")
                 .where()
                 .where(queriesFactory.newStdField("job"), ":job");
 
@@ -55,10 +55,11 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":job"), job.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                list.add(new Rate.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .letter(resultSet.getString("letter"))
+                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .note(resultSet.getDouble("note"))
+                        .feedback(resultSet.getString("feedback"))
                         .build());
 
             }
@@ -77,12 +78,13 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
      * @throws DataBaseException
      */
     @Override
-    public List<Apply> findBycandidate(User candidate) throws DataBaseException {
-        List<Apply> list = new ArrayList<>();
+    public List<Rate> findByCandidate(User candidate) throws DataBaseException {
+
+        List<Rate> list = new ArrayList<>();
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("apply")
+                .from("rate")
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
 
@@ -91,10 +93,11 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":candidate"), candidate.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                list.add(new Rate.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .letter(resultSet.getString("letter"))
+                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .note(resultSet.getDouble("note"))
+                        .feedback(resultSet.getString("feedback"))
                         .build());
 
             }
@@ -104,24 +107,24 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         }
 
         return list;
-
     }
 
     @Override
-    public List<Apply> findAll() throws DataBaseException {
-        List<Apply> list = new ArrayList<>();
+    public List<Rate> findAll() throws DataBaseException {
+        List<Rate> list = new ArrayList<>();
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("apply");
+                .from("rate");
         try {
 
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
-                list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                list.add(new Rate.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .letter(resultSet.getString("letter"))
+                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .note(resultSet.getDouble("note"))
+                        .feedback(resultSet.getString("feedback"))
                         .build());
 
             }
@@ -131,24 +134,25 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         }
 
         return list;
-
     }
 
     @Override
-    public Integer create(Apply entity) throws DataBaseException {
+    public Integer create(Rate entity) throws DataBaseException {
 
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
-        insertQuery.set(queriesFactory.newStdField("job"), ":job")
-                .set(queriesFactory.newStdField("candidate"), ":candidate")
-                .set(queriesFactory.newStdField("letter"), ":letter")
-                .inTable("apply");
+        insertQuery.set(queriesFactory.newStdField("candidate"), ":candidate")
+                .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField("note"), ":note")
+                .set(queriesFactory.newStdField("feedback"), ":feedback")
+                .inTable("rate");
 
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
-            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setObject(insertQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);
-            preparedStatement.setString(insertQuery.getPlaceholderIndex(":letter"), entity.getLetter());
+            preparedStatement.setObject(insertQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setDouble(insertQuery.getPlaceholderIndex(":note"), entity.getNote());
+            preparedStatement.setString(insertQuery.getPlaceholderIndex(":feedback"), entity.getFeedback());
             rowsCreated = preparedStatement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -160,20 +164,22 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
     }
 
     @Override
-    public Integer edit(Apply entity) throws DataBaseException {
+    public Integer edit(Rate entity) throws DataBaseException {
         Integer rowUpdated = 0;
         updateQuery = queriesFactory.newUpdateQuery();
         updateQuery
-                .set(queriesFactory.newStdField("letter"), ":letter")
-                .inTable("apply")
+                .set(queriesFactory.newStdField("note"), ":note")
+                .set(queriesFactory.newStdField("feedback"), ":feedback")
+                .inTable("rate")
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job")
-                .where(queriesFactory.newStdField("candidate"), ":candidate");
+                .where(queriesFactory.newStdField("candidate"), ":candidate")
+                .where(queriesFactory.newStdField("job"), ":job");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
-            preparedStatement.setInt(updateQuery.getPlaceholderIndex(":candidate"), entity.getCandidate().getId());
-            preparedStatement.setString(updateQuery.getPlaceholderIndex(":letter"), entity.getLetter());
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(updateQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setDouble(updateQuery.getPlaceholderIndex(":note"), entity.getNote());
+            preparedStatement.setString(updateQuery.getPlaceholderIndex(":feedback"), entity.getFeedback());
 
             rowUpdated = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
@@ -184,25 +190,26 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
     }
 
     @Override
-    public Integer delete(Apply entity) throws DataBaseException {
+    public Integer delete(Rate entity) throws DataBaseException {
 
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("apply")
+        deleteQuery.from("rate")
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job")
-                .where(queriesFactory.newStdField("candidate"), ":candidate");
-
+                .where(queriesFactory.newStdField("candidate"), ":candidate")
+                .where(queriesFactory.newStdField("job"), ":job");
         try {
             preparedStatement = cnx.prepareStatement(deleteQuery.getQueryString());
-            preparedStatement.setInt(deleteQuery.getPlaceholderIndex(":job"), entity.getJob().getId());
-            preparedStatement.setInt(deleteQuery.getPlaceholderIndex(":candidate"), entity.getCandidate().getId());
+            preparedStatement.setObject(deleteQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);
+            preparedStatement.setObject(deleteQuery.getPlaceholderIndex(":job"), entity.getJob() != null ? entity.getJob().getId() : null, java.sql.Types.INTEGER);
+
             rowDeleted = preparedStatement.executeUpdate();
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
 
         return rowDeleted;
+
     }
 
 }

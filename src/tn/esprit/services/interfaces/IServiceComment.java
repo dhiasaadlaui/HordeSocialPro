@@ -12,5 +12,11 @@ import tn.esprit.entities.Comment;
  */
 public interface IServiceComment extends IGenericService<Comment>{
     
-      public Comment findByID(Integer id)throws DataBaseException;
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
+    public Comment findByID(Integer id)throws DataBaseException;
 }
