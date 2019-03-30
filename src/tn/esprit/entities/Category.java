@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Category implements Serializable{
+public final class Category implements Serializable {
 
     /**
      *
@@ -202,11 +202,19 @@ public class Category implements Serializable{
         this.moderator = moderator;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", label=" + label + ", description=" + description + ", moderator=" + moderator.getUserName() + '}';
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -214,6 +222,11 @@ public class Category implements Serializable{
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -226,10 +239,7 @@ public class Category implements Serializable{
             return false;
         }
         final Category other = (Category) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
 }

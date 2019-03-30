@@ -33,12 +33,34 @@ public interface IServiceUser extends IGenericService<User>{
      */
     User findByID(Integer id) throws ObjectNotFoundException;
     
+    /**
+     *
+     * @param user
+     * @throws ConstraintViolationException
+     */
     void signUp(User user) throws ConstraintViolationException;
     
+    /**
+     *
+     * @param user
+     * @throws ConstraintViolationException
+     */
     void banUser(User user) throws ConstraintViolationException;
     
+    /**
+     *
+     * @param user
+     * @param to
+     * @throws ConstraintViolationException
+     */
     void changeRole(User user, UserRole to) throws ConstraintViolationException;
     
+    /**
+     *
+     * @param user
+     * @param code
+     * @throws ConstraintViolationException
+     */
     void accountActivation(User user,String code) throws ConstraintViolationException;
 
 }

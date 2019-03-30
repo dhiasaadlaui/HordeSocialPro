@@ -19,7 +19,7 @@ import tn.esprit.querybuilder.interfaces.UpdateQuery;
  *
  * @author Dhia
  */
-public class GenericDaoImpl {
+public  class GenericDaoImpl {
 
     /**
      *
