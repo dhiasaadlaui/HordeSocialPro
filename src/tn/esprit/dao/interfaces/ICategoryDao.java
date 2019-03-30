@@ -13,7 +13,13 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  * @author Alai Zid
  */
 public interface ICategoryDao extends IGenericDao<Category> {
-    
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ObjectNotFoundException
+     */
     Category findByID(Integer id) throws ObjectNotFoundException;
-    
+
 }

@@ -12,14 +12,14 @@ import tn.esprit.entities.User;
  *
  * @author Dhia
  */
-public interface IUserDao extends IGenericDao<User>{
-    
+public interface IUserDao extends IGenericDao<User> {
+
     /**
      *
      * @param id
      * @return
      * @throws DataBaseException
      */
-    User findByID(Integer id)throws DataBaseException;
-    
+    User findByID(Integer id) throws DataBaseException;
+
 }

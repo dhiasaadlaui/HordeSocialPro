@@ -23,7 +23,7 @@ import tn.esprit.services.util.ServiceMail;
 
 /**
  *
- * @author Dhia 
+ * @author Dhia
  */
 public class ServiceUserImpl implements IServiceUser {
 
@@ -37,7 +37,7 @@ public class ServiceUserImpl implements IServiceUser {
      */
     public ServiceUserImpl() {
         userDao = new UserDaoImpl();
-      
+
     }
 
     /**
@@ -126,6 +126,11 @@ public class ServiceUserImpl implements IServiceUser {
 
     }
 
+    /**
+     *
+     * @param user
+     * @throws ConstraintViolationException
+     */
     @Override
     public void signUp(User user) throws ConstraintViolationException {
         try {
@@ -163,6 +168,11 @@ public class ServiceUserImpl implements IServiceUser {
         }
     }
 
+    /**
+     *
+     * @param user
+     * @throws ConstraintViolationException
+     */
     @Override
     public void banUser(User user) throws ConstraintViolationException {
 
@@ -175,12 +185,24 @@ public class ServiceUserImpl implements IServiceUser {
 
     }
 
+    /**
+     *
+     * @param user
+     * @param to
+     * @throws ConstraintViolationException
+     */
     @Override
     public void changeRole(User user, UserRole to) throws ConstraintViolationException {
         user.setAuthorization(to);
 
     }
 
+    /**
+     *
+     * @param user
+     * @param code
+     * @throws ConstraintViolationException
+     */
     @Override
     public void accountActivation(User user, String code) throws ConstraintViolationException {
         if (user.getActivationCode().equals(code)) {

@@ -15,10 +15,30 @@ import tn.esprit.entities.Job;
  *
  * @author habib
  */
-public interface IJobDao extends IGenericDao<Job>{
+public interface IJobDao extends IGenericDao<Job> {
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
     Job findByID(Integer id) throws DataBaseException;
+
+    /**
+     *
+     * @param company
+     * @return
+     * @throws DataBaseException
+     */
     List<Job> findByCompany(Company company) throws DataBaseException;
+
+    /**
+     *
+     * @param category
+     * @return
+     * @throws DataBaseException
+     */
     List<Job> findByCategory(Category category) throws DataBaseException;
-    
-    
+
 }

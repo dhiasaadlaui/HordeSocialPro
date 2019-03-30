@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Reclamation implements Serializable{
+public final class Reclamation implements Serializable{
 
     /**
      *
@@ -251,6 +251,10 @@ public class Reclamation implements Serializable{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Reclamation{" + "id=" + id + ", type=" + type + ", details=" + details + ", job=" + job + ", comment=" + comment + ", claimer=" + claimer + ", staff=" + staff + ", feedback=" + feedback + ", status=" + status + '}';
@@ -401,6 +405,10 @@ public class Reclamation implements Serializable{
         this.status = status.name();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -408,6 +416,11 @@ public class Reclamation implements Serializable{
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
