@@ -10,39 +10,21 @@ import java.util.Objects;
 
 /**
  *
- * @author Dhia
+ * @author mdsaadlaoui
  */
-public final class Apply implements Serializable {
+public final class Rate implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
-    /**
-     *
-     */
     private Job job;
-
-    /**
-     *
-     */
     private User candidate;
+    private Double note;
+    private String feedback;
 
-    /**
-     *
-     */
-    private String letter;
-
-    /**
-     *
-     * @param job
-     * @param candidate
-     * @param letter
-     */
-    private Apply(Job job, User candidate, String letter) {
+    private Rate(Job job, User candidate, Double note, String feedback) {
         this.job = job;
         this.candidate = candidate;
-        this.letter = letter;
+        this.note = note;
+        this.feedback = feedback;
     }
 
     /**
@@ -50,35 +32,18 @@ public final class Apply implements Serializable {
      */
     public static class Builder {
 
-        /**
-         *
-         */
         private Job job;
-
-        /**
-         *
-         */
         private User candidate;
+        private Double note;
+        private String feedback;
 
         /**
          *
-         */
-        private String letter;
-
-        /**
-         *
-         */
-        public Builder() {
-
-        }
-
-        /**
-         *
-         * @param letter
+         * @param job
          * @return
          */
-        public Builder letter(String letter) {
-            this.letter = letter;
+        public Builder job(Job job) {
+            this.job = job;
             return this;
         }
 
@@ -94,11 +59,21 @@ public final class Apply implements Serializable {
 
         /**
          *
-         * @param job
+         * @param note
          * @return
          */
-        public Builder job(Job job) {
-            this.job = job;
+        public Builder note(Double note) {
+            this.note = note;
+            return this;
+        }
+
+        /**
+         *
+         * @param feedback
+         * @return
+         */
+        public Builder feedback(String feedback) {
+            this.feedback = feedback;
             return this;
         }
 
@@ -106,11 +81,12 @@ public final class Apply implements Serializable {
          *
          * @return
          */
-        public Apply build() {
-            return new Apply(
+        public Rate build() {
+            return new Rate(
                     this.job,
                     this.candidate,
-                    this.letter);
+                    this.note,
+                    this.feedback);
         }
 
     }
@@ -151,16 +127,41 @@ public final class Apply implements Serializable {
      *
      * @return
      */
-    public String getLetter() {
-        return letter;
+    public Double getNote() {
+        return note;
     }
 
     /**
      *
-     * @param letter
+     * @param note
      */
-    public void setLetter(String letter) {
-        this.letter = letter;
+    public void setNote(Double note) {
+        this.note = note;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String getFeedback() {
+        return feedback;
+    }
+
+    /**
+     *
+     * @param feedback
+     */
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Rate{" + "job=" + job + ", candidate=" + candidate + ", note=" + note + ", feedback=" + feedback + '}';
     }
 
     /**
@@ -169,9 +170,9 @@ public final class Apply implements Serializable {
      */
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.job);
-        hash = 17 * hash + Objects.hashCode(this.candidate);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.job);
+        hash = 23 * hash + Objects.hashCode(this.candidate);
         return hash;
     }
 
@@ -191,23 +192,11 @@ public final class Apply implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Apply other = (Apply) obj;
+        final Rate other = (Rate) obj;
         if (!Objects.equals(this.job, other.job)) {
             return false;
         }
-        if (!Objects.equals(this.candidate, other.candidate)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Apply{" + "job_id=" + job.getId() + ", title=" + job.getTitle() + ", candidate=" + candidate.getUserName() + ", letter=" + letter + '}';
+        return Objects.equals(this.candidate, other.candidate);
     }
 
 }

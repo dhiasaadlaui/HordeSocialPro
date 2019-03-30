@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author Dhia
  */
-public class Job implements Serializable{
+public final class Job implements Serializable {
 
     /**
      *
@@ -155,14 +155,14 @@ public class Job implements Serializable{
          */
         public Builder() {
         }
-        
+
         /**
          *
          * @param id
          * @return
          */
-        public Builder id(Integer id){
-            this.id=id;
+        public Builder id(Integer id) {
+            this.id = id;
             return this;
         }
 
@@ -171,8 +171,8 @@ public class Job implements Serializable{
          * @param company
          * @return
          */
-        public Builder company(Company company){
-            this.company=company;
+        public Builder company(Company company) {
+            this.company = company;
             return this;
         }
 
@@ -181,8 +181,8 @@ public class Job implements Serializable{
          * @param title
          * @return
          */
-        public Builder title(String title){
-            this.title=title;
+        public Builder title(String title) {
+            this.title = title;
             return this;
         }
 
@@ -191,8 +191,8 @@ public class Job implements Serializable{
          * @param description
          * @return
          */
-        public Builder description(String description){
-            this.description=description;
+        public Builder description(String description) {
+            this.description = description;
             return this;
         }
 
@@ -201,8 +201,8 @@ public class Job implements Serializable{
          * @param category
          * @return
          */
-        public Builder category(Category category){
-            this.category=category;
+        public Builder category(Category category) {
+            this.category = category;
             return this;
         }
 
@@ -211,8 +211,8 @@ public class Job implements Serializable{
          * @param location
          * @return
          */
-        public Builder location(String location){
-            this.location=location;
+        public Builder location(String location) {
+            this.location = location;
             return this;
         }
 
@@ -221,8 +221,8 @@ public class Job implements Serializable{
          * @param creationDate
          * @return
          */
-        public Builder creationDate(Date creationDate){
-            this.creationDate=creationDate;
+        public Builder creationDate(Date creationDate) {
+            this.creationDate = creationDate;
             return this;
         }
 
@@ -231,8 +231,8 @@ public class Job implements Serializable{
          * @param expireDate
          * @return
          */
-        public Builder expireDate(Date expireDate){
-            this.expireDate=expireDate;
+        public Builder expireDate(Date expireDate) {
+            this.expireDate = expireDate;
             return this;
         }
 
@@ -241,18 +241,18 @@ public class Job implements Serializable{
          * @param salary
          * @return
          */
-        public Builder salary(Double salary){
-            this.salary=salary;
+        public Builder salary(Double salary) {
+            this.salary = salary;
             return this;
         }
-        
+
         /**
          *
          * @param status
          * @return
          */
-        public Builder status(JobStatus status){
-            this.status=status.name();
+        public Builder status(JobStatus status) {
+            this.status = status.name();
             return this;
         }
 
@@ -260,17 +260,17 @@ public class Job implements Serializable{
          *
          * @return
          */
-        public Job build(){
+        public Job build() {
             return new Job(
-                    id, 
-                    company, 
-                    title, 
-                    description, 
-                    category, 
-                    location, 
-                    creationDate, 
-                    expireDate, 
-                    salary, 
+                    id,
+                    company,
+                    title,
+                    description,
+                    category,
+                    location,
+                    creationDate,
+                    expireDate,
+                    salary,
                     status);
         }
     }
@@ -435,6 +435,10 @@ public class Job implements Serializable{
         this.status = status.name();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 7;
@@ -442,6 +446,11 @@ public class Job implements Serializable{
         return hash;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -454,12 +463,13 @@ public class Job implements Serializable{
             return false;
         }
         final Job other = (Job) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.id, other.id);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Job{" + "id=" + id + ", company=" + company.getName() + ", title=" + title + ", description=" + description + ", category=" + category.getLabel() + ", location=" + location + ", creationDate=" + creationDate + ", expireDate=" + expireDate + ", salary=" + salary + ", status=" + status + '}';

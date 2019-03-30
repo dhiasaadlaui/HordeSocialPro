@@ -5,21 +5,32 @@
  */
 package tn.esprit.dao.interfaces;
 
+import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Abonnement;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.User;
 
 /**
  *
- * @author mghozzi
+ * @author Alai Zid
  */
-public interface ICompanyDao extends IGenericDao<Company> {
+public interface IAbonnementDao extends IGenericDao<Abonnement> {
 
     /**
      *
-     * @param recruiter
+     * @param candidate
      * @return
      * @throws DataBaseException
      */
-    Company findByRecruter(User recruiter) throws DataBaseException;
+    List<Abonnement> findByCandidate(User candidate) throws DataBaseException;
+
+    /**
+     *
+     * @param company
+     * @return
+     * @throws DataBaseException
+     */
+    List<Abonnement> findByCompany(Company company) throws DataBaseException;
+
 }

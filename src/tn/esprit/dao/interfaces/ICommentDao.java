@@ -4,16 +4,22 @@
  * and open the template in the editor.
  */
 package tn.esprit.dao.interfaces;
+
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Comment ;
+import tn.esprit.entities.Comment;
+
 /**
  *
  * @author Mehdi Sarray
  */
-public interface ICommentDao extends IGenericDao<Comment>
-{
-    
-  public Comment findByID(Integer id)throws DataBaseException;
-    
-    
+public interface ICommentDao extends IGenericDao<Comment> {
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
+    public Comment findByID(Integer id) throws DataBaseException;
+
 }

@@ -10,20 +10,18 @@ package tn.esprit.entities;
  * @author Dhia
  */
 public enum JobStatus {
-    
+
     /**
      *
      */
     PENDING,
-
     /**
      *
      */
     CONFIRMED,
-
     /**
      *
      */
     DISABLED
-    
+
 }

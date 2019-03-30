@@ -43,13 +43,9 @@ public class TestMarwen {
         IServiceUser serviceUser = new ServiceUserImpl();
         ICompanyDao companyDao = new CompanyDaoImpl();
         IReclamationDao reclamationdao = new ReclamationDaoImpl();
-        Reclamation reclamation =new Reclamation.Builder()
+        Reclamation reclamation = new Reclamation.Builder()
                 .type(ReclamationType.SCAM)
                 .details("this guy scammed me")
-                .comment(new Comment.Builder().id(1).build())
-                .claimer(serviceUser.findByID(1))
-                .staff(serviceUser.findByID(1))
-                .job(new Job.Builder().id(1).build())
                 .feedback("this is feedback text")
                 .status(ReclamationStatus.OPEN)
                 .build();
@@ -59,16 +55,7 @@ public class TestMarwen {
         } catch (DataBaseException ex) {
             System.out.println(ex.getMessage());
         }
-        
-       
-       
-       
-       
+
     }
-    
-    
-    
-    
-    
-    
+
 }

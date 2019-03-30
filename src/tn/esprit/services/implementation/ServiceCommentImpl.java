@@ -16,37 +16,45 @@ import tn.esprit.services.interfaces.IServiceComment;
  *
  * @author Mehdi Sarray
  */
-public class ServiceCommentImpl  implements IServiceComment{
+public class ServiceCommentImpl implements IServiceComment {
 
-    
-    ICommentDao icomment ;
-    
-    public ServiceCommentImpl() 
-    {
-        icomment = new CommentDaoImpl() ;
+    ICommentDao icomment;
+
+    /**
+     *
+     */
+    public ServiceCommentImpl() {
+        icomment = new CommentDaoImpl();
     }
-    
+
     @Override
     public List<Comment> findAll() throws DataBaseException {
-       return icomment.findAll();
+        return icomment.findAll();
     }
 
     @Override
     public Integer create(Comment entity) throws DataBaseException {
-      return   icomment.create(entity) ;
+        return icomment.create(entity);
     }
 
     @Override
     public Integer edit(Comment entity) throws DataBaseException {
-      return icomment.edit(entity) ;
+        return icomment.edit(entity);
     }
 
     @Override
     public Integer delete(Comment entity) throws DataBaseException {
-       return icomment.delete(entity) ;
+        return icomment.delete(entity);
     }
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
     @Override
-    public Comment findByID(Integer id)throws DataBaseException {
-          return icomment.findByID(id) ;
-      }
+    public Comment findByID(Integer id) throws DataBaseException {
+        return icomment.findByID(id);
+    }
 }

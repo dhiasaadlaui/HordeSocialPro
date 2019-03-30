@@ -6,15 +6,20 @@
 package tn.esprit.dao.interfaces;
 
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Company;
 import tn.esprit.entities.Reclamation;
-import tn.esprit.entities.User;
 
 /**
  *
  * @author mghozzi
  */
-public interface IReclamationDao extends IGenericDao<Reclamation>{
-      public Reclamation findById(int id) throws DataBaseException ;
-          
-      }
+public interface IReclamationDao extends IGenericDao<Reclamation> {
+
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DataBaseException
+     */
+    public Reclamation findById(int id) throws DataBaseException;
+
+}

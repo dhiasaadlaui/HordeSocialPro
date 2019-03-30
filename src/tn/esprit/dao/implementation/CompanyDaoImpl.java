@@ -13,21 +13,29 @@ import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.User;
-import tn.esprit.entities.UserAccountStatus;
-import tn.esprit.entities.UserRole;
 
 /**
  *
  * @author mghozzi
  */
-public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
+public final class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
 
-    private IUserDao userDao ;
-    
-    public CompanyDaoImpl ( ) {
-        super() ;
-        userDao = new UserDaoImpl() ;
+    private final IUserDao userDao;
+
+    /**
+     *
+     */
+    public CompanyDaoImpl() {
+        super();
+        userDao = new UserDaoImpl();
     }
+
+    /**
+     *
+     * @param recruiter
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public Company findByRecruter(User recruiter) throws DataBaseException {
         Company company = null;
@@ -36,10 +44,10 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                 .from("company")
                 .where()
                 .where(queriesFactory.newStdField("recruiter"), ":recruiter");
-        
+
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
-            preparedStatement.setInt(selectQuery.getPlaceholderIndex(":recruiter"), recruiter.getId() );
+            preparedStatement.setInt(selectQuery.getPlaceholderIndex(":recruiter"), recruiter.getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 company = new Company.Builder()
@@ -50,7 +58,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                         .phone(resultSet.getString("phone"))
                         .description(resultSet.getString("description"))
                         .image(resultSet.getString("image"))
-                    
                         .build();
 
             }
@@ -62,10 +69,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
         return company;
     }
 
-    
-    
-    
-    
     @Override
     public List<Company> findAll() throws DataBaseException {
         List<Company> list = new ArrayList<>();
@@ -84,7 +87,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
                         .phone(resultSet.getString("phone"))
                         .description(resultSet.getString("description"))
                         .image(resultSet.getString("image"))
-                      
                         .build());
 
             }
@@ -95,10 +97,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
 
         return list;
     }
-
-
-    
-    
 
     @Override
     public Integer create(Company entity) throws DataBaseException {
@@ -130,7 +128,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
         return rowsCreated;
     }
 
- 
     @Override
     public Integer edit(Company entity) throws DataBaseException {
 
@@ -163,9 +160,6 @@ public class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao {
         return rowUpdated;
     }
 
-    
-    
-    
     @Override
     public Integer delete(Company entity) throws DataBaseException {
 
