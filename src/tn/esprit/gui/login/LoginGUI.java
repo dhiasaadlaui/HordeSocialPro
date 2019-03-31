@@ -20,6 +20,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tn.esprit.entities.UserRole;
 import static tn.esprit.gui.login.LanguageToolBar.BUNDLE;
 import tn.esprit.gui.launch.App;
 
@@ -39,8 +40,8 @@ public class LoginGUI extends HBox {
      */
     public static Button BTN_LOGIN;
 
-    public static Button BTN_SIGNUP;
-
+    public static Button BTN_SIGNUP_CANDIDATE;
+    public static Button BTN_SIGNUP_RECRUITER;
     /**
      *
      */
@@ -67,7 +68,8 @@ public class LoginGUI extends HBox {
         // ------------initialisation------------
         IServiceUser serviceUser = new ServiceUserImpl();
         BTN_LOGIN = new Button(LanguageToolBar.BUNDLE.getString("login"));
-        BTN_SIGNUP = new Button("Sign up");
+        BTN_SIGNUP_CANDIDATE = new Button("Sign up Candidate");
+        BTN_SIGNUP_RECRUITER = new Button("Sign up Recruiter");
         LABEL_SIGNUP = new Label("Dont have account ?");
         TXT_USER = new TextField();
         TXT_PASSWORD = new PasswordField();
@@ -90,8 +92,8 @@ public class LoginGUI extends HBox {
         leftPane.setAlignment(Pos.CENTER);
         BTN_LOGIN.getStyleClass().add("primary");
         BTN_LOGIN.setPrefWidth(150);
-        BTN_SIGNUP.getStyleClass().add("primary");
-        BTN_SIGNUP.setPrefWidth(150);
+        BTN_SIGNUP_CANDIDATE.getStyleClass().add("primary");
+        BTN_SIGNUP_CANDIDATE.setPrefWidth(150);
         TXT_USER.setFont(new Font(20));
         TXT_PASSWORD.setFont(new Font(20));
         LABEL_SIGNUP.setStyle("-fx-text-fill: white;");
@@ -105,8 +107,8 @@ public class LoginGUI extends HBox {
 
             try {
                 App.USER_ONLINE = serviceUser.authentication(TXT_USER.getText(), TXT_PASSWORD.getText());
-                HomeGUI webmasterGui = new HomeGUI();
-                App.GLOBAL_PANE_BORDER.setCenter(webmasterGui);
+                HomeGUI home = new HomeGUI();
+                App.GLOBAL_PANE_BORDER.setCenter(home);
                 // traitement
             } catch (ObjectNotFoundException ex) {
 
@@ -117,6 +119,11 @@ public class LoginGUI extends HBox {
 
             }
         });
+        BTN_SIGNUP_CANDIDATE.setOnMouseClicked(e -> {
+
+            SignupGUI signUp = new SignupGUI(UserRole.CANDIDATE);
+            App.GLOBAL_PANE_BORDER.setCenter(signUp);
+        });
         map = new WorldMap(400, 1000);
         leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
         ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/horde_xlarge.png")));
@@ -124,7 +131,7 @@ public class LoginGUI extends HBox {
         logoLarge.setFitWidth(187);
         Region spacer = new Region();
         spacer.setPrefHeight(200);
-        rightPane.getChildren().addAll(logoLarge, TXT_USER, TXT_PASSWORD, BTN_LOGIN, spacer, LABEL_SIGNUP, BTN_SIGNUP);
+        rightPane.getChildren().addAll(logoLarge, TXT_USER, TXT_PASSWORD, BTN_LOGIN, spacer, LABEL_SIGNUP, BTN_SIGNUP_CANDIDATE, BTN_SIGNUP_RECRUITER);
         this.getChildren().addAll(leftPane, rightPane);
 
     }
@@ -136,7 +143,8 @@ public class LoginGUI extends HBox {
         LoginGUI.BTN_LOGIN.setText(BUNDLE.getString("login"));
         LoginGUI.TXT_USER.setPromptText(LanguageToolBar.BUNDLE.getString("username"));
         LoginGUI.TXT_PASSWORD.setPromptText(LanguageToolBar.BUNDLE.getString("password"));
-        map.worldMap.setText("changed");
+        map.worldMap.setTitle(LanguageToolBar.BUNDLE.getString("loginmaptitle"));
+        map.worldMap.setText(LanguageToolBar.BUNDLE.getString("loginmaptext"));
     }
 
 }

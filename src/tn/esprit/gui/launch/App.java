@@ -57,6 +57,7 @@ public class App extends Application {
          Image applicationIcon = new Image(getClass().getResourceAsStream("/resources/images/horde.png"));
         GLOBAL_STAGE.getIcons().add(applicationIcon);
         GLOBAL_STAGE.setResizable(false);
+        GLOBAL_STAGE.setTitle("Social Pro");
         //-----------styling----------------
         GLOBAL_PANE_BORDER.setStyle("-fx-background-color: #7f8c8d;");
         GLOBAL_PANE_BORDER.setCenter(LOGIN_GUI);

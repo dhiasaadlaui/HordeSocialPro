@@ -852,7 +852,7 @@ public class TilesInitilizer  {
                                              gaugeSparkLineTile, radarChartTile1, radarChartTile2,
                                              smoothAreaChartTile, countryTile, ephemerisTile, characterTile,
                                              flipTile, switchSliderTile, dateTile, calendarTile, sunburstTile,
-                                             matrixTile, radialPercentageTile, statusTile, barGaugeTile);//, weatherTile);
+                                             matrixTile, radialPercentageTile, statusTile, barGaugeTile,imageTile);//, weatherTile);
 
         GLOBAL_PANE.setHgap(5);
         GLOBAL_PANE.setVgap(5);

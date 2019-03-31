@@ -41,8 +41,8 @@ public class WorldMap {
         worldMap = TileBuilder.create()
                 .prefSize(tileWidth, tileHeigh)
                 .skinType(Tile.SkinType.WORLDMAP)
-                .title("WorldMap Tile")
-                .text("teeeeext")
+                .title(LanguageToolBar.BUNDLE.getString("loginmaptitle"))
+                .text(LanguageToolBar.BUNDLE.getString("loginmaptext"))
                 .textVisible(true)
                 .textAlignment(TextAlignment.LEFT)
                 
