@@ -5,7 +5,6 @@
  */
 package tn.esprit.unit.test.business;
 
-import static com.sun.scenario.effect.impl.prism.PrImage.create;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
@@ -37,6 +36,7 @@ import tn.esprit.entities.ReclamationType;
 import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
+import tn.esprit.services.implementation.HandleReclamationAdmin;
 import tn.esprit.services.implementation.HandleReclamationModerator;
 import tn.esprit.services.implementation.ServiceReclamationImpl;
 import tn.esprit.services.implementation.ServiceUserImpl;
@@ -54,8 +54,8 @@ public class TestMarwen {
      * @param args
      * @throws tn.esprit.services.exceptions.ObjectNotFoundException
      */
-    public static void main(String[] args) {
-        
+    public static void main(String[] args)  {
+
         IUserDao userDao = new UserDaoImpl();
         ICategoryDao categoryDao = new CategoryDaoImpl();
         ICompanyDao companyDao = new CompanyDaoImpl();
@@ -66,18 +66,9 @@ public class TestMarwen {
         IReclamationDao reclamationdao = new ReclamationDaoImpl();
         IAbonnementDao abonnementDao = new AbonnementDaoImpl();
         IRateDao rateDao = new RateDaoImpl();
-        
         IServiceReclamation serviceReclamation = new ServiceReclamationImpl();
         
-        
-        try {
-          
-        
-            
-            serviceReclamation.handleModerator(reclamationdao.findById(3), HandleReclamationModerator.DISABLE_JOB);
-        } catch (DataBaseException|  ConstraintViolationException ex) {
-            System.out.println(ex.getMessage());
-        }
+        Reclamation reclamation = new Reclamation.Builder().build() ;
         
     }
 }

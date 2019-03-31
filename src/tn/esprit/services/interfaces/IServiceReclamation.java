@@ -6,6 +6,7 @@
 package tn.esprit.services.interfaces;
 
 import java.util.List;
+import tn.esprit.entities.Job;
 import tn.esprit.entities.Reclamation;
 import tn.esprit.entities.ReclamationStatus;
 import tn.esprit.entities.ReclamationType;
