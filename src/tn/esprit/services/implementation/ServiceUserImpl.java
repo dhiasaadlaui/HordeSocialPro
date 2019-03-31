@@ -31,13 +31,14 @@ public class ServiceUserImpl implements IServiceUser {
      *
      */
     IUserDao userDao;
+    User loggedIn;
 
     /**
      *
      */
     public ServiceUserImpl() {
         userDao = new UserDaoImpl();
-
+       
     }
 
     /**
@@ -57,6 +58,7 @@ public class ServiceUserImpl implements IServiceUser {
                     .filter(e -> e.getPassword().equals(password))
                     .findFirst();
             if (optional.isPresent()) {
+                loggedIn = optional.get() ; // JUST ADDING THE LOGGED IN USER
                 return optional.get();
             } else {
                 throw new ObjectNotFoundException(LanguageToolBar.BUNDLE.getString("loginfail"));
@@ -237,6 +239,11 @@ public class ServiceUserImpl implements IServiceUser {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public User getLoggedInUsers() {
+        return loggedIn;  
     }
 
 }

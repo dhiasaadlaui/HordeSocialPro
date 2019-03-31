@@ -62,5 +62,8 @@ public interface IServiceUser extends IGenericService<User>{
      * @throws ConstraintViolationException
      */
     void accountActivation(User user,String code) throws ConstraintViolationException;
+    
+    
+   User getLoggedInUsers() ;
 
 }
