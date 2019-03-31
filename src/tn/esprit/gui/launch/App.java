@@ -8,6 +8,7 @@ package tn.esprit.gui.launch;
 import tn.esprit.gui.login.LoginGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import tn.esprit.entities.User;
@@ -46,7 +47,6 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         //--------initialisation-----------
-      
 
         GLOBAL_STAGE = new Stage();
         LOGIN_GUI = new LoginGUI();
@@ -54,8 +54,11 @@ public class App extends Application {
         GLOBAL_PANE_BORDER = new BorderPane();
         GLOBAL_SCENE = new Scene(GLOBAL_PANE_BORDER);
 
+         Image applicationIcon = new Image(getClass().getResourceAsStream("/resources/images/horde.png"));
+        GLOBAL_STAGE.getIcons().add(applicationIcon);
+        GLOBAL_STAGE.setResizable(false);
+        GLOBAL_STAGE.setTitle("Social Pro");
         //-----------styling----------------
-  
         GLOBAL_PANE_BORDER.setStyle("-fx-background-color: #7f8c8d;");
         GLOBAL_PANE_BORDER.setCenter(LOGIN_GUI);
 
@@ -76,7 +79,5 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-   
 
 }
