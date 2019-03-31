@@ -27,28 +27,6 @@ public class TestDhia {
      */
     public static void main(String[] args) {
 
-        Field[] fields = User.class.getDeclaredFields();
-        for (Field f : fields) {
-            Class t = f.getType();
-            System.out.println(t);
-
-        }
-
-        //       try {
-        //        String[] adrs = {"dhiasaadlaui@gmail.com","mohameddhia.saadlaui@esprit.tn"};
-//
-//        try {
-//            ServiceMail.sendMailToAll(adrs, "masstest", "masstest");
-//
-        IServiceUser serviceUser = new ServiceUserImpl();
-        try {
-            User user = serviceUser.findByID(5);
-            serviceUser.accountActivation(user, "Zy7DAJXH6k");
-        } catch (ConstraintViolationException ex) {
-            System.out.println(ex.getMessage());
-        } catch (ObjectNotFoundException ex) {
-            Logger.getLogger(TestDhia.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
 }

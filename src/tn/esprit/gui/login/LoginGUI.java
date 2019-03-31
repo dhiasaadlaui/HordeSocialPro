@@ -5,14 +5,19 @@
  */
 package tn.esprit.gui.login;
 
+import eu.hansolo.tilesfx.Tile;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import static tn.esprit.gui.login.LanguageToolBar.BUNDLE;
@@ -34,6 +39,8 @@ public class LoginGUI extends HBox {
      */
     public static Button BTN_LOGIN;
 
+    public static Button BTN_SIGNUP;
+
     /**
      *
      */
@@ -43,11 +50,14 @@ public class LoginGUI extends HBox {
      *
      */
     public static PasswordField TXT_PASSWORD;
+    public static Label LABEL_SIGNUP;
 
     /**
      *
      */
     public static LanguageToolBar LANGUAGE_BOX;
+    public static TilesInitilizer TILES;
+    public static WorldMap map = new WorldMap(800, 600);
 
     /**
      *
@@ -57,27 +67,34 @@ public class LoginGUI extends HBox {
         // ------------initialisation------------
         IServiceUser serviceUser = new ServiceUserImpl();
         BTN_LOGIN = new Button(LanguageToolBar.BUNDLE.getString("login"));
+        BTN_SIGNUP = new Button("Sign up");
+        LABEL_SIGNUP = new Label("Dont have account ?");
         TXT_USER = new TextField();
         TXT_PASSWORD = new PasswordField();
         LANGUAGE_BOX = new LanguageToolBar();
         VBox rightPane = new VBox();
         VBox leftPane = new VBox();
-
+        TILES = new TilesInitilizer();
 
         // ------------Styling------------ 
         rightPane.getStylesheets().add("/resources/css/theme.css");
-        rightPane.setPadding(new Insets(20));
+        rightPane.setPrefWidth(leftPane.getPrefWidth() / 4);
+        rightPane.setPadding(new Insets(50, 20, 50, 20));
         rightPane.setSpacing(10);
-        rightPane.setAlignment(Pos.CENTER);
+        rightPane.setAlignment(Pos.BOTTOM_CENTER);
         rightPane.setStyle("-fx-background-color:#34495e");
-        rightPane.setPrefSize(300, 600);
-        leftPane.setPrefSize(rightPane.getPrefWidth() * 3, rightPane.getPrefHeight());
+        rightPane.setPrefSize(300, 800);
+        leftPane.setPrefSize(rightPane.getPrefWidth() * 4, rightPane.getPrefHeight());
         leftPane.setSpacing(15);
-        leftPane.setPadding(new Insets(20, 10, 10, 20));
+        leftPane.setPadding(new Insets(10, 10, 10, 10));
+        leftPane.setAlignment(Pos.CENTER);
         BTN_LOGIN.getStyleClass().add("primary");
         BTN_LOGIN.setPrefWidth(150);
+        BTN_SIGNUP.getStyleClass().add("primary");
+        BTN_SIGNUP.setPrefWidth(150);
         TXT_USER.setFont(new Font(20));
         TXT_PASSWORD.setFont(new Font(20));
+        LABEL_SIGNUP.setStyle("-fx-text-fill: white;");
 
         loadLoginGuiLang();
 
@@ -100,8 +117,14 @@ public class LoginGUI extends HBox {
 
             }
         });
-        leftPane.getChildren().addAll(LANGUAGE_BOX);
-        rightPane.getChildren().addAll(TXT_USER, TXT_PASSWORD, BTN_LOGIN);
+        map = new WorldMap(400, 1000);
+        leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
+        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/horde_xlarge.png")));
+        logoLarge.setFitHeight(289);
+        logoLarge.setFitWidth(187);
+        Region spacer = new Region();
+        spacer.setPrefHeight(200);
+        rightPane.getChildren().addAll(logoLarge, TXT_USER, TXT_PASSWORD, BTN_LOGIN, spacer, LABEL_SIGNUP, BTN_SIGNUP);
         this.getChildren().addAll(leftPane, rightPane);
 
     }
@@ -113,6 +136,7 @@ public class LoginGUI extends HBox {
         LoginGUI.BTN_LOGIN.setText(BUNDLE.getString("login"));
         LoginGUI.TXT_USER.setPromptText(LanguageToolBar.BUNDLE.getString("username"));
         LoginGUI.TXT_PASSWORD.setPromptText(LanguageToolBar.BUNDLE.getString("password"));
+        map.worldMap.setText("changed");
     }
 
 }
