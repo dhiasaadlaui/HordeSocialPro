@@ -8,6 +8,7 @@ package tn.esprit.gui.login;
 import eu.hansolo.tilesfx.Demo;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
+import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import tn.esprit.entities.UserRole;
 import tn.esprit.gui.launch.App;
 
@@ -54,15 +56,21 @@ public class SignupGUI extends HBox {
     public static Button BTN_PHOTO_CHOSE;
 
     private Tile PHOTO;
+    public static File filePhotoProfil;
 
     public SignupGUI(UserRole useRole) {
 
         // ---------initialization -----------
+        filePhotoProfil = new File("/resources/images/default.jpg");
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Photo de profil");
+
         PHOTO = TileBuilder.create()
                 .skinType(Tile.SkinType.IMAGE)
                 .prefSize(300, 300)
                 .title("Candidate")
-                .image(new Image(Demo.class.getResourceAsStream("/resources/images/default.jpg")))
+                .image(new Image(this.getClass().getResourceAsStream("/resources/images/default.jpg")))
                 .imageMask(Tile.ImageMask.ROUND)
                 .text("Photo")
                 .textAlignment(TextAlignment.CENTER)
@@ -113,12 +121,19 @@ public class SignupGUI extends HBox {
 
         });
 
-        TilePane form = new TilePane();
-        
+        BTN_PHOTO_CHOSE.setOnMouseClicked(e -> {
+
+            filePhotoProfil = fileChooser.showOpenDialog(new Stage());
+
+            PHOTO.setImage(new Image(filePhotoProfil.toURI().toString()));
+            System.out.println(filePhotoProfil.getName());
+
+        });
+
         TilePane userName = new TilePane();
         userName.setTileAlignment(Pos.BASELINE_LEFT);
         userName.getChildren().addAll(USERNAME_LABEL, USERNAME_TXT);
-        
+
         TilePane firstName = new TilePane();
         firstName.setTileAlignment(Pos.BASELINE_LEFT);
         firstName.getChildren().addAll(FIRST_NAME_LABEL, FIRST_NAME_TXT);
