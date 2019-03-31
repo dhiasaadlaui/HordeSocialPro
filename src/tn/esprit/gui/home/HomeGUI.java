@@ -7,6 +7,7 @@ package tn.esprit.gui.home;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import tn.esprit.gui.login.SignupGUI;
 
 
 /**
@@ -22,11 +23,13 @@ public class HomeGUI extends VBox {
 
         // ------------initialisation------------
         Label label1 = new Label();
+   
 
         //-------------Styling-------------------
         this.getStylesheets().add("/resources/css/theme.css");
         label1.getStyleClass().add("primary");
 
+  
         //-------------logic--------------------
 
     }
