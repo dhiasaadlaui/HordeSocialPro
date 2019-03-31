@@ -5,24 +5,17 @@
  */
 package tn.esprit.dao.interfaces;
 
-import tn.esprit.dao.exceptions.DataBaseException;
+import java.util.List;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.Notification;
 
 /**
  *
  * @author Mehdi Sarray
  */
-public interface ICommentDao extends IGenericDao<Comment> {
-
-    /**
-     *
-     * @param id
-     * @return
-     * @throws DataBaseException
-     */
-    public Comment findByID(Integer id) throws DataBaseException;
+public interface INotificationDao extends IGenericDao<Notification> {
     
-    public Company getJobPoster(Comment entity) ;
-
+    public void craftNotification(Company entity,Comment comEntity) ; 
+    public List<Notification> getNotificationByUser(Company entity) ; // for my thread
 }
