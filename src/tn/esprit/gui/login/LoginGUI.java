@@ -6,6 +6,7 @@
 package tn.esprit.gui.login;
 
 import eu.hansolo.tilesfx.Tile;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -42,6 +43,8 @@ public class LoginGUI extends HBox {
 
     public static Button BTN_SIGNUP_CANDIDATE;
     public static Button BTN_SIGNUP_RECRUITER;
+    public static Button BTN_EXIT;
+
     /**
      *
      */
@@ -68,9 +71,10 @@ public class LoginGUI extends HBox {
         // ------------initialisation------------
         IServiceUser serviceUser = new ServiceUserImpl();
         BTN_LOGIN = new Button(LanguageToolBar.BUNDLE.getString("login"));
-        BTN_SIGNUP_CANDIDATE = new Button("Sign up Candidate");
-        BTN_SIGNUP_RECRUITER = new Button("Sign up Recruiter");
-        LABEL_SIGNUP = new Label("Dont have account ?");
+        BTN_SIGNUP_CANDIDATE = new Button(LanguageToolBar.BUNDLE.getString("signupcandidate"));
+        BTN_SIGNUP_RECRUITER = new Button(LanguageToolBar.BUNDLE.getString("signuprecruiter"));
+        BTN_EXIT = new Button(LanguageToolBar.BUNDLE.getString("exit"));
+        LABEL_SIGNUP = new Label(LanguageToolBar.BUNDLE.getString("loginquestion"));
         TXT_USER = new TextField();
         TXT_PASSWORD = new PasswordField();
         LANGUAGE_BOX = new LanguageToolBar();
@@ -94,6 +98,12 @@ public class LoginGUI extends HBox {
         BTN_LOGIN.setPrefWidth(150);
         BTN_SIGNUP_CANDIDATE.getStyleClass().add("primary");
         BTN_SIGNUP_CANDIDATE.setPrefWidth(150);
+
+        BTN_SIGNUP_RECRUITER.getStyleClass().add("primary");
+        BTN_SIGNUP_RECRUITER.setPrefWidth(150);
+        BTN_EXIT.getStyleClass().add("danger");
+        BTN_EXIT.setPrefWidth(150);
+
         TXT_USER.setFont(new Font(20));
         TXT_PASSWORD.setFont(new Font(20));
         LABEL_SIGNUP.setStyle("-fx-text-fill: white;");
@@ -124,6 +134,14 @@ public class LoginGUI extends HBox {
             SignupGUI signUp = new SignupGUI(UserRole.CANDIDATE);
             App.GLOBAL_PANE_BORDER.setCenter(signUp);
         });
+        BTN_SIGNUP_RECRUITER.setOnMouseClicked(e -> {
+
+            SignupGUI signUp = new SignupGUI(UserRole.RECRUITER);
+            App.GLOBAL_PANE_BORDER.setCenter(signUp);
+        });
+        BTN_EXIT.setOnAction(e -> {
+            Platform.exit();
+        });
         map = new WorldMap(400, 1000);
         leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
         ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/horde_xlarge.png")));
@@ -131,7 +149,9 @@ public class LoginGUI extends HBox {
         logoLarge.setFitWidth(187);
         Region spacer = new Region();
         spacer.setPrefHeight(200);
-        rightPane.getChildren().addAll(logoLarge, TXT_USER, TXT_PASSWORD, BTN_LOGIN, spacer, LABEL_SIGNUP, BTN_SIGNUP_CANDIDATE, BTN_SIGNUP_RECRUITER);
+        Region spacer2 = new Region();
+        spacer2.setPrefHeight(50);
+        rightPane.getChildren().addAll(logoLarge, TXT_USER, TXT_PASSWORD, BTN_LOGIN, spacer, LABEL_SIGNUP, BTN_SIGNUP_CANDIDATE, BTN_SIGNUP_RECRUITER, spacer2, BTN_EXIT);
         this.getChildren().addAll(leftPane, rightPane);
 
     }
@@ -140,9 +160,14 @@ public class LoginGUI extends HBox {
      *
      */
     public static void loadLoginGuiLang() {
-        LoginGUI.BTN_LOGIN.setText(BUNDLE.getString("login"));
-        LoginGUI.TXT_USER.setPromptText(LanguageToolBar.BUNDLE.getString("username"));
-        LoginGUI.TXT_PASSWORD.setPromptText(LanguageToolBar.BUNDLE.getString("password"));
+        BTN_LOGIN.setText(BUNDLE.getString("login"));
+        TXT_USER.setPromptText(LanguageToolBar.BUNDLE.getString("username"));
+        TXT_PASSWORD.setPromptText(LanguageToolBar.BUNDLE.getString("password"));
+        
+        BTN_EXIT.setText(LanguageToolBar.BUNDLE.getString("exit"));
+        BTN_SIGNUP_CANDIDATE.setText(LanguageToolBar.BUNDLE.getString("signupcandidate"));
+        BTN_SIGNUP_RECRUITER.setText(LanguageToolBar.BUNDLE.getString("signuprecruiter"));
+        LABEL_SIGNUP.setText(LanguageToolBar.BUNDLE.getString("loginquestion"));
         map.worldMap.setTitle(LanguageToolBar.BUNDLE.getString("loginmaptitle"));
         map.worldMap.setText(LanguageToolBar.BUNDLE.getString("loginmaptext"));
     }

@@ -86,7 +86,7 @@ public class Connexion {
             DB_URL = (String) p.get("url");
             DB_USER = (String) p.get("user");
             DB_PASSWORD = (String) p.get("password");
-            DRIVER = (String) p.get("driver");
+            DRIVER = (String) p.get("oldDriver");
             LOGGER.info("The class (" + LOGGER.getName() + ") attempting to connect database ..");
 
         } catch (IOException e) {
