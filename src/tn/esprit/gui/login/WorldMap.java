@@ -10,6 +10,7 @@ import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Country;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
+import tn.esprit.services.util.Randomizer;
 
 /**
  *
@@ -21,21 +22,17 @@ public class WorldMap {
 
     public WorldMap(double tileWidth, double tileHeigh) {
 
-        for (int i = 0; i < Country.values().length; i++) {
-            double value = 5;
-            Color color;
+        for (Country value1 : Country.values()) {
+            double value = Randomizer.randomIntgeger(10);
+            Color color=Tile.GRAY;
             if (value > 8) {
                 color = Tile.RED;
             } else if (value > 6) {
                 color = Tile.ORANGE;
             } else if (value > 4) {
                 color = Tile.YELLOW_ORANGE;
-            } else if (value > 2) {
-                color = Tile.GREEN;
-            } else {
-                color = Tile.BLUE;
-            }
-            Country.values()[i].setColor(color);
+            } 
+            value1.setColor(color);
         }
 
         worldMap = TileBuilder.create()
@@ -45,7 +42,6 @@ public class WorldMap {
                 .text(LanguageToolBar.BUNDLE.getString("loginmaptext"))
                 .textVisible(true)
                 .textAlignment(TextAlignment.LEFT)
-                
                 .build();
 
     }
