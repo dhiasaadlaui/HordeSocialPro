@@ -5,6 +5,8 @@
  */
 package tn.esprit.services.util;
 
+import java.util.Random;
+
 /**
  *
  * @author mdsaadlaoui
@@ -30,6 +32,10 @@ public class Randomizer {
         }
 
         return sb.toString();
+    }
+    public static Integer randomIntgeger(Integer maxValue){
+        Random RND = new Random();
+        return  RND.nextInt(maxValue);
     }
 
 }
