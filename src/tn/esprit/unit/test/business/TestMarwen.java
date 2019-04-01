@@ -70,5 +70,11 @@ public class TestMarwen {
         
         Reclamation reclamation = new Reclamation.Builder().build() ;
         
+        try {
+            System.out.println(serviceReclamation.findAll());
+        } catch (DataBaseException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
     }
 }

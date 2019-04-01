@@ -20,7 +20,7 @@ public class ServiceInputValidator {
      * @throws ConstraintViolationException
      */
     public static void string(String text) throws ConstraintViolationException {
-        if (!text.matches("^[a-zA-Z]+$")) {
+        if ((text == null)||!text.matches("^[a-zA-Z]+$")) {
             throw new ConstraintViolationException("Invalid String");
         }
     }
@@ -31,7 +31,7 @@ public class ServiceInputValidator {
      * @throws ConstraintViolationException
      */
     public static void username(String text) throws ConstraintViolationException {
-        if (text.matches("^[A-Za-z0-9]+$")) {
+        if ( (text == null)|| !text.matches("^[A-Za-z0-9]+$")) {
             throw new ConstraintViolationException("Invalid Username");
         }
 
@@ -43,8 +43,8 @@ public class ServiceInputValidator {
      * @throws ConstraintViolationException
      */
     public static void mail(String text) throws ConstraintViolationException {
-        if (!text.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+        if ( (text == null)||(!text.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$" )) ) {
             throw new ConstraintViolationException("Invalid mail");
         }
 
