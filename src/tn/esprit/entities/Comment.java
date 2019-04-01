@@ -6,6 +6,8 @@
 package tn.esprit.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -37,6 +39,11 @@ public final class Comment implements Serializable {
      *
      */
     private String content;
+    
+    /**
+     *
+     */
+    private LocalDateTime date;
 
     /**
      *
@@ -44,12 +51,14 @@ public final class Comment implements Serializable {
      * @param user
      * @param job
      * @param content
+     * @param date
      */
-    private Comment(Integer id, User user, Job job, String content) {
+    private Comment(Integer id, User user, Job job, String content, LocalDateTime date) {
         this.id = id;
         this.user = user;
         this.job = job;
         this.content = content;
+        this.date = date ;
     }
 
     /**
@@ -77,6 +86,11 @@ public final class Comment implements Serializable {
          */
         private String content;
 
+        /**
+         *
+         */
+        private LocalDateTime date;
+        
         /**
          *
          */
@@ -121,6 +135,15 @@ public final class Comment implements Serializable {
         public Builder content(String content) {
             this.content = content;
             return this;
+        } 
+        /**
+         *
+         * @param date
+         * @return
+         */
+        public Builder date(LocalDateTime date) {
+            this.date = date;
+            return this;
         }
 
         /**
@@ -132,7 +155,8 @@ public final class Comment implements Serializable {
                     this.id,
                     this.user,
                     this.job,
-                    this.content);
+                    this.content,
+                    this.date);
         }
 
     }
@@ -143,7 +167,7 @@ public final class Comment implements Serializable {
      */
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", user=" + user.getId() + ", job id=" + job.getId() + ", content=" + content + '}';
+        return "Comment{" + "id=" + id + ", user=" + user.getId() + ", job id=" + job.getId() + ", content=" + content +", date=" + date;
     }
 
     /**
