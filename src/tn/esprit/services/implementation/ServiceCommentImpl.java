@@ -10,6 +10,7 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.CommentDaoImpl;
 import tn.esprit.dao.interfaces.ICommentDao;
 import tn.esprit.entities.Comment;
+import tn.esprit.entities.Company;
 import tn.esprit.services.interfaces.IServiceComment;
 
 /**
@@ -56,5 +57,10 @@ public class ServiceCommentImpl implements IServiceComment {
     @Override
     public Comment findByID(Integer id) throws DataBaseException {
         return icomment.findByID(id);
+    }
+    
+    @Override
+    public Company getJobPoster(Comment entity) {
+        return icomment.getJobPoster(entity) ;
     }
 }
