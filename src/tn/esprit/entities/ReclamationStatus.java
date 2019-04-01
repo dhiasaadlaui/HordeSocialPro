@@ -14,16 +14,23 @@ public enum ReclamationStatus {
     /**
      *
      */
-    OPEN,
+    OPEN , 
 
     /**
      *
      */
-    CLOSED,
+    CLOSED, 
 
     /**
      *
      */
-    PENDING
+    PENDING , 
+    
+    
+    REDIRECTED ,
+    
+    CANCELED
+    
+    
     
 }
