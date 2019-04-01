@@ -5,10 +5,15 @@
  */
 package tn.esprit.unit.test.business;
 
+import com.mysql.cj.protocol.Resultset;
 import eu.hansolo.tilesfx.tools.Country;
 import java.lang.reflect.Field;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tn.esprit.dao.implementation.Connexion;
 import tn.esprit.entities.User;
 import tn.esprit.querybuilder.implementations.QueriesFactoryImpl;
 import tn.esprit.querybuilder.interfaces.QueriesFactory;
@@ -51,6 +56,20 @@ public class TestDhia {
 	.where()
 	.where(f.newStdField("recruiter"), ":recruiter");
         System.out.println(selectQuery.getQueryString());
+        try {
+            PreparedStatement ps = Connexion.getInstance().prepareStatement(selectQuery.getQueryString());
+            ps.setInt(selectQuery.getPlaceholderIndex(":recruiter"), 4);
+            ps.executeQuery();
+            ResultSet rs = ps.getResultSet();
+            
+            while (rs.next()){
+                System.out.println(rs.getString("domain"));
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
         
 
     }
