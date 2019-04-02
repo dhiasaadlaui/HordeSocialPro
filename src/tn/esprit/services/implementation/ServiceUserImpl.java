@@ -136,9 +136,7 @@ public class ServiceUserImpl implements IServiceUser {
     @Override
     public void signUp(User user) throws ConstraintViolationException {
         try {
-            ServiceInputValidator.mail(user.getEmail());
-            ServiceInputValidator.string(user.getFirstName());
-            ServiceInputValidator.string(user.getLastName());
+           
             user.setAccountStatus(UserAccountStatus.PENDING);
             user.setActivationCode(gnerateActivationCode(10));
             create(user);
@@ -164,7 +162,7 @@ public class ServiceUserImpl implements IServiceUser {
                     + "<br />\n"
                     + "Please do not reply to this message. Replies to this message are routed to an unmonitored mailbox. If you have any queries visit</span>&nbsp;<span style=\"font-size:9px\"><a href=\"https://github.com/dhiasaadlaui/HordeSocialPro\">https://github.com/dhiasaadlaui/HordeSocialPro</a>"
             );
-        } catch (ConstraintViolationException | DataBaseException | MessagingException cvx) {
+        } catch (DataBaseException | MessagingException cvx) {
             throw new ConstraintViolationException(cvx.getMessage());
 
         }
