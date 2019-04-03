@@ -5,16 +5,12 @@
  */
 package tn.esprit.gui.login;
 
-import eu.hansolo.tilesfx.Demo;
 import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Country;
 import java.io.File;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -27,11 +23,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
@@ -44,7 +38,6 @@ import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
 import tn.esprit.services.util.ServiceInputValidator;
-import static tn.esprit.services.util.ServiceInputValidator.mail;
 
 /**
  *
@@ -92,6 +85,8 @@ public class SignupGUI extends HBox {
     public static Button BTN_PHOTO_CHOSE_COMPANY;
 
     private Tile PHOTO;
+    private Tile PHOTO_COMPANY;
+    private Tile COUNTRY_TILE;
     public static File filePhotoProfil;
     private IServiceUser serviceUser;
 
@@ -116,12 +111,31 @@ public class SignupGUI extends HBox {
 
         ComboBox countries = new ComboBox(FXCollections.observableList(Arrays.asList(Country.values())));
         countries.getSelectionModel().selectFirst();
+        COUNTRY_TILE = TileBuilder.create().skinType(Tile.SkinType.COUNTRY)
+                                          
+                                          .minValue(0)
+                                          .maxValue(40)
+                                          .title("Country")
+                                          .unit("Unit")
+                                          .country(Country.valueOf(countries.getValue().toString()))
+                                          .tooltipText("")
+                                          .animated(true)
+                                          .build();
 
         PHOTO = TileBuilder.create()
                 .skinType(Tile.SkinType.IMAGE)
-                .prefSize(300, 300)
+                
                 .image(new Image(this.getClass().getResourceAsStream("/resources/images/default.jpg")))
                 .imageMask(Tile.ImageMask.ROUND)
+                .backgroundColor(Color.TRANSPARENT)
+                .textAlignment(TextAlignment.CENTER)
+                .build();
+        
+                PHOTO_COMPANY = TileBuilder.create()
+                .skinType(Tile.SkinType.IMAGE)
+                
+                .image(new Image(this.getClass().getResourceAsStream("/resources/images/default.jpg")))
+                .imageMask(Tile.ImageMask.RECTANGULAR)
                 .backgroundColor(Color.TRANSPARENT)
                 .textAlignment(TextAlignment.CENTER)
                 .build();
@@ -143,7 +157,7 @@ public class SignupGUI extends HBox {
         ADRESS_TXT = new TextField();
         PASSWORD_TXT = new PasswordField();
         PASSWORD_CONFIRM_TXT = new PasswordField();
-        BTN_PHOTO_CHOSE = new Button("Chose file");
+        BTN_PHOTO_CHOSE = new Button(LanguageToolBar.BUNDLE.getString("photo"));
 
         COMPANY_NAME_TXT = new TextField();
         COMPANY_DESCRIPTION_TXT = new TextField();
@@ -190,8 +204,9 @@ public class SignupGUI extends HBox {
         PASSWORD_LABEL.setStyle(labelsStyle);
         PASSWORD_CONFIRM_LABEL.setStyle(labelsStyle);
         SEXE_LABEL.setStyle(labelsStyle);
-
+        BTN_PHOTO_CHOSE.getStyleClass().add("default");
         gridUser.setVgap(4);
+        BTN_PHOTO_CHOSE.setPrefWidth(250);
 
         gridUser.setPadding(new Insets(5, 5, 5, 5));
 
@@ -213,6 +228,7 @@ public class SignupGUI extends HBox {
             }
         });
         countries.setOnAction(e -> {
+            COUNTRY_TILE.setCountry(Country.valueOf(countries.getValue().toString()));
             System.out.println(countries.getValue().toString());
         });
 
@@ -241,6 +257,8 @@ public class SignupGUI extends HBox {
         gridUser.add(PASSWORD_TXT, 1, 6);
         gridUser.add(PASSWORD_CONFIRM_LABEL, 0, 7);
         gridUser.add(PASSWORD_CONFIRM_TXT, 1, 7);
+        gridUser.add(BTN_PHOTO_CHOSE, 0, 8);
+
         formCandidate.setContent(gridUser);
 
         HBox companyadress = new HBox(countries, COMPANY_ADRESS_TXT);
@@ -336,7 +354,7 @@ public class SignupGUI extends HBox {
             LEFT_PANE.getChildren().addAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
         }
 
-        RIGHT_PANE.getChildren().addAll(PHOTO, BTN_PHOTO_CHOSE);
+        RIGHT_PANE.getChildren().addAll(PHOTO,PHOTO_COMPANY,COUNTRY_TILE);
         this.getChildren().addAll(LEFT_PANE, RIGHT_PANE);
     }
 
