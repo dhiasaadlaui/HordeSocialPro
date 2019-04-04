@@ -12,12 +12,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.dao.implementation.CompanyDaoImpl;
 import tn.esprit.dao.implementation.JobDaoImpl;
+import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.JobStatus;
 import tn.esprit.entities.User;
 import tn.esprit.entities.UserAccountStatus;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceJob;
 
@@ -128,7 +131,31 @@ return jobDao.create(entity);
     }
 
     @Override
-    public void postJob(Job job, User loggedUser) {
+  
+    public void postJob(Job job, User loggedUser) throws ConstraintViolationException {
+
+        try {
+            ICompanyDao companyDao = new CompanyDaoImpl();
+            job.setCompany(companyDao.findByRecruter(loggedUser));
+            job.setStatus(JobStatus.PENDING);
+            job.setCreationDate(new Date());
+            if (job == null) 
+                throw  new ConstraintViolationException("missing expire date");
+            if (job.getExpireDate().after(new Date())) 
+                     throw  new ConstraintViolationException("invalid date");
+            if (job.getCategory()== null) 
+                           throw  new ConstraintViolationException("missing job category");
+           /*
+            *complete messing if casses with clear exception message
+            */
+            create(job);
+            
+        } catch (DataBaseException ex) {
+            throw new ConstraintViolationException(ex.getMessage());
+        }
+
+    }
+    /*public void postJob(Job job, User loggedUser) {
 
         
         if(loggedUser.getAccountStatus()== UserAccountStatus.ACTIVATED.toString()){
@@ -147,5 +174,6 @@ return jobDao.create(entity);
               
 
     }
+    */
     
 }
