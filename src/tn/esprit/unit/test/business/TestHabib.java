@@ -5,30 +5,19 @@
  */
 package tn.esprit.unit.test.business;
 
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.dao.implementation.AbonnementDaoImpl;
-import tn.esprit.dao.implementation.ApplyDaoImpl;
-import tn.esprit.dao.implementation.CategoryDaoImpl;
-import tn.esprit.dao.implementation.CommentDaoImpl;
-import tn.esprit.dao.implementation.CompanyDaoImpl;
-import tn.esprit.dao.implementation.JobDaoImpl;
-import tn.esprit.dao.implementation.RateDaoImpl;
-import tn.esprit.dao.implementation.ReclamationDaoImpl;
-import tn.esprit.dao.implementation.UserDaoImpl;
-import tn.esprit.dao.interfaces.IAbonnementDao;
-import tn.esprit.dao.interfaces.IApplyDao;
-import tn.esprit.dao.interfaces.ICategoryDao;
-import tn.esprit.dao.interfaces.ICommentDao;
-import tn.esprit.dao.interfaces.ICompanyDao;
-import tn.esprit.dao.interfaces.IJobDao;
-import tn.esprit.dao.interfaces.IRateDao;
-import tn.esprit.dao.interfaces.IReclamationDao;
-import tn.esprit.dao.interfaces.IUserDao;
-import tn.esprit.entities.Rate;
-import tn.esprit.services.implementation.ServiceUserImpl;
-import tn.esprit.services.interfaces.IServiceUser;
+import tn.esprit.entities.Category;
+import tn.esprit.entities.Company;
+import tn.esprit.entities.Job;
+import tn.esprit.entities.JobStatus;
+import tn.esprit.entities.User;
+import tn.esprit.entities.UserAccountStatus;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
+import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.interfaces.IServiceJob;
 
 /**
  *
@@ -40,25 +29,73 @@ public class TestHabib {
      *
      * @param args
      */
+             IServiceJob serviceJob ;
+
+    
     public static void main(String[] args) {
 
-        IUserDao userDao = new UserDaoImpl();
-        ICategoryDao categoryDao = new CategoryDaoImpl();
-        ICompanyDao companyDao = new CompanyDaoImpl();
-        IJobDao jobDao = new JobDaoImpl();
-        IApplyDao applyDao = new ApplyDaoImpl();
-        ICommentDao commentDao = new CommentDaoImpl();
-        IServiceUser serviceUser = new ServiceUserImpl();
-        IReclamationDao reclamationdao = new ReclamationDaoImpl();
-        IAbonnementDao abonnementDao = new AbonnementDaoImpl();
-        IRateDao rateDao = new RateDaoImpl();
-
-        try {
-            rateDao.delete(rateDao.findAll().get(0));
-        } catch (DataBaseException ex) {
-            ex.getMessage();
-        }
-
-    }
+       
+                
+                     IServiceJob sj = new SerivceJobImpl();
+                     User user = new User.Builder()
+                             .id(1)
+                             .firstName("habib")
+                             .lastName("ali")
+                             .userName("habibali")
+                             .accountStatus(UserAccountStatus.ACTIVATED)
+                             .adress("ddd")
+                             .email("ssss")
+                             .password("aa")
+                             .photo("img.ilmg")
+                             .build();
+                     User user1 = new User.Builder()
+                             .id(2)
+                             .firstName("habibbbbbbbbb")
+                             .lastName("aliii")
+                             .userName("habibaliiii")
+                             .accountStatus(UserAccountStatus.ACTIVATED)
+                             .adress("ddkkkkkkd")
+                             .email("ssskkkks")
+                             .password("akka")
+                             .photo("img.kkilmg")
+                             .build();
+                     Company company = new Company.Builder()
+                             
+                             .name("vermeg")
+                             .adress("lac1")
+                             .description("good")
+                             .domain("dev")
+                             .image("img.png")
+                             .phone("225")
+                             .recruiter(user1)
+                             .build();
+                     
+                     
+                     Category category = new Category.Builder()
+                             .id(2)
+                             .label("just a gat")
+                             .description("ddd")
+                             .moderator(user1)
+                             .build();
+                     
+                     Date vcreationDate = new Date ();
+                     
+                 try {
+                     Job job = sj.findByID(8);
+                       System.out.println(job);
+                 sj.jobDisable(job);
+                     System.out.println(job);
+                     sj.jobActivation(job);
+                     System.out.println(job);
+                 } catch (ObjectNotFoundException ex) {
+                     Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+               
+             
+                 
+        
+        
+        
+ }
 
 }
