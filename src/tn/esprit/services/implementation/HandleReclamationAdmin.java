@@ -3,22 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.unit.test.business;
-
-
-
+package tn.esprit.services.implementation;
 
 /**
  *
- * @author Dhia
+ * @author mghozzi
  */
-public class TestDhia {
-
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-
-    }
+public enum HandleReclamationAdmin {
+    BAN ,
+    REJECT 
 }
