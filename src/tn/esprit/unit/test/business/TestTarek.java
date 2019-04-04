@@ -17,8 +17,12 @@ import tn.esprit.entities.Apply;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.User;
+import tn.esprit.services.implementation.ServiceApplyImpl;
 import tn.esprit.services.implementation.ServiceCommentImpl;
+import tn.esprit.services.implementation.ServiceUserImpl;
+import tn.esprit.services.interfaces.IServiceApply;
 import tn.esprit.services.interfaces.IServiceComment;
+import tn.esprit.services.interfaces.IServiceUser;
 
 /**
  *
@@ -70,5 +74,39 @@ public class TestTarek {
             
      
     }
-}*/}}
+}*/
+        IApplyDao apply = new ApplyDaoImpl();
+        IServiceApply apply1 = new ServiceApplyImpl();
+        User us = new User.Builder().build();
+        us.setId(2);
+        Apply app1 = new Apply.Builder().build();
+        Job j1 = new Job.Builder().build();
+        j1.setId(1);
+        app1.setJob(j1);
+        app1.setCandidate(us);
+    
+    //try {
+      //  System.out.println(apply1.advancedsearch("aa","java",102,454510));
+    //}catch (DataBaseException ex){
+      //  System.out.println(ex.getMessage());
+    //}
+    //try {
+      //  System.out.println(apply1.create(app1));
+    //}catch (DataBaseException ex){
+      //  System.out.println(ex.getMessage());
+    //}
+  //  try {
+    //    System.out.println(apply1.delete(app1));
+    //}catch (DataBaseException ex){
+      //  System.out.println(ex.getMessage());
+   // }
+   try {
+        System.out.println(apply1.findAll());
+    }catch (DataBaseException ex){
+        System.out.println(ex.getMessage());
+    }
+        
+    
+    
+    }}
 
