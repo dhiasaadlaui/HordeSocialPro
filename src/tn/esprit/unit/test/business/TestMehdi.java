@@ -43,7 +43,7 @@ public class TestMehdi {
 //        
 //      //  CREATE COMMENT 
         User user1 = new User.Builder().id(1).build() ;
-        user1.setId(4);
+        user1.setId(10);
         System.out.println(user1);
         Job  job1 = new Job.Builder().id(2).build() ;
         System.out.println(job1.getId());
