@@ -16,6 +16,8 @@ import tn.esprit.dao.implementation.JobDaoImpl;
 import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.JobStatus;
+import tn.esprit.entities.User;
+import tn.esprit.entities.UserAccountStatus;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceJob;
 
@@ -126,8 +128,24 @@ return jobDao.create(entity);
     }
 
     @Override
-    public void postJob(Job job) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void postJob(Job job, User loggedUser) {
+
+        
+        if(loggedUser.getAccountStatus()== UserAccountStatus.ACTIVATED.toString()){
+            
+              if (job.getStatus()== JobStatus.PENDING.toString())   {
+                  
+                  if (job.getExpireDate().after(new Date())){
+                      try {
+                          create(job);
+                      } catch (DataBaseException ex) {
+                          Logger.getLogger(SerivceJobImpl.class.getName()).log(Level.SEVERE, null, ex);
+                      }
+                  }
+              }
+        }
+              
+
     }
     
 }

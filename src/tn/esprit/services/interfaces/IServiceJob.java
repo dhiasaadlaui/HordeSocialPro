@@ -8,6 +8,7 @@ package tn.esprit.services.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
@@ -29,7 +30,7 @@ public interface IServiceJob extends IGenericService<Job>{
        
        void jobDisable (Job job);
        
-        void postJob(Job job);
+        void postJob(Job job, User loggedUser);
         
         
          
