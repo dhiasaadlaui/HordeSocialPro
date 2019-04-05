@@ -5,7 +5,9 @@
  */
 package tn.esprit.unit.test.business;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
@@ -33,10 +35,11 @@ public class TestHabib {
 
     
     public static void main(String[] args) {
-
-       
-                
-                     IServiceJob sj = new SerivceJobImpl();
+     
+                               IServiceJob sj = new SerivceJobImpl();
+                               
+                 
+                              
                      User user = new User.Builder()
                              .id(1)
                              .firstName("habib")
@@ -79,9 +82,11 @@ public class TestHabib {
                              .build();
                      
                      Date vcreationDate = new Date ();
-                     
+              
+                    
                  try {
                      Job job = sj.findByID(8);
+                    
                        System.out.println(job);
                  sj.jobDisable(job);
                      System.out.println(job);
@@ -93,7 +98,7 @@ public class TestHabib {
                
              
                  
-        
+       
         
         
  }
