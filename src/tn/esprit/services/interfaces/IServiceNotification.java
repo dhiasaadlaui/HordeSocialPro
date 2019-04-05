@@ -6,9 +6,12 @@
 package tn.esprit.services.interfaces;
 
 import java.util.List;
+import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Notification;
+import tn.esprit.services.exceptions.ConstraintViolationException;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
  *
@@ -16,6 +19,6 @@ import tn.esprit.entities.Notification;
  */
 public interface IServiceNotification extends IGenericService<Notification>{
    
-    public void craftNotification(Company entity,Comment comEntity) ; 
-    public List<Notification> getNotificationByUser(Company entity) ; // for my thread
+    public void craftNotification(Company entity,Comment comEntity) throws ConstraintViolationException; 
+    public List<Notification> getNotificationByUser(Company entity) throws ObjectNotFoundException ; // for my thread
 }

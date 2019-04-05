@@ -4,9 +4,11 @@
  * and open the template in the editor.
  */
 package tn.esprit.services.interfaces;
+import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 /**
  *
  * @author Mehdi Sarray
@@ -17,9 +19,9 @@ public interface IServiceComment extends IGenericService<Comment>{
      *
      * @param id
      * @return
-     * @throws DataBaseException
+     * @throws ObjectNotFoundException
      */
-    public Comment findByID(Integer id)throws DataBaseException;
-    public Company getJobPoster(Comment entity) ;
-    
+    public Comment findByID(Integer id)throws ObjectNotFoundException;
+    public Company getJobPoster(Comment entity) throws ObjectNotFoundException;
+    public List<Comment> findCommentByName(String name) throws ObjectNotFoundException;
 }

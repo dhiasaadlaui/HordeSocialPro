@@ -14,6 +14,7 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.INotificationDao;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.Job;
 import tn.esprit.entities.Notification;
 import tn.esprit.entities.User;
 
@@ -25,7 +26,31 @@ public class NotificationDaoImpl  extends GenericDaoImpl implements INotificatio
 
     @Override
     public List<Notification> findAll() throws DataBaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     List<Notification> list = new ArrayList<>();
+        selectQuery = queriesFactory.newSelectQuery();
+        selectQuery
+                .select(queriesFactory.newAllField())
+                .from("Notification");
+        try {
+
+            resultSet = cnx.getResult(selectQuery.getQueryString());
+            while (resultSet.next()) {
+                list.add(new Notification.Builder().id(resultSet.getInt("id"))
+                        .is_read(resultSet.getInt("is_read"))
+                        .date(resultSet.getTimestamp("date_notif").toLocalDateTime())
+                        .job(new Job.Builder().id(resultSet.getInt("job")).build())
+                        .company(new Company.Builder().recruiter(
+                                new User.Builder().id(resultSet.getInt("recruiter")).build())
+                                .build()).build()) ;
+                        
+
+            }
+
+        } catch (SQLException ex) {
+            throw new DataBaseException(ex.getMessage());
+        }
+
+        return list;
     }
 
     @Override
@@ -78,21 +103,29 @@ public class NotificationDaoImpl  extends GenericDaoImpl implements INotificatio
 
     @Override
     public Integer delete(Notification entity) throws DataBaseException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void craftNotification(Company entity,Comment comEntity) {
-       Notification notif = new Notification.Builder().company(entity).is_read(0).job(comEntity.getJob()).build() ;
+          Integer rowDeleted = 1;
+        deleteQuery = queriesFactory.newDeleteQuery();
+        deleteQuery.from("Notification")
+                .where()
+                .where(queriesFactory.newStdField("id"), ":id");
         try {
-            create(notif) ;
-        } catch (DataBaseException ex) {
-            Logger.getLogger(NotificationDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            preparedStatement = cnx.prepareStatement(deleteQuery.getQueryString());
+            preparedStatement.setInt(deleteQuery.getPlaceholderIndex(":id"), entity.getId());
+            rowDeleted = preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new DataBaseException(ex.getMessage());
         }
+        return rowDeleted;
     }
 
     @Override
-    public List<Notification> getNotificationByUser(Company entity) {
+    public void craftNotification(Company entity,Comment comEntity) throws DataBaseException {
+       Notification notif = new Notification.Builder().company(entity).is_read(0).job(comEntity.getJob()).build() ;
+       create(notif) ;
+    }
+
+    @Override
+    public List<Notification> getNotificationByUser(Company entity) throws DataBaseException{
         
         List<Notification> notif = new ArrayList<>();
         
@@ -113,8 +146,8 @@ public class NotificationDaoImpl  extends GenericDaoImpl implements INotificatio
                         .build();
                 notif.add(nf);
             }
-        } catch (SQLException ex) {
-             System.out.println(ex.getStackTrace());
+        }  catch (SQLException ex) {
+            throw new DataBaseException(ex.getMessage());
         }
         
         

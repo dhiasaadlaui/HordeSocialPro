@@ -6,11 +6,20 @@
 package tn.esprit.services.implementation;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.CommentDaoImpl;
+import tn.esprit.dao.implementation.CompanyDaoImpl;
+import tn.esprit.dao.implementation.JobDaoImpl;
 import tn.esprit.dao.interfaces.ICommentDao;
+import tn.esprit.dao.interfaces.ICompanyDao;
+import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.User;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceComment;
 
 /**
@@ -20,12 +29,16 @@ import tn.esprit.services.interfaces.IServiceComment;
 public class ServiceCommentImpl implements IServiceComment {
 
     ICommentDao icomment;
+    IJobDao ijob ;
+    ICompanyDao icompany;
 
     /**
      *
      */
     public ServiceCommentImpl() {
         icomment = new CommentDaoImpl();
+        ijob = new JobDaoImpl() ;
+        icompany = new CompanyDaoImpl();
     }
 
     @Override
@@ -55,12 +68,32 @@ public class ServiceCommentImpl implements IServiceComment {
      * @throws DataBaseException
      */
     @Override
-    public Comment findByID(Integer id) throws DataBaseException {
-        return icomment.findByID(id);
+    public Comment findByID(Integer id) throws ObjectNotFoundException {
+          try {
+            return icomment.findByID(id);
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+        
     }
     
     @Override
-    public Company getJobPoster(Comment entity) {
-        return icomment.getJobPoster(entity) ;
+    public Company getJobPoster(Comment entity)  throws ObjectNotFoundException{
+        try {
+        return  icompany.findByRecruter(new User.Builder().id(ijob.findByID(entity.getJob().getId()).getCompany().getRecruiter().getId() ).build())   ;
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
     }
+
+    @Override
+    public List<Comment> findCommentByName(String name) throws ObjectNotFoundException {
+         try {
+    return findAll().stream().filter(e -> e.getUser().getUserName().equalsIgnoreCase(name)).collect(Collectors.toList()) ;
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+        
+    }
+    
 }
