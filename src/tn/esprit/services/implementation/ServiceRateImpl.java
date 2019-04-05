@@ -10,7 +10,10 @@ import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.RateDaoImpl;
 import tn.esprit.dao.interfaces.IRateDao;
+import tn.esprit.entities.Job;
 import tn.esprit.entities.Rate;
+import tn.esprit.entities.User;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceRate;
 
 /**
@@ -47,5 +50,28 @@ public class ServiceRateImpl implements IServiceRate{
     public Integer delete(Rate entity) throws DataBaseException {
        return iservicerate.delete(entity);
     }
+
+    @Override
+    public List<Rate> findByJob(Job job) throws ObjectNotFoundException {
+         try {
+             
+            return iservicerate.findByJob(job);
+            
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public List<Rate> findByCandidate(User candidate) throws ObjectNotFoundException {
+          try {
+              
+          return iservicerate.findByCandidate(candidate);
+          
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+    }
+    
     
 }
