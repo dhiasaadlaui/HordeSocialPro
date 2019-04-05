@@ -72,31 +72,37 @@ public class TestDhia {
         
         
         
-//        try {
-//            System.out.println(userDao.findAll());
-//            System.out.println(categoryDao.findAll());
-//     
-//         
-//
-//        } catch (DataBaseException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-        
         try {
-            
-            serviceReclamation.claim(
-                    new Reclamation.Builder()
-                            .type(ReclamationType.SCAM)
-                            .job(jobDao.findByID(2))
-                    .build()
-                    , userDao.findByID(2));
+            System.out.println(userDao.findAll());
+            System.out.println(categoryDao.findAll());
+            System.out.println(companyDao.findAll());
+            System.out.println(jobDao.findAll());
+            System.out.println(applyDao.findAll());
+            System.out.println(commentDao.findAll());
+            System.out.println(reclamationdao.findAll());
+            System.out.println(abonnementDao.findAll());
+            System.out.println(rateDao.findAll());
+            System.out.println(notificationDao.findAll());
             
         } catch (DataBaseException ex) {
-               System.out.println(ex.getMessage());
-        } catch (ConstraintViolationException ex) {
             System.out.println(ex.getMessage());
         }
-        
+//        
+//        try {
+//            
+//            serviceReclamation.claim(
+//                    new Reclamation.Builder()
+//                            .type(ReclamationType.SCAM)
+//                            .job(jobDao.findByID(2))
+//                    .build()
+//                    , userDao.findByID(2));
+//            
+//        } catch (DataBaseException ex) {
+//               System.out.println(ex.getMessage());
+//        } catch (ConstraintViolationException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//        
 
     }
 }

@@ -28,6 +28,11 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
     private final ICompanyDao companyDao;
     private final ICategoryDao categoryDao;
 
+    public JobDaoImpl() {
+        companyDao = new CompanyDaoImpl();
+        categoryDao = new CategoryDaoImpl();
+    }
+
     /**
      *
      * @param id
@@ -40,7 +45,7 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         Job job = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("job")
+                .from(Job.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
 
@@ -51,10 +56,10 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
             while (resultSet.next()) {
                 job = new Job.Builder()
                         .id(resultSet.getInt("id"))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .title(resultSet.getString("title"))
                         .description(resultSet.getString("description"))
-                        .category(categoryDao.findByID(resultSet.getInt("category")))
+                        .category(categoryDao.findByID(resultSet.getInt(Category.class.getSimpleName().toLowerCase())))
                         .location(resultSet.getString("location"))
                         .creationDate(resultSet.getDate("creationdate"))
                         .expireDate(resultSet.getDate("expiredate"))
@@ -74,14 +79,6 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
 
     /**
      *
-     */
-    public JobDaoImpl() {
-        companyDao = new CompanyDaoImpl();
-        categoryDao = new CategoryDaoImpl();
-    }
-
-    /**
-     *
      * @param company
      * @return
      * @throws DataBaseException
@@ -95,7 +92,7 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
                 .select(queriesFactory.newAllField())
                 .from("job")
                 .where()
-                .where(queriesFactory.newStdField("company"), ":idcompany");
+                .where(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":idcompany");
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":idcompany"), company.getRecruiter().getId());
@@ -103,10 +100,10 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
             while (resultSet.next()) {
                 list.add(new Job.Builder()
                         .id(resultSet.getInt("id"))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .title(resultSet.getString("title"))
                         .description(resultSet.getString("description"))
-                        .category(categoryDao.findByID(resultSet.getInt("category")))
+                        .category(categoryDao.findByID(resultSet.getInt(Category.class.getSimpleName().toLowerCase())))
                         .location(resultSet.getString("location"))
                         .creationDate(resultSet.getDate("creationdate"))
                         .expireDate(resultSet.getDate("expiredate"))
@@ -137,9 +134,9 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("job")
+                .from(Job.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("category"), ":idcategory");
+                .where(queriesFactory.newStdField(Category.class.getSimpleName().toLowerCase()), ":idcategory");
 
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
@@ -148,10 +145,10 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
             while (resultSet.next()) {
                 list.add(new Job.Builder()
                         .id(resultSet.getInt("id"))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .title(resultSet.getString("title"))
                         .description(resultSet.getString("description"))
-                        .category(categoryDao.findByID(resultSet.getInt("category")))
+                        .category(categoryDao.findByID(resultSet.getInt(Category.class.getSimpleName().toLowerCase())))
                         .location(resultSet.getString("location"))
                         .creationDate(resultSet.getDate("creationdate"))
                         .expireDate(resultSet.getDate("expiredate"))
@@ -175,16 +172,16 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("job");
+                .from(Job.class.getSimpleName().toLowerCase());
         try {
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
                 list.add(new Job.Builder()
                         .id(resultSet.getInt("id"))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .title(resultSet.getString("title"))
                         .description(resultSet.getString("description"))
-                        .category(categoryDao.findByID(resultSet.getInt("category")))
+                        .category(categoryDao.findByID(resultSet.getInt(Category.class.getSimpleName().toLowerCase())))
                         .location(resultSet.getString("location"))
                         .creationDate(resultSet.getDate("creationdate"))
                         .expireDate(resultSet.getDate("expiredate"))
@@ -206,16 +203,16 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
     public Integer create(Job entity) throws DataBaseException {
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
-        insertQuery.set(queriesFactory.newStdField("company"), ":company")
+        insertQuery.set(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":company")
                 .set(queriesFactory.newStdField("title"), ":title")
                 .set(queriesFactory.newStdField("description"), ":description")
-                .set(queriesFactory.newStdField("category"), ":category")
+                .set(queriesFactory.newStdField(Category.class.getSimpleName().toLowerCase()), ":category")
                 .set(queriesFactory.newStdField("location"), ":location")
                 .set(queriesFactory.newStdField("creationDate"), ":creationDate")
                 .set(queriesFactory.newStdField("expireDate"), ":expireDate")
                 .set(queriesFactory.newStdField("salary"), ":salary")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable("job");
+                .inTable(Job.class.getSimpleName().toLowerCase());
         try {
             preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setInt(insertQuery.getPlaceholderIndex(":company"), entity.getCompany().getRecruiter().getId());
@@ -244,16 +241,16 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
     public Integer edit(Job entity) throws DataBaseException {
         Integer rowUpdated = 0;
         updateQuery = queriesFactory.newUpdateQuery();
-        updateQuery.set(queriesFactory.newStdField("company"), ":company")
+        updateQuery.set(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":company")
                 .set(queriesFactory.newStdField("title"), ":title")
                 .set(queriesFactory.newStdField("description"), ":description")
-                .set(queriesFactory.newStdField("category"), ":category")
+                .set(queriesFactory.newStdField(Category.class.getSimpleName().toLowerCase()), ":category")
                 .set(queriesFactory.newStdField("location"), ":location")
                 .set(queriesFactory.newStdField("creationDate"), ":creationDate")
                 .set(queriesFactory.newStdField("expireDate"), ":expireDate")
                 .set(queriesFactory.newStdField("salary"), ":salary")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable("job")
+                .inTable(Job.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -284,7 +281,7 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
     public Integer delete(Job entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("job")
+        deleteQuery.from(Job.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -298,4 +295,4 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         return rowDeleted;
     }
 
-        }
+}

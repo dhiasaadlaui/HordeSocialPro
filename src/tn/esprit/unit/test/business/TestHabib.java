@@ -41,65 +41,65 @@ public class TestHabib {
     
     public static void main(String[] args) {
      
-                               IServiceJob sj = new SerivceJobImpl();
-                               
-                               IServiceUser usrService =  new ServiceUserImpl();
-                               
-                 try {
-                     User recr = usrService.findByID(2);
-                                                   ICompanyDao cdao = new CompanyDaoImpl();
-                              Company cc = cdao.findByRecruter(recr);
-                              
-                 } catch (ObjectNotFoundException ex) {
-                     Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
-                 }
-                               
-                               
-
-                    
-                     User user1 = new User.Builder()
-                             .id(2)
-                             .firstName("habibbbbbbbbb")
-                             .lastName("aliii")
-                             .userName("habibaliiii")
-                             .accountStatus(UserAccountStatus.ACTIVATED)
-                             .adress("ddkkkkkkd")
-                             .email("ssskkkks")
-                             .password("akka")
-                             .photo("img.kkilmg")
-                             .build();
-                     Company company = 
-                     
-                     
-                     Category category = new Category.Builder()
-                             .id(2)
-                             .label("just a gat")
-                             .description("ddd")
-                             .moderator(user1)
-                             .build();
-                     
-                     Date vcreationDate = new Date ();
-              
-           
-                     Job job = new Job.Builder()
-                             .category(category)
-                             .company(company)
-                             .creationDate(vcreationDate)
-                             .description("god")
-                             .expireDate(new Date())
-                             .location("fedar")
-                             .salary(100.0)
-                             .title("devv")
-                             .status(JobStatus.PENDING)
-                             .build();
-                     
-                     
-                 try {
-                     sj.postJob(job, user);
-                 } catch (ConstraintViolationException ex) {
-                     System.out.println(ex.getMessage());
-                 }
-               
+//                               IServiceJob sj = new SerivceJobImpl();
+//                               
+//                               IServiceUser usrService =  new ServiceUserImpl();
+//                               
+//                 try {
+//                     User recr = usrService.findByID(2);
+//                                                   ICompanyDao cdao = new CompanyDaoImpl();
+//                              Company cc = cdao.findByRecruter(recr);
+//                              
+//                 } catch (ObjectNotFoundException ex) {
+//                     Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
+//                 }
+//                               
+//                               
+//
+//                    
+//                     User user1 = new User.Builder()
+//                             .id(2)
+//                             .firstName("habibbbbbbbbb")
+//                             .lastName("aliii")
+//                             .userName("habibaliiii")
+//                             .accountStatus(UserAccountStatus.ACTIVATED)
+//                             .adress("ddkkkkkkd")
+//                             .email("ssskkkks")
+//                             .password("akka")
+//                             .photo("img.kkilmg")
+//                             .build();
+//                     
+//                     
+//                     
+//                     Category category = new Category.Builder()
+//                             .id(2)
+//                             .label("just a gat")
+//                             .description("ddd")
+//                             .moderator(user1)
+//                             .build();
+//                     
+//                     Date vcreationDate = new Date ();
+//              
+//           
+//                     Job job = new Job.Builder()
+//                             .category(category)
+//                             .company(company)
+//                             .creationDate(vcreationDate)
+//                             .description("god")
+//                             .expireDate(new Date())
+//                             .location("fedar")
+//                             .salary(100.0)
+//                             .title("devv")
+//                             .status(JobStatus.PENDING)
+//                             .build();
+//                     
+//                     
+//                 try {
+//                     sj.postJob(job, user);
+//                 } catch (ConstraintViolationException ex) {
+//                     System.out.println(ex.getMessage());
+//                 }
+//               
              
                  
        

@@ -6,19 +6,15 @@
 package tn.esprit.dao.implementation;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.ICommentDao;
+import tn.esprit.dao.interfaces.IJobDao;
+import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.Comment;
-import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.User;
-import tn.esprit.querybuilder.interfaces.SelectQuery.JoinType;
 
 /**
  *
@@ -26,8 +22,13 @@ import tn.esprit.querybuilder.interfaces.SelectQuery.JoinType;
  */
 public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao {
 
-    private Job job;
-    private User user;
+    IUserDao userDao;
+    IJobDao jobDao;
+
+    public CommentDaoImpl() {
+        userDao = new UserDaoImpl();
+        jobDao = new JobDaoImpl();
+    }
 
     @Override
     public List<Comment> findAll() throws DataBaseException {
@@ -39,14 +40,10 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
         try {
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
-                job = new Job.Builder().build();
-                user = new User.Builder().build();
-                user.setId(resultSet.getInt("user"));
-                job.setId(resultSet.getInt("job"));
                 list.add(new Comment.Builder()
                         .id(resultSet.getInt("id"))
-                        .user(user)
-                        .job(job)
+                        .user(userDao.findByID(resultSet.getInt(User.class.getSimpleName().toLowerCase())))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .content(resultSet.getString("content"))
                         .date(resultSet.getTimestamp("datecom").toLocalDateTime())
                         .build());
@@ -62,11 +59,11 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
 
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
-        insertQuery.set(queriesFactory.newStdField("user"), ":user")
-                .set(queriesFactory.newStdField("job"), ":job")
+        insertQuery.set(queriesFactory.newStdField(User.class.getSimpleName().toLowerCase()), ":user")
+                .set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("content"), ":content")
                 .set(queriesFactory.newStdField("datecom"), ":datecom")
-                .inTable("Comment");
+                .inTable(Comment.class.getSimpleName().toLowerCase());
         try {
             preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setInt(insertQuery.getPlaceholderIndex(":user"), entity.getUser().getId());
@@ -89,11 +86,11 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
     public Integer edit(Comment entity) throws DataBaseException {
         Integer rowUpdated = 0;
         updateQuery = queriesFactory.newUpdateQuery();
-        updateQuery.set(queriesFactory.newStdField("user"), ":user")
-                .set(queriesFactory.newStdField("job"), ":job")
+        updateQuery.set(queriesFactory.newStdField(User.class.getSimpleName().toLowerCase()), ":user")
+                .set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("content"), ":content")
                 .set(queriesFactory.newStdField("datecom"), ":datecom")
-                .inTable("comment")
+                .inTable(Comment.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -114,7 +111,7 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
     public Integer delete(Comment entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("Comment")
+        deleteQuery.from(Comment.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -138,7 +135,7 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
         Comment comment = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("Comment")
+                .from(Comment.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -148,8 +145,8 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
             while (resultSet.next()) {
                 comment = new Comment.Builder()
                         .id(resultSet.getInt("id"))
-                        .user(new User.Builder().id(resultSet.getInt("user")).build())
-                        .job(new Job.Builder().id(resultSet.getInt("job")).build())
+                        .user(userDao.findByID(resultSet.getInt(User.class.getSimpleName().toLowerCase())))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .content(resultSet.getString("content"))
                         .date(resultSet.getTimestamp("datecom").toLocalDateTime())
                         .build();
@@ -160,7 +157,4 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
         return comment;
     }
 
-
 }
-    
-
