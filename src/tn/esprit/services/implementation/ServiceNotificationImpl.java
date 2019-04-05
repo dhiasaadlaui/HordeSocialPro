@@ -12,6 +12,8 @@ import tn.esprit.dao.interfaces.INotificationDao;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Notification;
+import tn.esprit.services.exceptions.ConstraintViolationException;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceNotification;
 
 /**
@@ -46,13 +48,22 @@ public class ServiceNotificationImpl implements IServiceNotification{
     }
 
     @Override
-    public void craftNotification(Company entity, Comment comEntity) {
-         in.craftNotification(entity, comEntity);
+    public void craftNotification(Company entity, Comment comEntity) throws ConstraintViolationException {
+          try {
+             in.craftNotification(entity, comEntity);
+        } catch (DataBaseException ex) {
+            throw new ConstraintViolationException(ex.getMessage());
+        }
     }
 
     @Override
-    public List<Notification> getNotificationByUser(Company entity) {
-        return in.getNotificationByUser(entity) ;
+    public List<Notification> getNotificationByUser(Company entity)  throws ObjectNotFoundException{
+       try {
+            return in.getNotificationByUser(entity) ;
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+        
     }
   
         

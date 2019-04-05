@@ -6,6 +6,7 @@
 package tn.esprit.dao.interfaces;
 
 import java.util.List;
+import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Notification;
@@ -16,6 +17,6 @@ import tn.esprit.entities.Notification;
  */
 public interface INotificationDao extends IGenericDao<Notification> {
     
-    public void craftNotification(Company entity,Comment comEntity) ; 
-    public List<Notification> getNotificationByUser(Company entity) ; // for my thread
+    public void craftNotification(Company entity,Comment comEntity) throws DataBaseException; 
+    public List<Notification> getNotificationByUser(Company entity) throws DataBaseException ; // for my thread
 }

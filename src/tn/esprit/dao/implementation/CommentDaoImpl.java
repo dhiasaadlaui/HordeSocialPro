@@ -160,48 +160,7 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
         return comment;
     }
 
-    @Override
-    public Company getJobPoster(Comment entity) {
-        
-        Company cmp = new Company.Builder().build() ;
-        try {
-            selectQuery = queriesFactory.newSelectQuery();
-            
-            selectQuery.select(
-                    queriesFactory.newQualifiedField("company", "recruiter"),
-                    queriesFactory.newQualifiedField("company", "name"),
-                    queriesFactory.newQualifiedField("company", "description"),
-                    queriesFactory.newQualifiedField("company", "adress"),
-                    queriesFactory.newQualifiedField("company", "domain"),
-                    queriesFactory.newQualifiedField("company", "image"),
-                    queriesFactory.newQualifiedField("company", "phone")
-            )
-                    .from("company")
-                    .join("job", queriesFactory.newQualifiedField("job", "company"), queriesFactory.newQualifiedField("company", "recruiter"), JoinType.INNER)
-                    .where()
-                    .where(queriesFactory.newStdField("recruiter"), ":recruiter");
-            System.out.println(selectQuery.getQueryString());
-            
-            preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
-            preparedStatement.setInt(selectQuery.getPlaceholderIndex(":recruiter"), entity.getJob().getId());
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                 cmp = new Company.Builder()
-                        .recruiter(new User.Builder().id(resultSet.getInt("recruiter")).build())
-                        .name(resultSet.getString("name"))
-                        .description(resultSet.getString("description"))
-                        .adress(resultSet.getString("adress"))
-                        .domain(resultSet.getString("domain"))
-                        .image(resultSet.getString("image"))
-                        .phone(resultSet.getString("phone"))
-                        .build();
-                
-                
-                return new Company.Builder().recruiter(new User.Builder().id(2).build()).build() ;
-            }   } catch (SQLException ex) {
-            Logger.getLogger(CommentDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return cmp ;
+
 }
     
-}
+
