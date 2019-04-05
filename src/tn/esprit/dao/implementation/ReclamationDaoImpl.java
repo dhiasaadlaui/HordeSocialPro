@@ -124,7 +124,7 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
                 .set(queriesFactory.newStdField("status"), ":status")
                 .inTable("reclamation");
         try {
-            preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
+            preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setObject(insertQuery.getPlaceholderIndex(":claimer"), entity.getClaimer() != null ? entity.getClaimer().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":type"), entity.getType());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":details"), entity.getDetails());
@@ -134,8 +134,11 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":feedback"), entity.getFeedback());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":status"), entity.getStatus());
 
-            rowsCreated = preparedStatement.executeUpdate();
-
+             rowsCreated = preparedStatement.executeUpdate();
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                entity.setId(resultSet.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }

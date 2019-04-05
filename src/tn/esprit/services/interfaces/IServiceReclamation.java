@@ -34,9 +34,11 @@ public interface IServiceReclamation extends IGenericService<Reclamation>{
      List <Reclamation> findByStatus (ReclamationStatus status) throws ObjectNotFoundException;
      
      List<Reclamation> findByType ( ReclamationType type) throws ObjectNotFoundException ;
+     
+     Reclamation findById ( int id ) throws ObjectNotFoundException ;
  
      void openReclamation ( Reclamation reclamation) throws ObjectNotFoundException ;
      
-     
+     // ca manque le service d'envoi de mail en cas d'une desactivation de statut ou bien de ban d'un compte .
      
 }
