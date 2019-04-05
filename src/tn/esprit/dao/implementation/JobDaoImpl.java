@@ -298,4 +298,4 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
         return rowDeleted;
     }
 
-}
+        }
