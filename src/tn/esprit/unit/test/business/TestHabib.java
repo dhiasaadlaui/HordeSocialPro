@@ -11,15 +11,20 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.dao.implementation.CompanyDaoImpl;
+import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.entities.Category;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.JobStatus;
 import tn.esprit.entities.User;
 import tn.esprit.entities.UserAccountStatus;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.interfaces.IServiceUser;
 
 /**
  *
@@ -38,19 +43,20 @@ public class TestHabib {
      
                                IServiceJob sj = new SerivceJobImpl();
                                
-                 
+                               IServiceUser usrService =  new ServiceUserImpl();
+                               
+                 try {
+                     User recr = usrService.findByID(2);
+                                                   ICompanyDao cdao = new CompanyDaoImpl();
+                              Company cc = cdao.findByRecruter(recr);
                               
-                     User user = new User.Builder()
-                             .id(1)
-                             .firstName("habib")
-                             .lastName("ali")
-                             .userName("habibali")
-                             .accountStatus(UserAccountStatus.ACTIVATED)
-                             .adress("ddd")
-                             .email("ssss")
-                             .password("aa")
-                             .photo("img.ilmg")
-                             .build();
+                 } catch (ObjectNotFoundException ex) {
+                     Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
+                 }
+                               
+                               
+
+                    
                      User user1 = new User.Builder()
                              .id(2)
                              .firstName("habibbbbbbbbb")
@@ -62,16 +68,7 @@ public class TestHabib {
                              .password("akka")
                              .photo("img.kkilmg")
                              .build();
-                     Company company = new Company.Builder()
-                             
-                             .name("vermeg")
-                             .adress("lac1")
-                             .description("good")
-                             .domain("dev")
-                             .image("img.png")
-                             .phone("225")
-                             .recruiter(user1)
-                             .build();
+                     Company company = 
                      
                      
                      Category category = new Category.Builder()
@@ -83,17 +80,24 @@ public class TestHabib {
                      
                      Date vcreationDate = new Date ();
               
-                    
+           
+                     Job job = new Job.Builder()
+                             .category(category)
+                             .company(company)
+                             .creationDate(vcreationDate)
+                             .description("god")
+                             .expireDate(new Date())
+                             .location("fedar")
+                             .salary(100.0)
+                             .title("devv")
+                             .status(JobStatus.PENDING)
+                             .build();
+                     
+                     
                  try {
-                     Job job = sj.findByID(8);
-                    
-                       System.out.println(job);
-                 sj.jobDisable(job);
-                     System.out.println(job);
-                     sj.jobActivation(job);
-                     System.out.println(job);
-                 } catch (ObjectNotFoundException ex) {
-                     Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
+                     sj.postJob(job, user);
+                 } catch (ConstraintViolationException ex) {
+                     System.out.println(ex.getMessage());
                  }
                
              

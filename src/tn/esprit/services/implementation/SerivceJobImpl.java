@@ -5,12 +5,9 @@
  */
 package tn.esprit.services.implementation;
 
-import com.sun.org.apache.xml.internal.security.keys.ContentHandlerAlreadyRegisteredException;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.CompanyDaoImpl;
@@ -20,7 +17,6 @@ import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.JobStatus;
 import tn.esprit.entities.User;
-import tn.esprit.entities.UserAccountStatus;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceJob;
