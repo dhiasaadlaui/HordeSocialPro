@@ -43,6 +43,9 @@ public class ServiceReclamationImpl implements IServiceReclamation {
     IServiceUser userImpl;
     IServiceComment commentImpl;
 
+    /**
+     *
+     */
     public ServiceReclamationImpl() {
         reclamationDao = new ReclamationDaoImpl();
         jobDao = new JobDaoImpl();
@@ -51,6 +54,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         commentDao = new CommentDaoImpl();
     }
 
+    /**
+     *
+     * @param reclamation
+     * @param loggedUser
+     * @throws ConstraintViolationException
+     */
     @Override
     public void claim(Reclamation reclamation, User loggedUser) throws ConstraintViolationException {
         if (reclamation.getType() == null) {
@@ -83,11 +92,22 @@ public class ServiceReclamationImpl implements IServiceReclamation {
 
     }
 
+    /**
+     *
+     * @param claimerUser
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Reclamation> findByClaimer(User claimerUser) throws ObjectNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param reclamtion
+     * @throws ConstraintViolationException
+     */
     @Override
     public void cancel(Reclamation reclamtion) throws ConstraintViolationException {
 
@@ -104,6 +124,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
 
     }
 
+    /**
+     *
+     * @param reclamation
+     * @param action
+     * @throws ConstraintViolationException
+     */
     @Override
     public void handleModerator(Reclamation reclamation, HandleReclamationModerator action) throws ConstraintViolationException {
         
@@ -154,6 +180,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         }
     }
 
+    /**
+     *
+     * @param reclamation
+     * @param action
+     * @throws ConstraintViolationException
+     */
     @Override
     public void handleAdmin(Reclamation reclamation, HandleReclamationAdmin action) throws ConstraintViolationException {
         switch (action) {
@@ -183,6 +215,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public Reclamation findById(int id) throws ObjectNotFoundException {
         try {
@@ -193,6 +231,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
 
     }
 
+    /**
+     *
+     * @param status
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
 
     public List<Reclamation> findByStatus(ReclamationStatus status) throws ObjectNotFoundException {
@@ -209,6 +253,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
 
     }
 
+    /**
+     *
+     * @param type
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Reclamation> findByType(ReclamationType type) throws ObjectNotFoundException {
         try {
@@ -218,6 +268,11 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         }
     }
 
+    /**
+     *
+     * @param reclamation
+     * @throws ObjectNotFoundException
+     */
     @Override
     public void openReclamation(Reclamation reclamation) throws ObjectNotFoundException {
 

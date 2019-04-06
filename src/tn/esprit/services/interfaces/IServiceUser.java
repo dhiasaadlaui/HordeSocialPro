@@ -60,10 +60,14 @@ public interface IServiceUser extends IGenericService<User>{
      * @param user
      * @param code
      * @throws ConstraintViolationException
-     */
+     */   
+    
     void accountActivation(User user,String code) throws ConstraintViolationException;
     
-    
-   User getLoggedInUsers() ;
+    /**
+     *
+     * @return
+     */
+    User getLoggedInUsers();
 
 }

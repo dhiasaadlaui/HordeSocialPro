@@ -45,51 +45,185 @@ import tn.esprit.services.util.ServiceInputValidator;
  */
 public class SignupGUI extends HBox {
 
+    /**
+     *
+     */
     public static VBox LEFT_PANE;
+
+    /**
+     *
+     */
     public static VBox RIGHT_PANE;
 
+    /**
+     *
+     */
     public static Label USERNAME_LABEL;
+
+    /**
+     *
+     */
     public static Label FIRST_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label LAST_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label EMAIL_LABEL;
+
+    /**
+     *
+     */
     public static Label ADRESS_LABEL;
+
+    /**
+     *
+     */
     public static Label PASSWORD_LABEL;
+
+    /**
+     *
+     */
     public static Label PASSWORD_CONFIRM_LABEL;
+
+    /**
+     *
+     */
     public static Label SEXE_LABEL;
 
+    /**
+     *
+     */
     public static TextField USERNAME_TXT;
+
+    /**
+     *
+     */
     public static TextField FIRST_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField LAST_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField EMAIL_TXT;
+
+    /**
+     *
+     */
     public static TextField ADRESS_TXT;
+
+    /**
+     *
+     */
     public static PasswordField PASSWORD_TXT;
+
+    /**
+     *
+     */
     public static PasswordField PASSWORD_CONFIRM_TXT;
 
+    /**
+     *
+     */
     public static TextField COMPANY_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_DESCRIPTION_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_ADRESS_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_DOMAIN_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_IMAGE_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_PHONE_TXT;
 
+    /**
+     *
+     */
     public static Label COMPANY_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_DESCRIPTION_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_ADRESS_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_DOMAIN_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_IMAGE_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_PHONE_LABEL;
 
+    /**
+     *
+     */
     public static Button BTN_BACK;
+
+    /**
+     *
+     */
     public static Button BTN_SUBMIT;
+
+    /**
+     *
+     */
     public static Button BTN_PHOTO_CHOSE;
+
+    /**
+     *
+     */
     public static Button BTN_PHOTO_CHOSE_COMPANY;
 
     private Tile PHOTO;
     private Tile PHOTO_COMPANY;
     private Tile COUNTRY_TILE;
+
+    /**
+     *
+     */
     public static File filePhotoProfil;
     private IServiceUser serviceUser;
 
+    /**
+     *
+     * @param useRole
+     */
     public SignupGUI(UserRole useRole) {
 
         getStylesheets().add("/resources/css/theme.css");

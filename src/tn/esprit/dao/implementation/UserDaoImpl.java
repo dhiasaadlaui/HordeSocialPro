@@ -31,7 +31,7 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
         User user = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("user")
+                .from(User.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
 
@@ -123,7 +123,7 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
                 .set(queriesFactory.newStdField("accountstatus"), ":accountstatus")
                 .set(queriesFactory.newStdField("activationcode"), ":activationcode")
                 .set(queriesFactory.newStdField("photo"), ":photo")
-                .inTable("user");
+                .inTable(User.class.getSimpleName().toLowerCase());
         try {
             preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":firstname"), entity.getFirstName());
@@ -168,7 +168,7 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
                 .set(queriesFactory.newStdField("photo"), ":photo")
                 .set(queriesFactory.newStdField("accountstatus"), ":accountstatus")
                 .set(queriesFactory.newStdField("activationcode"), ":activationcode")
-                .inTable("user")
+                .inTable(User.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -201,7 +201,7 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
     public Integer delete(User entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("user")
+        deleteQuery.from(User.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {

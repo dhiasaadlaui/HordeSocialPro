@@ -12,7 +12,6 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.dao.interfaces.IRateDao;
 import tn.esprit.dao.interfaces.IUserDao;
-import tn.esprit.entities.Abonnement;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.Rate;
 import tn.esprit.entities.User;
@@ -46,9 +45,9 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("rate")
+                .from(Rate.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job");
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job");
 
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
@@ -57,7 +56,7 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
             while (resultSet.next()) {
                 list.add(new Rate.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .note(resultSet.getDouble("note"))
                         .feedback(resultSet.getString("feedback"))
                         .build());
@@ -84,7 +83,7 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("rate")
+                .from(Rate.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
 
@@ -95,7 +94,7 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
             while (resultSet.next()) {
                 list.add(new Rate.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .note(resultSet.getDouble("note"))
                         .feedback(resultSet.getString("feedback"))
                         .build());
@@ -142,10 +141,10 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
         insertQuery.set(queriesFactory.newStdField("candidate"), ":candidate")
-                .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("note"), ":note")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
-                .inTable("rate");
+                .inTable(Rate.class.getSimpleName().toLowerCase());
 
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
@@ -170,10 +169,10 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
         updateQuery
                 .set(queriesFactory.newStdField("note"), ":note")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
-                .inTable("rate")
+                .inTable(Rate.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate")
-                .where(queriesFactory.newStdField("job"), ":job");
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
             preparedStatement.setObject(updateQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);
@@ -194,10 +193,10 @@ public class RateDaoImpl extends GenericDaoImpl implements IRateDao {
 
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("rate")
+        deleteQuery.from(Rate.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate")
-                .where(queriesFactory.newStdField("job"), ":job");
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job");
         try {
             preparedStatement = cnx.prepareStatement(deleteQuery.getQueryString());
             preparedStatement.setObject(deleteQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);

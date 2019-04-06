@@ -46,9 +46,9 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("apply")
+                .from(Apply.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job");
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job");
 
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
@@ -56,7 +56,7 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
                         .letter(resultSet.getString("letter"))
                         .build());
@@ -82,7 +82,7 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("apply")
+                .from(Apply.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
 
@@ -92,7 +92,7 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
                         .letter(resultSet.getString("letter"))
                         .build());
@@ -119,7 +119,7 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
                 list.add(new Apply.Builder()
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
                         .letter(resultSet.getString("letter"))
                         .build());
@@ -139,10 +139,10 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
 
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
-        insertQuery.set(queriesFactory.newStdField("job"), ":job")
+        insertQuery.set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("candidate"), ":candidate")
                 .set(queriesFactory.newStdField("letter"), ":letter")
-                .inTable("apply");
+                .inTable(Apply.class.getSimpleName().toLowerCase());
 
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
@@ -165,9 +165,9 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
         updateQuery = queriesFactory.newUpdateQuery();
         updateQuery
                 .set(queriesFactory.newStdField("letter"), ":letter")
-                .inTable("apply")
+                .inTable(Apply.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job")
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
@@ -188,9 +188,9 @@ public final class ApplyDaoImpl extends GenericDaoImpl implements IApplyDao {
 
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("apply")
+        deleteQuery.from(Apply.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("job"), ":job")
+                .where(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
 
         try {

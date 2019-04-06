@@ -3,21 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tn.esprit.services.implementation;
+package tn.esprit.services.interfaces;
+
+
+import tn.esprit.entities.Category;
 
 /**
  *
- * @author mghozzi
+ * @author habib
  */
-public enum HandleReclamationAdmin {
-
-    /**
-     *
-     */
-    BAN ,
-
-    /**
-     *
-     */
-    REJECT 
+public interface IServiceCategory extends IGenericService<Category>{
+   
+    
+    
 }
