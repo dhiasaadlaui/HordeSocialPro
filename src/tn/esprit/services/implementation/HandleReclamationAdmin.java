@@ -10,6 +10,14 @@ package tn.esprit.services.implementation;
  * @author mghozzi
  */
 public enum HandleReclamationAdmin {
+
+    /**
+     *
+     */
     BAN ,
+
+    /**
+     *
+     */
     REJECT 
 }

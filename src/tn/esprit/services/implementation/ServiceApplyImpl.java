@@ -23,12 +23,23 @@ public class ServiceApplyImpl implements IServiceApply{
     
     IApplyDao iapply;
     
+    /**
+     *
+     */
     public ServiceApplyImpl(){
         iapply = new ApplyDaoImpl();
     }
     
-    
-     @Override
+    /**
+     *
+     * @param job
+     * @param category
+     * @param salarymin
+     * @param salarymax
+     * @return
+     * @throws DataBaseException
+     */
+    @Override
     public List<Apply> advancedsearch(String job, String category, double salarymin, double salarymax) throws DataBaseException {
         List<Apply> l = iapply.findAll();
          List<Apply> advancedapply = new ArrayList<>();
@@ -58,11 +69,23 @@ public class ServiceApplyImpl implements IServiceApply{
         return iapply.delete(entity);
     }
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Apply> findByjob(Job job) throws DataBaseException {
        return iapply.findByjob(job);
     }
 
+    /**
+     *
+     * @param candidate
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Apply> findBycandidate(User candidate) throws DataBaseException {
         return iapply.findBycandidate(candidate);

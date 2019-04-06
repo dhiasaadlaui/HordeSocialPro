@@ -65,7 +65,6 @@ public class ServiceCommentImpl implements IServiceComment {
      *
      * @param id
      * @return
-     * @throws DataBaseException
      */
     @Override
     public Comment findByID(Integer id) throws ObjectNotFoundException {
@@ -77,6 +76,12 @@ public class ServiceCommentImpl implements IServiceComment {
         
     }
     
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public Company getJobPoster(Comment entity)  throws ObjectNotFoundException{
         try {
@@ -86,6 +91,12 @@ public class ServiceCommentImpl implements IServiceComment {
         }
     }
 
+    /**
+     *
+     * @param name
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Comment> findCommentByName(String name) throws ObjectNotFoundException {
          try {

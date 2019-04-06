@@ -29,6 +29,9 @@ public class SerivceJobImpl implements IServiceJob{
     
     IJobDao jobDao;
     
+    /**
+     *
+     */
     public SerivceJobImpl (){
     jobDao = new JobDaoImpl();
     
@@ -55,6 +58,12 @@ return jobDao.create(entity);
         return jobDao.delete(entity);
         }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public Job findByID(Integer id) throws ObjectNotFoundException {
         try {
@@ -64,6 +73,12 @@ return jobDao.create(entity);
         }
       }
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Job> findByCompany(Job job) throws ObjectNotFoundException {
  
@@ -77,6 +92,12 @@ return jobDao.create(entity);
         }
     }
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Job> findByLocation(Job job) throws ObjectNotFoundException {
        try {
@@ -89,6 +110,12 @@ return jobDao.create(entity);
         }
     }
 
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Job> findByCategory(Job job) throws ObjectNotFoundException {
        try {
@@ -100,7 +127,13 @@ return jobDao.create(entity);
                     } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
         }
-    }    @Override
+    }
+
+    /**
+     *
+     * @param job
+     */
+    @Override
     public void jobActivation(Job job) {
   
             job.setStatus(JobStatus.CONFIRMED);
@@ -112,6 +145,10 @@ return jobDao.create(entity);
 
     }
 
+    /**
+     *
+     * @param job
+     */
     @Override
     public void jobDisable(Job job) {
   
@@ -127,6 +164,12 @@ return jobDao.create(entity);
 
     }
 
+    /**
+     *
+     * @param job
+     * @param loggedUser
+     * @throws ConstraintViolationException
+     */
     @Override
   
     public void postJob(Job job, User loggedUser) throws ConstraintViolationException {

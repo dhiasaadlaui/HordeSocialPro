@@ -52,6 +52,12 @@ public class ServiceNotification {
 //          };
 //        new Thread(task).start();
 //    }
+
+    /**
+     *
+     * @param cm
+     * @throws Exception
+     */
     
     public void initialize(Company cm) throws Exception {
         listNotif= serv1.getNotificationByUser(cm) ;

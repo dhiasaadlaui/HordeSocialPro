@@ -59,6 +59,9 @@ public final class Notification implements Serializable{
         this.job = job;
     }
     
+    /**
+     *
+     */
     public static class Builder { 
         
     /**
@@ -86,8 +89,10 @@ public final class Notification implements Serializable{
      */
     private Job job;
     
-    
-    public Builder() {
+        /**
+         *
+         */
+        public Builder() {
         }
     
          /**
@@ -100,21 +105,41 @@ public final class Notification implements Serializable{
             return this;
         }
         
+        /**
+         *
+         * @param company
+         * @return
+         */
         public Builder company(Company company) {
             this.company = company;
             return this;
         }
         
+        /**
+         *
+         * @param is_read
+         * @return
+         */
         public Builder is_read(Integer is_read) {
             this.is_read = is_read;
             return this;
         }
         
+        /**
+         *
+         * @param date
+         * @return
+         */
         public Builder date(LocalDateTime date) {
             this.date = date;
             return this;
         }
         
+        /**
+         *
+         * @param job
+         * @return
+         */
         public Builder job(Job job) {
             this.job = job;
             return this;
@@ -134,47 +159,91 @@ public final class Notification implements Serializable{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "notification{" + "id=" + id + ", company=" + company + ", is_read=" + is_read + ", date=" + date + ", job=" + job + '}';
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public Company getCompany() {
         return company;
     }
 
+    /**
+     *
+     * @param company
+     */
     public void setCompany(Company company) {
         this.company = company;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getIs_read() {
         return is_read;
     }
 
+    /**
+     *
+     * @param is_read
+     */
     public void setIs_read(Integer is_read) {
         this.is_read = is_read;
     }
 
+    /**
+     *
+     * @return
+     */
     public LocalDateTime getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
+    /**
+     *
+     * @return
+     */
     public Job getJob() {
         return job;
     }
 
+    /**
+     *
+     * @param job
+     */
     public void setJob(Job job) {
         this.job = job;
     }

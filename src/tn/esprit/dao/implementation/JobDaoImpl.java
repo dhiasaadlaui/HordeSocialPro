@@ -28,6 +28,9 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
     private final ICompanyDao companyDao;
     private final ICategoryDao categoryDao;
 
+    /**
+     *
+     */
     public JobDaoImpl() {
         companyDao = new CompanyDaoImpl();
         categoryDao = new CategoryDaoImpl();

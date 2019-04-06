@@ -24,6 +24,9 @@ public class ServiceRateImpl implements IServiceRate{
 
     IRateDao iservicerate ;
 
+    /**
+     *
+     */
     public ServiceRateImpl() {
         iservicerate = new RateDaoImpl() ;
     }

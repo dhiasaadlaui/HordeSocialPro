@@ -16,8 +16,32 @@ import tn.esprit.entities.User;
  * @author mourad
  */
 public interface IServiceApply extends IGenericService<Apply>{
-     public List<Apply> findByjob(Job job) throws DataBaseException;
-      public List<Apply> findBycandidate(User candidate) throws DataBaseException ;
-      public List<Apply> advancedsearch(String job , String category , double salarymin ,double salarymax) throws DataBaseException;
+
+    /**
+     *
+     * @param job
+     * @return
+     * @throws DataBaseException
+     */
+    public List<Apply> findByjob(Job job) throws DataBaseException;
+
+    /**
+     *
+     * @param candidate
+     * @return
+     * @throws DataBaseException
+     */
+    public List<Apply> findBycandidate(User candidate) throws DataBaseException ;
+
+    /**
+     *
+     * @param job
+     * @param category
+     * @param salarymin
+     * @param salarymax
+     * @return
+     * @throws DataBaseException
+     */
+    public List<Apply> advancedsearch(String job , String category , double salarymin ,double salarymax) throws DataBaseException;
     
 }

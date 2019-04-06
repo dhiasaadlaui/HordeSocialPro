@@ -18,8 +18,16 @@ import tn.esprit.services.util.Randomizer;
  */
 public class WorldMap {
 
+    /**
+     *
+     */
     public Tile worldMap;
 
+    /**
+     *
+     * @param tileWidth
+     * @param tileHeigh
+     */
     public WorldMap(double tileWidth, double tileHeigh) {
 
         for (Country value1 : Country.values()) {

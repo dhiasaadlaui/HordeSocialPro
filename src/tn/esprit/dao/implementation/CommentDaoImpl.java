@@ -25,6 +25,9 @@ public final class CommentDaoImpl extends GenericDaoImpl implements ICommentDao 
     IUserDao userDao;
     IJobDao jobDao;
 
+    /**
+     *
+     */
     public CommentDaoImpl() {
         userDao = new UserDaoImpl();
         jobDao = new JobDaoImpl();

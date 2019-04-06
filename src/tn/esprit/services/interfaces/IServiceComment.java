@@ -22,6 +22,20 @@ public interface IServiceComment extends IGenericService<Comment>{
      * @throws ObjectNotFoundException
      */
     public Comment findByID(Integer id)throws ObjectNotFoundException;
+
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws ObjectNotFoundException
+     */
     public Company getJobPoster(Comment entity) throws ObjectNotFoundException;
+
+    /**
+     *
+     * @param name
+     * @return
+     * @throws ObjectNotFoundException
+     */
     public List<Comment> findCommentByName(String name) throws ObjectNotFoundException;
 }

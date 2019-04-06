@@ -42,8 +42,19 @@ public class LoginGUI extends HBox {
      */
     public static Button BTN_LOGIN;
 
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_CANDIDATE;
+
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_RECRUITER;
+
+    /**
+     *
+     */
     public static Button BTN_EXIT;
 
     /**
@@ -55,13 +66,25 @@ public class LoginGUI extends HBox {
      *
      */
     public static PasswordField TXT_PASSWORD;
+
+    /**
+     *
+     */
     public static Label LABEL_SIGNUP;
 
     /**
      *
      */
     public static LanguageToolBar LANGUAGE_BOX;
+
+    /**
+     *
+     */
     public static TilesInitilizer TILES;
+
+    /**
+     *
+     */
     public static WorldMap map = new WorldMap(800, 600);
 
     /**

@@ -17,6 +17,19 @@ import tn.esprit.entities.Notification;
  */
 public interface INotificationDao extends IGenericDao<Notification> {
     
+    /**
+     *
+     * @param entity
+     * @param comEntity
+     * @throws DataBaseException
+     */
     public void craftNotification(Company entity,Comment comEntity) throws DataBaseException; 
+
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws DataBaseException
+     */
     public List<Notification> getNotificationByUser(Company entity) throws DataBaseException ; // for my thread
 }

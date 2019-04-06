@@ -239,6 +239,10 @@ public class ServiceUserImpl implements IServiceUser {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public User getLoggedInUsers() {
         return loggedIn;  

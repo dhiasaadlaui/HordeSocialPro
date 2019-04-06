@@ -24,6 +24,9 @@ public class ServiceNotificationImpl implements IServiceNotification{
 
     INotificationDao in ;
 
+    /**
+     *
+     */
     public ServiceNotificationImpl() {
        in = new NotificationDaoImpl() ; }
 
@@ -47,6 +50,12 @@ public class ServiceNotificationImpl implements IServiceNotification{
        return in.delete(entity);
     }
 
+    /**
+     *
+     * @param entity
+     * @param comEntity
+     * @throws ConstraintViolationException
+     */
     @Override
     public void craftNotification(Company entity, Comment comEntity) throws ConstraintViolationException {
           try {
@@ -56,6 +65,12 @@ public class ServiceNotificationImpl implements IServiceNotification{
         }
     }
 
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws ObjectNotFoundException
+     */
     @Override
     public List<Notification> getNotificationByUser(Company entity)  throws ObjectNotFoundException{
        try {

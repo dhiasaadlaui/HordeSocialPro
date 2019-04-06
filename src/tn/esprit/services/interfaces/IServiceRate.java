@@ -29,6 +29,7 @@ public interface IServiceRate extends IGenericService<Rate>{
      *
      * @param candidate
      * @return
+     * @throws tn.esprit.services.exceptions.ObjectNotFoundException
      * @throws DataBaseException
      */
     List<Rate> findByCandidate(User candidate) throws ObjectNotFoundException;

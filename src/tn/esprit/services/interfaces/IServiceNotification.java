@@ -19,6 +19,19 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  */
 public interface IServiceNotification extends IGenericService<Notification>{
    
+    /**
+     *
+     * @param entity
+     * @param comEntity
+     * @throws ConstraintViolationException
+     */
     public void craftNotification(Company entity,Comment comEntity) throws ConstraintViolationException; 
+
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws ObjectNotFoundException
+     */
     public List<Notification> getNotificationByUser(Company entity) throws ObjectNotFoundException ; // for my thread
 }

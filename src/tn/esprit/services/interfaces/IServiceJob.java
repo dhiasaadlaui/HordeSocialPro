@@ -18,20 +18,57 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  */
 public interface IServiceJob extends IGenericService<Job>{
        
-    
-    
-       Job findByID(Integer id) throws ObjectNotFoundException;
+    /**
+     *
+     * @param id
+     * @return
+     * @throws ObjectNotFoundException
+     */
+    Job findByID(Integer id) throws ObjectNotFoundException;
         
-       
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
     List<Job> findByCompany(Job job) throws ObjectNotFoundException;
-      List<Job> findByLocation(Job job) throws ObjectNotFoundException;
-       List<Job> findByCategory(Job job) throws ObjectNotFoundException;
 
-       void jobActivation(Job job);
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
+    List<Job> findByLocation(Job job) throws ObjectNotFoundException;
+
+    /**
+     *
+     * @param job
+     * @return
+     * @throws ObjectNotFoundException
+     */
+    List<Job> findByCategory(Job job) throws ObjectNotFoundException;
+
+    /**
+     *
+     * @param job
+     */
+    void jobActivation(Job job);
        
-       void jobDisable (Job job);
+    /**
+     *
+     * @param job
+     */
+    void jobDisable (Job job);
        
-        void postJob(Job job, User loggedUser) throws ConstraintViolationException;
+    /**
+     *
+     * @param job
+     * @param loggedUser
+     * @throws ConstraintViolationException
+     */
+    void postJob(Job job, User loggedUser) throws ConstraintViolationException;
         
         
          

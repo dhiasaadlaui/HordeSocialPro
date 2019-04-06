@@ -17,7 +17,6 @@ import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.Notification;
-import tn.esprit.entities.User;
 
 /**
  *
@@ -29,6 +28,9 @@ public class NotificationDaoImpl extends GenericDaoImpl implements INotification
     private final IUserDao userDao;
     private final ICompanyDao companyDao;
 
+    /**
+     *
+     */
     public NotificationDaoImpl() {
         jobDao = new JobDaoImpl();
         userDao = new UserDaoImpl();
@@ -128,12 +130,24 @@ public class NotificationDaoImpl extends GenericDaoImpl implements INotification
         return rowDeleted;
     }
 
+    /**
+     *
+     * @param entity
+     * @param comEntity
+     * @throws DataBaseException
+     */
     @Override
     public void craftNotification(Company entity, Comment comEntity) throws DataBaseException {
         Notification notif = new Notification.Builder().company(entity).is_read(0).job(comEntity.getJob()).build();
         create(notif);
     }
 
+    /**
+     *
+     * @param entity
+     * @return
+     * @throws DataBaseException
+     */
     @Override
     public List<Notification> getNotificationByUser(Company entity) throws DataBaseException {
 
@@ -149,8 +163,10 @@ public class NotificationDaoImpl extends GenericDaoImpl implements INotification
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":recruiter"), entity.getRecruiter().getId());
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                Notification nf = new Notification.Builder().id(resultSet.getInt("id"))
-                        .company(new Company.Builder().recruiter(new User.Builder().id(resultSet.getInt("recruiter")).build()).build())
+                Notification nf = new Notification.Builder()
+                        .id(resultSet.getInt("id"))
+                        .company(companyDao.findByRecruter(userDao.findByID(resultSet.getInt("recruiter"))))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .date(resultSet.getTimestamp("date_notif").toLocalDateTime())
                         .is_read(resultSet.getInt("is_read"))
                         .build();
