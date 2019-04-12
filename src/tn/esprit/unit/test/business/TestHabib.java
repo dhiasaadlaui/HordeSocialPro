@@ -48,8 +48,7 @@ public class TestHabib {
                  try {
                      User recr = usrService.findByID(2);
                                                    ICompanyDao cdao = new CompanyDaoImpl();
-                              Company cc = cdao.findByRecruter(recr);
-                              
+               
                  } catch (ObjectNotFoundException ex) {
                      Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -68,22 +67,16 @@ public class TestHabib {
                              .password("akka")
                              .photo("img.kkilmg")
                              .build();
-                     Company company = 
+                 
                      
-                     
-                     Category category = new Category.Builder()
-                             .id(2)
-                             .label("just a gat")
-                             .description("ddd")
-                             .moderator(user1)
-                             .build();
+                             
                      
                      Date vcreationDate = new Date ();
               
            
                      Job job = new Job.Builder()
-                             .category(category)
-                             .company(company)
+                    //         .category(category)
+
                              .creationDate(vcreationDate)
                              .description("god")
                              .expireDate(new Date())
@@ -93,13 +86,8 @@ public class TestHabib {
                              .status(JobStatus.PENDING)
                              .build();
                      
+             
                      
-                 try {
-                     sj.postJob(job, user);
-                 } catch (ConstraintViolationException ex) {
-                     System.out.println(ex.getMessage());
-                 }
-               
              
                  
        
