@@ -52,11 +52,8 @@ public class TestHabib {
                  } catch (ObjectNotFoundException ex) {
                      Logger.getLogger(TestHabib.class.getName()).log(Level.SEVERE, null, ex);
                  }
-                               
-                               
-
-                    
-                     User user1 = new User.Builder()
+              
+                 User user1 = new User.Builder()
                              .id(2)
                              .firstName("habibbbbbbbbb")
                              .lastName("aliii")
@@ -85,14 +82,7 @@ public class TestHabib {
                              .title("devv")
                              .status(JobStatus.PENDING)
                              .build();
-                     
-             
-                     
-             
-                 
-       
-        
-        
+
  }
 
 }
