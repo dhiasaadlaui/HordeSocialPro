@@ -5,10 +5,19 @@
  */
 package tn.esprit.gui.home;
 
+import HabibGuitest.ItemJob;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Job;
 import tn.esprit.gui.login.SignupGUI;
-
+import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.interfaces.IServiceJob;
 
 /**
  *
@@ -19,19 +28,36 @@ public class HomeGUI extends VBox {
     /**
      *
      */
+    IServiceJob serviceJob;
+
     public HomeGUI() {
 
         // ------------initialisation------------
-        Label label1 = new Label();
-   
+        serviceJob = new SerivceJobImpl();
+        FlowPane flowpane = new FlowPane();
 
-        //-------------Styling-------------------
-        this.getStylesheets().add("/resources/css/theme.css");
-        label1.getStyleClass().add("primary");
+        try {
+            List<Job> jobs = serviceJob.findAll();
 
-  
-        //-------------logic--------------------
+            for (Job job : jobs) {
+                flowpane.getChildren().add(new ItemJob() {
+                });
 
+            }
+
+            //-------------Styling-------------------
+            flowpane.setHgap(10);
+            flowpane.setVgap(10);
+            
+
+            //-------------logic--------------------
+        } catch (DataBaseException ex) {
+            Alert errorWindow = new Alert(Alert.AlertType.ERROR);
+            errorWindow.setTitle("fail");
+            errorWindow.setContentText(ex.getMessage());
+        }
+
+        getChildren().add(flowpane);
     }
 
 }
