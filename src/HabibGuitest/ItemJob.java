@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tn.esprit.entities.Job;
 
 public abstract class ItemJob extends Pane {
 
@@ -24,7 +25,7 @@ public abstract class ItemJob extends Pane {
     protected final Label label7;
     protected final ImageView imageView;
 
-    public ItemJob() {
+    public ItemJob(Job job) {
 
         button = new Button();
         label = new Label();
@@ -59,7 +60,7 @@ public abstract class ItemJob extends Pane {
         label.setLayoutX(127.0);
         label.setLayoutY(35.0);
         label.getStyleClass().add("danger");
-        label.setText("Vermeg");
+        label.setText(job.getCompany().getName());
         label.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
         label.setFont(new Font(18.0));
 
@@ -95,12 +96,12 @@ public abstract class ItemJob extends Pane {
 
         label4.setPrefHeight(39.0);
         label4.setPrefWidth(132.0);
-        label4.setText("Software Developper");
+        label4.setText(job.getTitle());
         label4.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         label5.setPrefHeight(52.0);
         label5.setPrefWidth(116.0);
-        label5.setText("Chiraz FELLAH");
+        label5.setText(job.getCompany().getRecruiter().getFirstName()+" "+job.getCompany().getRecruiter().getLastName());
         label5.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         label6.setPrefHeight(32.0);

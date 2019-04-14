@@ -40,7 +40,7 @@ public class HomeGUI extends VBox {
             List<Job> jobs = serviceJob.findAll();
 
             for (Job job : jobs) {
-                flowpane.getChildren().add(new ItemJob() {
+                flowpane.getChildren().add(new ItemJob(job) {
                 });
 
             }
