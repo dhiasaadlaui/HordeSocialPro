@@ -5,7 +5,6 @@
  */
 package tn.esprit.gui.login;
 
-import eu.hansolo.tilesfx.Tile;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +25,6 @@ import static tn.esprit.gui.login.LanguageToolBar.BUNDLE;
 import tn.esprit.gui.launch.App;
 
 import tn.esprit.gui.home.HomeGUI;
-import static tn.esprit.gui.launch.App.GLOBAL_PANE_BORDER;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
