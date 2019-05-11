@@ -23,6 +23,6 @@ public interface ICommentDao extends IGenericDao<Comment> {
      */
     public Comment findByID(Integer id) throws DataBaseException;
     
-    public Company getJobPoster(Comment entity) ;
+   // public Company getJobPoster(Comment entity) ;
 
 }

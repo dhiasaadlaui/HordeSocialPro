@@ -47,14 +47,14 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         //--------initialisation-----------
-
-        GLOBAL_STAGE = new Stage();
+         GLOBAL_STAGE = new Stage();
+        GLOBAL_PANE_BORDER = new BorderPane();
+       
         LOGIN_GUI = new LoginGUI();
 
-        GLOBAL_PANE_BORDER = new BorderPane();
         GLOBAL_SCENE = new Scene(GLOBAL_PANE_BORDER);
 
-         Image applicationIcon = new Image(getClass().getResourceAsStream("/resources/images/horde.png"));
+        Image applicationIcon = new Image(getClass().getResourceAsStream("/resources/images/horde.png"));
         GLOBAL_STAGE.getIcons().add(applicationIcon);
         GLOBAL_STAGE.setResizable(false);
         GLOBAL_STAGE.setTitle("Social Pro");
