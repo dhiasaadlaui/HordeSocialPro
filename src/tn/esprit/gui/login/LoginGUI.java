@@ -21,11 +21,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tn.esprit.entities.UserRole;
-import tn.esprit.gui.home.HomeGUI;
 import static tn.esprit.gui.login.LanguageToolBar.BUNDLE;
 import tn.esprit.gui.launch.App;
 
-
+import tn.esprit.gui.home.HomeGUI;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
@@ -141,7 +140,7 @@ public class LoginGUI extends HBox {
 
             try {
                 App.USER_ONLINE = serviceUser.authentication(TXT_USER.getText(), TXT_PASSWORD.getText());
-                HomeGUI home = new HomeGUI() ;
+                HomeGUI home = new HomeGUI();
                 App.GLOBAL_PANE_BORDER.setCenter(home);
                 // traitement
             } catch (ObjectNotFoundException ex) {
