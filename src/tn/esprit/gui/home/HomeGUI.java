@@ -5,16 +5,9 @@
  */
 package tn.esprit.gui.home;
 
-import HabibGuitest.ItemJob;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Job;
 import tn.esprit.gui.login.SignupGUI;
 import tn.esprit.gui.pages.PageJobsBase;
 
@@ -28,12 +21,9 @@ public class HomeGUI extends HBox {
     /**
      *
      */
-    IServiceJob serviceJob;
-
     public HomeGUI() {
 
         // ------------initialisation------------
-
    
    
 
@@ -49,8 +39,6 @@ public class HomeGUI extends HBox {
   
         //-------------logic--------------------
 
-
-        getChildren().add(flowpane);
     }
 
 }

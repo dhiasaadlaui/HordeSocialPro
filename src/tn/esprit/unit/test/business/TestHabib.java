@@ -44,7 +44,6 @@ public class TestHabib {
      */
     public static void main(String[] args) {
      
-
 //                               IServiceJob sj = new SerivceJobImpl();
 //                               
 //                               IServiceUser usrService =  new ServiceUserImpl();
@@ -109,7 +108,6 @@ public class TestHabib {
        
         
         
-
  }
 
 }
