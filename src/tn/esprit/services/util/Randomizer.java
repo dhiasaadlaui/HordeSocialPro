@@ -13,6 +13,10 @@ import java.util.Random;
  */
 public class Randomizer {
 
+    /**
+     *
+     * @return
+     */
     public static String randomStringGenerator() {
 
         String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -33,6 +37,12 @@ public class Randomizer {
 
         return sb.toString();
     }
+
+    /**
+     *
+     * @param maxValue
+     * @return
+     */
     public static Integer randomIntgeger(Integer maxValue){
         Random RND = new Random();
         return  RND.nextInt(maxValue);

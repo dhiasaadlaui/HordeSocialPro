@@ -52,6 +52,19 @@ public class ServiceInputValidator {
 
     /**
      *
+     * @param text1
+     * @param text2
+     * @throws ConstraintViolationException
+     */
+    public static void sameText(String text1,String text2) throws ConstraintViolationException {
+        if ( !text1.equals(text2)) {
+            throw new ConstraintViolationException("not matchs");
+        }
+
+    }
+
+    /**
+     *
      * @param date
      * @throws ConstraintViolationException
      */

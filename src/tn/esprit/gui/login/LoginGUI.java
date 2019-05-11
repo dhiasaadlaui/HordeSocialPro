@@ -5,7 +5,6 @@
  */
 package tn.esprit.gui.login;
 
-import eu.hansolo.tilesfx.Tile;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,8 +40,19 @@ public class LoginGUI extends HBox {
      */
     public static Button BTN_LOGIN;
 
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_CANDIDATE;
+
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_RECRUITER;
+
+    /**
+     *
+     */
     public static Button BTN_EXIT;
 
     /**
@@ -54,13 +64,25 @@ public class LoginGUI extends HBox {
      *
      */
     public static PasswordField TXT_PASSWORD;
+
+    /**
+     *
+     */
     public static Label LABEL_SIGNUP;
 
     /**
      *
      */
     public static LanguageToolBar LANGUAGE_BOX;
+
+    /**
+     *
+     */
     public static TilesInitilizer TILES;
+
+    /**
+     *
+     */
     public static WorldMap map = new WorldMap(800, 600);
 
     /**
@@ -83,6 +105,7 @@ public class LoginGUI extends HBox {
         TILES = new TilesInitilizer();
 
         // ------------Styling------------ 
+        App.GLOBAL_PANE_BORDER.setStyle("-fx-background-color: #7f8c8d;");
         rightPane.getStylesheets().add("/resources/css/theme.css");
         rightPane.setPrefWidth(leftPane.getPrefWidth() / 4);
         rightPane.setPadding(new Insets(50, 20, 50, 20));
@@ -130,14 +153,10 @@ public class LoginGUI extends HBox {
             }
         });
         BTN_SIGNUP_CANDIDATE.setOnMouseClicked(e -> {
-
-            SignupGUI signUp = new SignupGUI(UserRole.CANDIDATE);
-            App.GLOBAL_PANE_BORDER.setCenter(signUp);
+            App.GLOBAL_PANE_BORDER.setCenter(new SignupGUI(UserRole.CANDIDATE));
         });
         BTN_SIGNUP_RECRUITER.setOnMouseClicked(e -> {
-
-            SignupGUI signUp = new SignupGUI(UserRole.RECRUITER);
-            App.GLOBAL_PANE_BORDER.setCenter(signUp);
+            App.GLOBAL_PANE_BORDER.setCenter(new SignupGUI(UserRole.RECRUITER));
         });
         BTN_EXIT.setOnAction(e -> {
             Platform.exit();
@@ -163,7 +182,7 @@ public class LoginGUI extends HBox {
         BTN_LOGIN.setText(BUNDLE.getString("login"));
         TXT_USER.setPromptText(LanguageToolBar.BUNDLE.getString("username"));
         TXT_PASSWORD.setPromptText(LanguageToolBar.BUNDLE.getString("password"));
-        
+
         BTN_EXIT.setText(LanguageToolBar.BUNDLE.getString("exit"));
         BTN_SIGNUP_CANDIDATE.setText(LanguageToolBar.BUNDLE.getString("signupcandidate"));
         BTN_SIGNUP_RECRUITER.setText(LanguageToolBar.BUNDLE.getString("signuprecruiter"));

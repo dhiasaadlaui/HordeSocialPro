@@ -19,7 +19,7 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  */
 public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDao {
 
-    private UserDaoImpl userDao;
+    private final UserDaoImpl userDao;
 
     /**
      *
@@ -39,7 +39,7 @@ public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDa
         Category category = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("category")
+                .from(Category.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
 
@@ -93,7 +93,7 @@ public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDa
         insertQuery.set(queriesFactory.newStdField("label"), ":label")
                 .set(queriesFactory.newStdField("description"), ":description")
                 .set(queriesFactory.newStdField("moderator"), ":moderator")
-                .inTable("category");
+                .inTable(Category.class.getSimpleName().toLowerCase());
         try {
             preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":label"), entity.getLabel());
@@ -120,7 +120,7 @@ public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDa
         updateQuery.set(queriesFactory.newStdField("label"), ":label")
                 .set(queriesFactory.newStdField("description"), ":description")
                 .set(queriesFactory.newStdField("moderator"), ":moderator")
-                .inTable("category")
+                .inTable(Category.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -141,7 +141,7 @@ public final class CategoryDaoImpl extends GenericDaoImpl implements ICategoryDa
     public Integer delete(Category entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("category")
+        deleteQuery.from(Category.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {

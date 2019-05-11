@@ -46,7 +46,7 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("abonnement")
+                .from(Abonnement.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidate");
         try {
@@ -56,7 +56,7 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
             while (resultSet.next()) {
                 list.add(new Abonnement.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .dateAbonnement(resultSet.getDate("dateabonnement"))
                         .build());
 
@@ -82,9 +82,9 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("abonnement")
+                .from(Abonnement.class.getSimpleName().toLowerCase())
                 .where()
-                .where(queriesFactory.newStdField("company"), ":company");
+                .where(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":company");
         try {
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":company"), company.getRecruiter().getId());
@@ -92,7 +92,7 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
             while (resultSet.next()) {
                 list.add(new Abonnement.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .dateAbonnement(resultSet.getDate("dateabonnement"))
                         .build());
 
@@ -112,14 +112,14 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery
                 .select(queriesFactory.newAllField())
-                .from("abonnement");
+                .from(Abonnement.class.getSimpleName().toLowerCase());
         try {
 
             resultSet = cnx.getResult(selectQuery.getQueryString());
             while (resultSet.next()) {
                 list.add(new Abonnement.Builder()
                         .candidate(userDao.findByID(resultSet.getInt("candidate")))
-                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt("company")).build()))
+                        .company(companyDao.findByRecruter(new User.Builder().id(resultSet.getInt(Company.class.getSimpleName().toLowerCase())).build()))
                         .dateAbonnement(resultSet.getDate("dateabonnement"))
                         .build());
 
@@ -138,9 +138,9 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
         Integer rowsCreated = 0;
         insertQuery = queriesFactory.newInsertQuery();
         insertQuery.set(queriesFactory.newStdField("candidate"), ":candidate")
-                .set(queriesFactory.newStdField("company"), ":company")
+                .set(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":company")
                 .set(queriesFactory.newStdField("dateabonnement"), ":dateabonnement")
-                .inTable("abonnement");
+                .inTable(Abonnement.class.getSimpleName().toLowerCase());
 
         try {
             preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
@@ -163,12 +163,12 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
         updateQuery = queriesFactory.newUpdateQuery();
         updateQuery
                 .set(queriesFactory.newStdField("candidate"), ":candidate")
-                .set(queriesFactory.newStdField("company"), ":company")
+                .set(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":company")
                 .set(queriesFactory.newStdField("dateabonnement"), ":dateabonnement")
-                .inTable("abonnement")
+                .inTable(Abonnement.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidateid")
-                .where(queriesFactory.newStdField("company"), ":companyid");
+                .where(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":companyid");
         try {
             preparedStatement = cnx.prepareStatement(updateQuery.getQueryString());
             preparedStatement.setObject(updateQuery.getPlaceholderIndex(":candidate"), entity.getCandidate() != null ? entity.getCandidate().getId() : null, java.sql.Types.INTEGER);
@@ -190,10 +190,10 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
 
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("abonnement")
+        deleteQuery.from(Abonnement.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("candidate"), ":candidateid")
-                .where(queriesFactory.newStdField("company"), ":companyid");
+                .where(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":companyid");
 
         try {
             preparedStatement = cnx.prepareStatement(deleteQuery.getQueryString());

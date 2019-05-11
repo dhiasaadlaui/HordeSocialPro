@@ -42,34 +42,34 @@ public class TestMehdi {
         IServiceNotification serv3 = new ServiceNotificationImpl();
 //        
 //      //  CREATE COMMENT 
-        User user1 = new User.Builder().id(1).build() ;
-        user1.setId(4);
-        System.out.println(user1);
-        Job  job1 = new Job.Builder().id(2).build() ;
-        System.out.println(job1.getId());
+//        User user1 = new User.Builder().id(1).build() ;
+//        user1.setId(10);
+//        System.out.println(user1);
+//        Job  job1 = new Job.Builder().id(2).build() ;
+//        System.out.println(job1.getId());
+////        
+////        
+//        Comment com1 = new Comment.Builder().job(job1).content("TESTING hugug").build() ;
+////        
+//        com1.setUser(user1);
+//        System.out.println(com1.getUser().getId());
 //        
+//     
 //        
-        Comment com1 = new Comment.Builder().job(job1).content("TESTING hugug").build() ;
-//        
-        com1.setUser(user1);
-        System.out.println(com1.getUser().getId());
-        
-     
-        
-        System.out.println(com1);
-        try {
-            System.out.println(serv0.create(com1))  ;
-            
-            Company ny = serv0.getJobPoster(com1) ;
-            System.out.println(ny.getName());
-            System.out.println(ny.getRecruiter().getId());
-//            serv1.craftNotification(ny, com1);
-            /** FRIST SCENARIO CREATUBG THE NOTIFICATION **/ /////////////////////<<<<<<<<<<<<<<
-            
-            
-        } catch (DataBaseException ex) {
-            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        System.out.println(com1);
+//        try {
+//            System.out.println(serv0.create(com1))  ;
+//            
+//            Company ny = serv0.getJobPoster(com1) ;
+//            System.out.println(ny.getName());
+//            System.out.println(ny.getRecruiter().getId());
+////            serv1.craftNotification(ny, com1);
+//            /** FRIST SCENARIO CREATUBG THE NOTIFICATION **/ /////////////////////<<<<<<<<<<<<<<
+//            
+//            
+//        } catch (DataBaseException ex) {
+//            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         // FINDALL TEST
 //        
 //        List<Comment> ls = new ArrayList<>() ;
@@ -99,7 +99,7 @@ public class TestMehdi {
 //
 //        System.out.println(mc);
 
-//            // DELETE TEST
+            //            // DELETE TEST
 //        
 //        Comment mc = new Comment.Builder().id(2).build() ;
 //        try {
@@ -108,30 +108,45 @@ public class TestMehdi {
 //            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //      
-        
-        
-        
-        
-        // Thread TESTING NOTIFICATION 
-         //CREATE NOTIF
-      //  List<User>  listus = new ArrayList<>() ;
-        
-     //   listus = serv2.getLoggedInUsers() ; Suppose we have a list of loggedin users 
-        
-//        Company cm = new Company.Builder().recruiter(new User.Builder().id(2).build()).build() ;
-//        sn.startJob(cm);
-//      
-//        System.out.println("GOING THROUGH THIIIS");
-//        List<Notification> ns = new ArrayList<>(); 
+//        try {
+//            // Thread TESTING NOTIFICATION
+//            //CREATE NOTIF
+//            //  List<User>  listus = new ArrayList<>() ;
+//            
+//            //   listus = serv2.getLoggedInUsers() ; Suppose we have a list of loggedin users
 //        
-//         Company ny =new Company.Builder().recruiter(new User.Builder().id(2).build()).build() ;
-//       
-//       ns =  serv3.getNotificationByUser(ny) ;
-//         
-//         for(Notification nf  : ns)
-//             System.out.println(nf.getId()+" "+nf.getIs_read()+" "+nf.getDate());
-//         
-//         
-//         System.out.println(ns.size());
+////        Company cm = new Company.Builder().recruiter(new User.Builder().id(2).build()).build() ;
+////        sn.startJob(cm);
+////      
+////        System.out.println("GOING THROUGH THIIIS");
+////        List<Notification> ns = new ArrayList<>();
+////        
+////         Company ny =new Company.Builder().recruiter(new User.Builder().id(2).build()).build() ;
+////       
+////       ns =  serv3.getNotificationByUser(ny) ;
+////         
+////         for(Notification nf  : ns)
+////             System.out.println(nf.getId()+" "+nf.getIs_read()+" "+nf.getDate());
+////
+////         
+////         System.out.println(ns.size());
+//            GET JOB BY COMMENT WORKING
+//          Comment cmt =   serv0.findByID(10);
+//            System.out.println(cmt);
+//           Company cmp =  serv0.getJobPoster(cmt);
+//            System.out.println(cmp);
+//        } catch (DataBaseException ex) {
+//            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//                    try {
+//            serv3.delete(new Notification.Builder().id(2).build()) ;
+//            serv3.findAll().stream().forEach(e -> {
+//                System.out.println(e.getId());
+//            });
+//        } catch (DataBaseException ex) {
+//            Logger.getLogger(TestMehdi.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
+    
+    
 }
