@@ -45,7 +45,7 @@ public interface IServiceUser extends IGenericService<User>{
      * @param user
      * @throws ConstraintViolationException
      */
-    void banUser(User user) throws ConstraintViolationException;
+    void banUser(User user,String reason) throws ConstraintViolationException;
     
     /**
      *

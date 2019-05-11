@@ -100,7 +100,12 @@ public class ServiceReclamationImpl implements IServiceReclamation {
      */
     @Override
     public List<Reclamation> findByClaimer(User claimerUser) throws ObjectNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
+         try {
+            return findAll().stream().filter(e -> e.getClaimer().equals(claimerUser)).collect(Collectors.toList());
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
     }
 
     /**
@@ -279,7 +284,8 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         reclamation.setStatus(ReclamationStatus.OPEN);
         try {
             reclamationDao.edit(reclamation);
-        } catch (Exception e) {
+        } catch (DataBaseException e) {
+             throw new ObjectNotFoundException(e.getMessage());
         }
 
     }
