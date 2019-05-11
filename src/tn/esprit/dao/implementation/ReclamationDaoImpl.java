@@ -48,7 +48,7 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
     @Override
     public Reclamation findById(int id) throws DataBaseException {
         Reclamation reclamation = null;
-        selectQuery = queriesFactory.newSelectQuery();
+        selectQuery = queriesFactory.newSelectQuery(); // on va traviller avec la requette sql select
         selectQuery.select(queriesFactory.newAllField())
                 .from(Reclamation.class.getSimpleName().toLowerCase())
                 .where()
