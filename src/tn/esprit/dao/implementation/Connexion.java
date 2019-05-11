@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import tn.esprit.gui.login.LanguageToolBar;
 
 /**
  *
@@ -40,8 +40,6 @@ public class Connexion {
     /**
      *
      */
-    private String DRIVER;
-
     /**
      *
      */
@@ -86,10 +84,10 @@ public class Connexion {
             DB_URL = (String) p.get("url");
             DB_USER = (String) p.get("user");
             DB_PASSWORD = (String) p.get("password");
-            DRIVER = (String) p.get("oldDriver");
-            LOGGER.info("The class (" + LOGGER.getName() + ") attempting to connect database ..");
+            LOGGER.log(Level.INFO, "Attempting to connect database ..", LOGGER.getName());
+            cn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        } catch (IOException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();// TODO: handle exception
 
         }
@@ -99,22 +97,6 @@ public class Connexion {
      *
      * @return @throws SQLException
      */
-    public Connection connect() throws SQLException {
-        try {
-
-            Class.forName(DRIVER);
-            cn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-
-        } catch (SQLException e) {
-            LOGGER.warning("The class (" + LOGGER.getName() + ") failed to connected  database ..");
-            throw new SQLException(LanguageToolBar.BUNDLE.getString("dberror"));
-
-        } catch (ClassNotFoundException ex) {
-            LOGGER.warning("Driver not found: " + DRIVER);
-        }
-        return cn;
-    }
-
     /**
      *
      * @param query execute given querie via a new statement and return a
@@ -125,7 +107,7 @@ public class Connexion {
     public ResultSet getResult(String query) throws SQLException {
 
         try {
-            return getInstance().connect().createStatement().executeQuery(query);
+            return cn.createStatement().executeQuery(query);
         } catch (SQLException ex) {
             throw new SQLException(ex.getMessage());
         }
@@ -140,7 +122,7 @@ public class Connexion {
      */
     public PreparedStatement prepareStatement(String query) throws SQLException {
 
-        return getInstance().connect().prepareStatement(query);
+        return cn.prepareStatement(query);
     }
 
     /**
@@ -152,7 +134,7 @@ public class Connexion {
      */
     public PreparedStatement prepareStatementWithGeneratedKey(String query) throws SQLException {
 
-        return getInstance().connect().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+        return cn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
     }
 
     /**

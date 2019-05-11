@@ -13,6 +13,8 @@ import tn.esprit.dao.interfaces.ICommentDao;
 import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.dao.interfaces.IReclamationDao;
 import tn.esprit.dao.interfaces.IUserDao;
+import tn.esprit.entities.Comment;
+import tn.esprit.entities.Job;
 import tn.esprit.entities.Reclamation;
 import tn.esprit.entities.ReclamationStatus;
 import tn.esprit.entities.ReclamationType;
@@ -48,7 +50,7 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
         Reclamation reclamation = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("reclamation")
+                .from(Reclamation.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -62,10 +64,10 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
                         .details(resultSet.getString("details"))
                         .staff(userDao.findByID(resultSet.getInt("staff")))
                         .claimer(userDao.findByID(resultSet.getInt("claimer")))
-                        .comment(cammentDao.findByID(resultSet.getInt("comment")))
+                        .comment(cammentDao.findByID(resultSet.getInt(Comment.class.getSimpleName().toLowerCase())))
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .build();
 
             }
@@ -94,10 +96,10 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
                         .details(resultSet.getString("details"))
                         .staff(userDao.findByID(resultSet.getInt("staff")))
                         .claimer(userDao.findByID(resultSet.getInt("claimer")))
-                        .comment(cammentDao.findByID(resultSet.getInt("comment")))
+                        .comment(cammentDao.findByID(resultSet.getInt(Comment.class.getSimpleName().toLowerCase())))
                         .type(Enum.valueOf(ReclamationType.class, resultSet.getString("type")))
                         .status(Enum.valueOf(ReclamationStatus.class, resultSet.getString("status")))
-                        .job(jobDao.findByID(resultSet.getInt("job")))
+                        .job(jobDao.findByID(resultSet.getInt(Job.class.getSimpleName().toLowerCase())))
                         .build());
 
             }
@@ -116,15 +118,15 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
         insertQuery
                 .set(queriesFactory.newStdField("type"), ":type")
                 .set(queriesFactory.newStdField("details"), ":details")
-                .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("claimer"), ":claimer")
-                .set(queriesFactory.newStdField("comment"), ":comment")
+                .set(queriesFactory.newStdField(Comment.class.getSimpleName().toLowerCase()), ":comment")
                 .set(queriesFactory.newStdField("staff"), ":staff")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable("reclamation");
+                .inTable(Reclamation.class.getSimpleName().toLowerCase());
         try {
-            preparedStatement = cnx.prepareStatement(insertQuery.getQueryString());
+            preparedStatement = cnx.prepareStatementWithGeneratedKey(insertQuery.getQueryString());
             preparedStatement.setObject(insertQuery.getPlaceholderIndex(":claimer"), entity.getClaimer() != null ? entity.getClaimer().getId() : null, java.sql.Types.INTEGER);
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":type"), entity.getType());
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":details"), entity.getDetails());
@@ -135,7 +137,10 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
             preparedStatement.setString(insertQuery.getPlaceholderIndex(":status"), entity.getStatus());
 
             rowsCreated = preparedStatement.executeUpdate();
-
+            resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                entity.setId(resultSet.getInt(1));
+            }
         } catch (SQLException ex) {
             throw new DataBaseException(ex.getMessage());
         }
@@ -151,13 +156,13 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
         updateQuery
                 .set(queriesFactory.newStdField("type"), ":type")
                 .set(queriesFactory.newStdField("details"), ":details")
-                .set(queriesFactory.newStdField("job"), ":job")
+                .set(queriesFactory.newStdField(Job.class.getSimpleName().toLowerCase()), ":job")
                 .set(queriesFactory.newStdField("claimer"), ":claimer")
-                .set(queriesFactory.newStdField("comment"), ":comment")
+                .set(queriesFactory.newStdField(Comment.class.getSimpleName().toLowerCase()), ":comment")
                 .set(queriesFactory.newStdField("staff"), ":staff")
                 .set(queriesFactory.newStdField("feedback"), ":feedback")
                 .set(queriesFactory.newStdField("status"), ":status")
-                .inTable("reclamation")
+                .inTable(Reclamation.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {
@@ -182,7 +187,7 @@ public final class ReclamationDaoImpl extends GenericDaoImpl implements IReclama
     public Integer delete(Reclamation entity) throws DataBaseException {
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("reclamation")
+        deleteQuery.from(Reclamation.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("id"), ":id");
         try {

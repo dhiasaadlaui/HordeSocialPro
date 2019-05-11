@@ -45,7 +45,7 @@ public interface IServiceUser extends IGenericService<User>{
      * @param user
      * @throws ConstraintViolationException
      */
-    void banUser(User user) throws ConstraintViolationException;
+    void banUser(User user,String reason) throws ConstraintViolationException;
     
     /**
      *
@@ -60,10 +60,14 @@ public interface IServiceUser extends IGenericService<User>{
      * @param user
      * @param code
      * @throws ConstraintViolationException
-     */
+     */   
+    
     void accountActivation(User user,String code) throws ConstraintViolationException;
     
-    
-   User getLoggedInUsers() ;
+    /**
+     *
+     * @return
+     */
+    User getLoggedInUsers();
 
 }
