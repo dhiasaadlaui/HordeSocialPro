@@ -1,118 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="815.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox style="-fx-background-color: #34495e;" stylesheets="@../resources/css/theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea layoutX="179.0" layoutY="596.0" prefHeight="85.0" prefWidth="519.0" />
-      <Button layoutX="263.0" layoutY="740.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="122.0" styleClass="success" stylesheets="@../resources/css/theme.css" text="Apply" />
-      <Button layoutX="739.0" layoutY="631.0" mnemonicParsing="false" styleClass="warning" stylesheets="@../resources/css/theme.css" text="Comment" />
-      <Button layoutX="449.0" layoutY="740.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="122.0" styleClass="danger" stylesheets="@../resources/css/theme.css" text="Claim" />
-      <ImageView fitHeight="85.0" fitWidth="130.0" layoutX="26.0" layoutY="596.0" pickOnBounds="true" preserveRatio="true" />
-      <VBox layoutX="150.0" layoutY="86.0" prefHeight="497.0" prefWidth="165.0">
+      <AnchorPane prefHeight="231.0" prefWidth="618.0">
          <children>
-            <Label prefHeight="52.0" prefWidth="152.0" text="Company name :">
+            <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/images/defaultcompany.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="131.0" layoutY="14.0" style="-fx-text-fill: #FFFF;" text="Vermeg">
                <font>
-                  <Font size="15.0" />
+                  <Font size="35.0" />
                </font>
             </Label>
-            <Label prefHeight="42.0" prefWidth="130.0" text="Job title :">
-               <font>
-                  <Font size="15.0" />
-               </font>
+            <Label layoutX="131.0" layoutY="65.0" style="-fx-text-fill: #FFFF;" text="Job Title: Software developer" />
+            <Label layoutX="480.0" layoutY="14.0" text="Salary : 3000 EUR">
+               <styleClass>
+                  <String fx:value="danger" />
+                  <String fx:value="button" />
+               </styleClass>
             </Label>
-            <Label prefHeight="49.0" prefWidth="86.0" text="Salary :">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="58.0" prefWidth="100.0" text="Category :">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="48.0" prefWidth="60.0" text="Recruiter">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="45.0" prefWidth="87.0" text="Expire date :">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
-            <Label prefHeight="40.0" prefWidth="97.0" text="Creation date :">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="50.0" prefWidth="64.0" text="Location :">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="41.0" prefWidth="83.0" text="Description :">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
+            <Label layoutX="131.0" layoutY="100.0" style="-fx-text-fill: #FFFF;" text="Recruiter:" />
+            <Label layoutX="131.0" layoutY="137.0" style="-fx-text-fill: #FFFF;" text="Creation date:" />
+            <Label layoutX="131.0" layoutY="119.0" style="-fx-text-fill: #FFFF;" text="Category:" />
+            <Label layoutX="131.0" layoutY="155.0" style="-fx-text-fill: #FFFF;" text="Expire date:" />
+            <Label layoutX="131.0" layoutY="173.0" style="-fx-text-fill: #FFFF;" text="Location:" />
+            <Label layoutX="131.0" layoutY="191.0" style="-fx-text-fill: #FFFF;" text="Description:" />
+            <Label layoutX="227.0" layoutY="100.0" style="-fx-text-fill: #FFFF;" text="Chiraz Fellah" />
+            <Label layoutX="227.0" layoutY="119.0" style="-fx-text-fill: #FFFF;" text="Informatique" />
+            <Label layoutX="227.0" layoutY="137.0" style="-fx-text-fill: #FFFF;" text="01/05/2019" />
+            <Label layoutX="227.0" layoutY="155.0" style="-fx-text-fill: #FFFF;" text="02/06/2019" />
+            <Label layoutX="227.0" layoutY="173.0" style="-fx-text-fill: #FFFF;" text="Tunis, Tunisia" />
+            <TextArea editable="false" layoutX="227.0" layoutY="200.0" prefHeight="51.0" prefWidth="282.0" text="Vermeg looking for software developer with 2 years experience , &#10;with java entreprise edition" />
+            <Button layoutX="494.0" layoutY="87.0" mnemonicParsing="false" prefHeight="6.0" prefWidth="100.0" styleClass="primary" text="Appy" />
+            <Button layoutX="494.0" layoutY="123.0" mnemonicParsing="false" prefHeight="6.0" prefWidth="100.0" styleClass="primary" text="Edit" />
+            <Button layoutX="494.0" layoutY="160.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="100.0" styleClass="warning" text="Repport" />
          </children>
-      </VBox>
-      <VBox layoutX="334.0" layoutY="86.0" prefHeight="484.0" prefWidth="556.0">
-         <children>
-            <Label prefHeight="42.0" prefWidth="57.0" text="Vermeg ">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="40.0" prefWidth="129.0" text="Software developer">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="56.0" prefWidth="67.0" text="3000 euro">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="56.0" prefWidth="12.0" text="IT">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="45.0" prefWidth="82.0" text="Chiraz fellah">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="43.0" prefWidth="77.0" text="06/06/2019">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="60.0" prefWidth="77.0" text="04/04/2019">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="24.0" prefWidth="35.0" text="Tunis">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label prefHeight="83.0" prefWidth="492.0" text="Need software developer with at least 2 years of experience in java/jee, Angular and an engineer grade in IT" wrapText="true">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
+      </AnchorPane>
+      <TitledPane animated="false" prefHeight="226.0" prefWidth="618.0" styleClass="warning" text="Comments (5)">
+         <content>
+            <ScrollPane>
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane prefHeight="51.0" prefWidth="450.0">
+                           <children>
+                              <TextArea layoutX="17.0" layoutY="13.0" prefHeight="62.0" prefWidth="338.0" promptText="Say something ..." />
+                              <Button layoutX="367.0" layoutY="31.0" mnemonicParsing="false" text="Comment" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="62.0" prefWidth="450.0">
+                           <children>
+                              <ImageView fitHeight="67.0" fitWidth="59.0" layoutX="6.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/images/default.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextArea editable="false" layoutX="75.0" layoutY="17.0" prefHeight="59.0" prefWidth="348.0" text="Interesting job , i would like to contact HR Officer for more info,&#10;My mail" />
+                              <Label layoutX="331.0" layoutY="75.0" text="Date: 01/05/2019" />
+                              <Button layoutX="430.0" layoutY="23.0" mnemonicParsing="false" styleClass="danger" text="!" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="62.0" prefWidth="450.0">
+                           <children>
+                              <ImageView fitHeight="67.0" fitWidth="59.0" layoutX="6.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/images/default.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextArea editable="false" layoutX="75.0" layoutY="13.0" prefHeight="59.0" prefWidth="348.0" text="Interesting job , i would like to contact HR Officer for more info,&#10;My mail" />
+                              <Label layoutX="331.0" layoutY="75.0" text="Date: 01/05/2019" />
+                              <Button layoutX="430.0" layoutY="23.0" mnemonicParsing="false" text="!" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="62.0" prefWidth="450.0">
+                           <children>
+                              <ImageView fitHeight="67.0" fitWidth="59.0" layoutX="6.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/images/default.jpg" />
+                                 </image>
+                              </ImageView>
+                              <TextArea editable="false" layoutX="75.0" layoutY="13.0" prefHeight="59.0" prefWidth="348.0" text="Interesting job , i would like to contact HR Officer for more info,&#10;My mail" />
+                              <Label layoutX="331.0" layoutY="75.0" text="Date: 01/05/2019" />
+                              <Button layoutX="430.0" layoutY="23.0" mnemonicParsing="false" text="!" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </content>
+      </TitledPane>
    </children>
-</Pane>
+</VBox>
