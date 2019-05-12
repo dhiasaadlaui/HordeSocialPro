@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
+import tn.esprit.gui.pages.PageJobsBase;
+import tn.esprit.gui.pages.PageReclamationsBase;
 
 public abstract class SideBarBase extends VBox {
 
@@ -330,6 +332,22 @@ public abstract class SideBarBase extends VBox {
             @Override
             public void handle(MouseEvent event) {
                 App.GLOBAL_PANE_BORDER.setCenter(new LoginGUI());
+            }
+        });
+        hBox2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageReclamationsBase() {
+                });
+            }
+        });
+         hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageJobsBase() {
+                });
             }
         });
 

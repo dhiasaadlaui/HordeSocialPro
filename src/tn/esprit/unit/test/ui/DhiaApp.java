@@ -5,18 +5,19 @@
  */
 package tn.esprit.unit.test.ui;
 
-
 import javafx.application.Application;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
 import tn.esprit.gui.home.HomeGUI;
 import tn.esprit.gui.home.SideBarBase;
 import tn.esprit.gui.items.generic.ItemJobBase;
+import tn.esprit.gui.items.generic.ItemReclamationBase;
+import tn.esprit.gui.pages.PageCreateClaim;
 import tn.esprit.gui.pages.PageJobsBase;
-
-
-
 
 /**
  *
@@ -24,23 +25,34 @@ import tn.esprit.gui.pages.PageJobsBase;
  */
 public class DhiaApp extends Application {
 
-
     @Override
     public void start(Stage primaryStage) {
         //--------initialisation-----------
-      
+        Button btn = new Button("print");
+        VBox vb = new VBox();
+        vb.setSpacing(50);
+        vb.getChildren().addAll(btn,new ItemReclamationBase() {
+        }, new ItemReclamationBase() {
+        }, new ItemReclamationBase() {
+        });
 
-       
-       Scene GLOBAL_SCENE = new Scene(new PageJobsBase() {
-});
+           btn.setOnMouseClicked(e -> {
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null) {
+                job.showPrintDialog(primaryStage); // Window must be your main Stage
+                job.printPage(vb);
+                job.endJob();
+            }
+        });
+        
+        Scene GLOBAL_SCENE = new Scene(vb);
 
         //-----------styling----------------
-
-
         //------------logic-----------------
         primaryStage.setScene(GLOBAL_SCENE);
         primaryStage.show();
 
+     
     }
 
     @Override
@@ -54,7 +66,5 @@ public class DhiaApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-   
 
 }

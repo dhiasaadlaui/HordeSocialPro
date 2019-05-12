@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package viewMarwen;
+package tn.esprit.gui.pages;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,13 +22,12 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author mghozzi
+ * @author mdsaadlaoui
  */
-public class Claim extends Application {
+public class PageCreateClaim extends VBox {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        VBox main = new VBox(); // la division de notre ecran totlae
+    public PageCreateClaim() {
+
         HBox outils = new HBox(); // la division de notre ecran totlae
         VBox bu = new VBox();
         /**
@@ -72,9 +70,9 @@ public class Claim extends Application {
         c.setAlignment(Pos.CENTER);
         c.setStyle("-fx-background-color:#c44569;-fx-text-fill:#ecf0f1");
 
-        main.setPadding(new Insets(20));
-        main.setSpacing(10);
-        main.setStyle("-fx-background-color:#192a56");
+        setPadding(new Insets(20));
+        setSpacing(10);
+        setStyle("-fx-background-color:#192a56");
         //    main.setStyle("-fx-background-image: url(\"/resources/images/alert.gif\");-fx-background-size: cover;");
 
         bu.setSpacing(15);
@@ -84,8 +82,6 @@ public class Claim extends Application {
         outils.setSpacing(30);
         outils.setAlignment(Pos.CENTER);
         outils.getChildren().addAll(textArea, bu);
-        Stage primarystage = new Stage();
-        Scene scene = new Scene(main);
 
         HBox hBox = new HBox();
         hBox.setSpacing(560);
@@ -101,12 +97,8 @@ public class Claim extends Application {
 
         vBox.getChildren().addAll(r1, r2, r3, r4, r5);
         hBox.getChildren().addAll(vBox, im);
-        main.getChildren().addAll(login, hBox, outils);
-        primarystage.setScene(scene);
-        primarystage.show();
+        getChildren().addAll(login, hBox, outils);
+
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

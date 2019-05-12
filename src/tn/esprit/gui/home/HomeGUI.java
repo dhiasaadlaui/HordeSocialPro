@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import tn.esprit.gui.login.SignupGUI;
 import tn.esprit.gui.pages.PageJobsBase;
 
-
 /**
  *
  * @author Dhia
@@ -24,21 +23,15 @@ public class HomeGUI extends HBox {
     public HomeGUI() {
 
         // ------------initialisation------------
-   
-   
-
         //-------------Styling-------------------
-    //    this.getStylesheets().add("/resources/css/theme.css");
-
+        //    this.getStylesheets().add("/resources/css/theme.css");
         getChildren().add(new SideBarBase() {
-});
-                getChildren().add(new PageJobsBase() {
-}
-                );
-  
-  
-        //-------------logic--------------------
+        });
+        getChildren().add(new PageJobsBase() {
+        }
+        );
 
+        //-------------logic--------------------
     }
 
 }
