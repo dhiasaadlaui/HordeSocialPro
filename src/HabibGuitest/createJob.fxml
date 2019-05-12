@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="788.0" prefWidth="808.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutX="137.0" layoutY="24.0" prefHeight="612.0" prefWidth="267.0">
+         <children>
+            <Label prefHeight="100.0" prefWidth="250.0" text="Job title : " textAlignment="CENTER">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label prefHeight="100.0" prefWidth="250.0" text="Category :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label prefHeight="100.0" prefWidth="250.0" text="Salary :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label prefHeight="100.0" prefWidth="250.0" text="Description :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label prefHeight="100.0" prefWidth="249.0" text="Location : ">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label prefHeight="100.0" prefWidth="250.0" text="Expire date :">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Button layoutX="449.0" layoutY="668.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" styleClass="primary" stylesheets="@../resources/css/theme.css" text="Cancel" />
+    <Button layoutX="281.0" layoutY="668.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" styleClass="primary" stylesheets="@../resources/css/theme.css" text="Post" />
+      <VBox layoutX="384.0" layoutY="24.0" prefHeight="612.0" prefWidth="321.0">
+         <children>
+            <Label prefHeight="31.0" prefWidth="98.0" />
+            <TextField prefHeight="31.0" prefWidth="267.0" />
+            <Label prefHeight="73.0" prefWidth="65.0" />
+            <TextField />
+            <Label prefHeight="68.0" prefWidth="56.0" />
+            <TextField />
+            <Label prefHeight="66.0" prefWidth="71.0" />
+            <TextArea prefHeight="90.0" prefWidth="290.0" />
+            <Label prefHeight="39.0" prefWidth="76.0" />
+            <TextField />
+            <Label prefHeight="63.0" prefWidth="70.0" />
+            <DatePicker />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
