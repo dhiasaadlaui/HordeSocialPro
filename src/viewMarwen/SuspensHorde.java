@@ -37,54 +37,39 @@ public class SuspensHorde extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         VBox main = new VBox(); // la division de notre ecran totlae
-     //   HBox te = new HBox() ;
+        //   HBox te = new HBox() ;
         ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/azer.png")));
-       logoLarge.setFitWidth(320);
+        logoLarge.setFitWidth(320);
         logoLarge.setFitHeight(330);
         main.setStyle("-fx-background-color:#34495e;");
-           // ProgressIndicator a = new ProgressIndicator() ;
-             ProgressBar a = new ProgressBar();
-             
-             
-              IntegerProperty seconds = new SimpleIntegerProperty();
-              
-               a.progressProperty().bind(seconds.divide(60.0));
-                Timeline timeline = new Timeline(
-        new KeyFrame(Duration.ZERO, new KeyValue(seconds, 0)),
-        new KeyFrame(Duration.minutes(0.5), e-> {
-            // do anything you need here on completion...
-            System.out.println("Minute over");
-        }, new KeyValue(seconds, 60))   
-    );
-    timeline.setCycleCount(Animation.INDEFINITE);
-    timeline.play();
-   
+        // ProgressIndicator a = new ProgressIndicator() ;
+        ProgressBar a = new ProgressBar();
 
-              
-    a.setMinWidth(300);
-    a.setMinHeight(25);
-           
-          
-           
-           
-           
-           
+        IntegerProperty seconds = new SimpleIntegerProperty();
+
+        a.progressProperty().bind(seconds.divide(60.0));
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(seconds, 0)),
+                new KeyFrame(Duration.minutes(0.5), e -> {
+                    // do anything you need here on completion...
+                    System.out.println("Minute over");
+                }, new KeyValue(seconds, 60))
+        );
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+        a.setMinWidth(300);
+        a.setMinHeight(25);
+
         main.setAlignment(Pos.CENTER);
         Label statusLabel = new Label();
-   //      statusLabel.setText("Loading ... ");
-       statusLabel.setStyle("-fx-font-size:25px;-fx-text-fill:#d2dae2");
-        
-        
-        
-        
-        
-      
-    //    te.getChildren().addAll(a) ;
-          main.getChildren().addAll(logoLarge ,a, statusLabel );
+        //      statusLabel.setText("Loading ... ");
+        statusLabel.setStyle("-fx-font-size:25px;-fx-text-fill:#d2dae2");
+
+        //    te.getChildren().addAll(a) ;
+        main.getChildren().addAll(logoLarge, a, statusLabel);
         Scene scene = new Scene(main);
-        
-     
-        
+
         primaryStage.setScene(scene);
         primaryStage.setScene(scene);
         primaryStage.show();
