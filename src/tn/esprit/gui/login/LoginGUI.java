@@ -163,9 +163,9 @@ public class LoginGUI extends HBox {
         });
         map = new WorldMap(400, 1000);
         leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
-        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/horde_xlarge.png")));
-        logoLarge.setFitHeight(289);
-        logoLarge.setFitWidth(187);
+        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/azer.png")));
+        logoLarge.setFitHeight(300);
+        logoLarge.setFitWidth(292);
         Region spacer = new Region();
         spacer.setPrefHeight(200);
         Region spacer2 = new Region();
