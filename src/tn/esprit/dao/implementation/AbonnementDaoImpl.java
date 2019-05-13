@@ -158,7 +158,7 @@ public final class AbonnementDaoImpl extends GenericDaoImpl implements IAbonneme
     }
 
     @Override
-    public Integer edit(Abonnement entity) throws DataBaseException {
+  public Integer edit(Abonnement entity) throws DataBaseException {
         Integer rowUpdated = 0;
         updateQuery = queriesFactory.newUpdateQuery();
         updateQuery
