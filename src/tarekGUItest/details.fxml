@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="628.0" prefWidth="736.0" style="-fx-background-color: #192a56;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@/resources/css/theme.css" />
+    </stylesheets>
+   <children>
+      <ImageView fitHeight="77.0" fitWidth="72.0" layoutX="259.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/icons/check-mark.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="338.0" layoutY="43.0" prefHeight="27.0" prefWidth="127.0" text="Tarek Chehidi" textFill="#e7e7e7">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <AnchorPane layoutX="16.0" layoutY="103.0" prefHeight="504.0" prefWidth="736.0" style="-fx-background-color: E7E7E7; -fx-background-radius: 10;">
+         <children>
+            <TilePane layoutX="14.0" layoutY="10.0" prefColumns="2" prefHeight="472.0" prefWidth="688.0" tileAlignment="TOP_LEFT">
+               <children>
+                  <ImageView fitHeight="41.0" fitWidth="51.0">
+                     <image>
+                        <Image url="@../resources/icons/network.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="38.0" prefWidth="231.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Candidate : Chehidi tarek" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/administrator.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="27.0" prefWidth="232.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Job : software Developper" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="33.0" fitWidth="45.0">
+                     <image>
+                        <Image url="@../resources/icons/wall-calendar.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="38.0" prefWidth="235.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Start Date: 10/05/2019" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="31.0" fitWidth="47.0">
+                     <image>
+                        <Image url="@../resources/icons/wall-calendar.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="33.0" prefWidth="236.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Expiration Date: 10/05/2020" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="34.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/stats.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="36.0" prefWidth="238.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Recruiter : Chiraz Fallah" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="48.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/banker.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="38.0" prefWidth="242.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css" text="Salary : 2000 DT" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="39.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/boss-2.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="32.0" prefWidth="245.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" text="Category : JEE" textFill="#0a0000">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="36.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icons/flats.png" />
+                     </image>
+                  </ImageView>
+                  <Label prefHeight="17.0" prefWidth="247.0" style="-fx-background-color: D5D5D5; -fx-background-radius: 10;" text="Company : Vermeg">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </TilePane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

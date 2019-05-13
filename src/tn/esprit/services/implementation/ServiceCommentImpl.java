@@ -18,6 +18,7 @@ import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.interfaces.IJobDao;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.Job;
 import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceComment;
@@ -29,7 +30,7 @@ import tn.esprit.services.interfaces.IServiceComment;
 public class ServiceCommentImpl implements IServiceComment {
 
     ICommentDao icomment;
-    IJobDao ijob ;
+    IJobDao ijob;
     ICompanyDao icompany;
 
     /**
@@ -37,7 +38,7 @@ public class ServiceCommentImpl implements IServiceComment {
      */
     public ServiceCommentImpl() {
         icomment = new CommentDaoImpl();
-        ijob = new JobDaoImpl() ;
+        ijob = new JobDaoImpl();
         icompany = new CompanyDaoImpl();
     }
 
@@ -68,14 +69,14 @@ public class ServiceCommentImpl implements IServiceComment {
      */
     @Override
     public Comment findByID(Integer id) throws ObjectNotFoundException {
-          try {
+        try {
             return icomment.findByID(id);
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
         }
-        
+
     }
-    
+
     /**
      *
      * @param entity
@@ -83,9 +84,9 @@ public class ServiceCommentImpl implements IServiceComment {
      * @throws ObjectNotFoundException
      */
     @Override
-    public Company getJobPoster(Comment entity)  throws ObjectNotFoundException{
+    public Company getJobPoster(Comment entity) throws ObjectNotFoundException {
         try {
-        return  icompany.findByRecruter(new User.Builder().id(ijob.findByID(entity.getJob().getId()).getCompany().getRecruiter().getId() ).build())   ;
+            return icompany.findByRecruter(new User.Builder().id(ijob.findByID(entity.getJob().getId()).getCompany().getRecruiter().getId()).build());
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
         }
@@ -99,12 +100,21 @@ public class ServiceCommentImpl implements IServiceComment {
      */
     @Override
     public List<Comment> findCommentByName(String name) throws ObjectNotFoundException {
-         try {
-    return findAll().stream().filter(e -> e.getUser().getUserName().equalsIgnoreCase(name)).collect(Collectors.toList()) ;
+        try {
+            return findAll().stream().filter(e -> e.getUser().getUserName().equalsIgnoreCase(name)).collect(Collectors.toList());
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
         }
-        
+
     }
-    
+
+    @Override
+    public List<Comment> findCommentByJob(Job job) throws ObjectNotFoundException {
+        try {
+            return findAll().stream().filter(e -> e.getJob().getId().equals(job.getId())).collect(Collectors.toList());
+        } catch (DataBaseException ex) {
+            throw new ObjectNotFoundException(ex.getMessage());
+        }
+    }
+
 }

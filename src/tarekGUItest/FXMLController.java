@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package HabibGuitest;
+package tarekGUItest;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,9 +12,9 @@ import javafx.fxml.Initializable;
 /**
  * FXML Controller class
  *
- * @author habib
+ * @author ali
  */
-public class DetailsController implements Initializable {
+public class FXMLController implements Initializable {
 
     /**
      * Initializes the controller class.
