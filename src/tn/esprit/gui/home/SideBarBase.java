@@ -1,7 +1,10 @@
 package tn.esprit.gui.home;
 
+import java.util.Optional;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.Image;
@@ -11,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.StageStyle;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
 import tn.esprit.gui.pages.PageJobsBase;
@@ -331,7 +335,23 @@ public abstract class SideBarBase extends VBox {
         hBox4.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                App.GLOBAL_PANE_BORDER.setCenter(new LoginGUI());
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                //alert.getDialogPane().setStyle("-fx-background-color:#218c74;-fx-text-fill:#ecf0f1");
+                alert.initStyle(StageStyle.UTILITY);
+
+                alert.setTitle("Confirmation");
+                alert.setHeaderText("tttttttt");
+                alert.setContentText("aaaaaa");
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.get() == ButtonType.OK) {
+                    System.out.println("okey");
+                    App.GLOBAL_PANE_BORDER.setCenter(new LoginGUI());
+                } else {
+                    System.out.println("cancel !");
+
+                }
+
             }
         });
         hBox2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
@@ -342,7 +362,7 @@ public abstract class SideBarBase extends VBox {
                 });
             }
         });
-         hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        hBox.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);

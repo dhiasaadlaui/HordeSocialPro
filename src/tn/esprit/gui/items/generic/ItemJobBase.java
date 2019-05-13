@@ -1,5 +1,6 @@
 package tn.esprit.gui.items.generic;
 
+import tn.esprit.gui.pages.PageViewJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -8,6 +9,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tn.esprit.gui.launch.App;
+import tn.esprit.gui.pages.PageJobsBase;
 
 public abstract class ItemJobBase extends Pane {
 
@@ -127,7 +130,10 @@ public abstract class ItemJobBase extends Pane {
         button.setPrefWidth(100.0);
         button.getStyleClass().add("primary");
         button.setText("View details");
-
+        button.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob() { });
+        });
         button0.setMnemonicParsing(false);
         button0.setPrefHeight(0.0);
         button0.setPrefWidth(100.0);

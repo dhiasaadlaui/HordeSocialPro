@@ -7,10 +7,7 @@ package viewMarwen;
 
 import java.util.Optional;
 import javafx.application.Application;
-import static javafx.application.ConditionalFeature.FXML;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
-import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,7 +20,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -94,7 +90,6 @@ public class Claim extends Application {
         outils.setAlignment(Pos.CENTER);
         outils.getChildren().addAll(textArea, bu);
         Stage primarystage = new Stage();
-        Scene scene = new Scene(main);
 
         HBox hBox = new HBox();
         hBox.setSpacing(560);
@@ -108,63 +103,36 @@ public class Claim extends Application {
         r4.setToggleGroup(group);
         r5.setToggleGroup(group);
 
+        s.setOnMouseClicked(e -> {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            //alert.getDialogPane().setStyle("-fx-background-color:#218c74;-fx-text-fill:#ecf0f1");
+            alert.initStyle(StageStyle.UTILITY);
 
-        s.setOnMouseClicked( e -> {
-Alert alert = new Alert ( Alert.AlertType.CONFIRMATION) ;  
-//alert.getDialogPane().setStyle("-fx-background-color:#218c74;-fx-text-fill:#ecf0f1");
-alert.initStyle(StageStyle.UTILITY);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText("tttttttt");
+            alert.setContentText("aaaaaa");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                System.out.println("okey");
+            } else {
+                System.out.println("cancel !");
 
+            }
 
-    alert.setTitle("Confirmation");
-    alert.setHeaderText("tttttttt");
-    alert.setContentText("aaaaaa");
-      Optional<ButtonType> result = alert.showAndWait() ;
-    if ( result.get()==ButtonType.OK)  {
-        System.out.println("okey");
-}
-else { System.out.println("cancel !");
-    
-    }
-        
         });
-      
-    
+
         vBox.getChildren().addAll(r1, r2, r3, r4, r5);
         hBox.getChildren().addAll(vBox, im);
         main.getChildren().addAll(login, hBox, outils);
+        Scene scene = new Scene(main);
         primarystage.setScene(scene);
         primarystage.show();
-        
-        
-        
-        
-     
-        
-        
-        
+
     }
-    
 
-    
-public  void alert (ActionEvent event) {
-
-            Alert alert = new Alert ( Alert.AlertType.CONFIRMATION) ;
-       
-       alert.setGraphic(new ImageView(new Image(getClass().getResource("ancient.png").toString())));
-     
-
-
-
-    alert.setTitle("Confirmation");
-    alert.setHeaderText("tttttttt");
-    alert.setContentText("aaaaaa");
-  
-}
     public static void main(String[] args) {
-        
-        
-        
+
         launch(args);
-      
+
     }
 }

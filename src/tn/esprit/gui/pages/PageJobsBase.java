@@ -1,6 +1,6 @@
 package tn.esprit.gui.pages;
 
-import HabibGuitest.searchJobBar;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

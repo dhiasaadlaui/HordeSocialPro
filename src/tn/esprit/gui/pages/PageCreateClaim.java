@@ -65,6 +65,9 @@ public class PageCreateClaim extends VBox {
         textArea.setStyle("-fx-background-color:#dcdde1");
         textArea.setStyle("-fx-background-image: url(\"/resources/icons/writer.png\");-fx-background-size: auto;-fx-background-repeat: no-repeat;");
         Button c = new Button("Cancel");
+        c.setOnMouseClicked(e -> {
+            ((Stage) c.getScene().getWindow()).close();
+        });
         c.setPrefWidth(150);
         c.setPrefHeight(43);
         c.setAlignment(Pos.CENTER);
