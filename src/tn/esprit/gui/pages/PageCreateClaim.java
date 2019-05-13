@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package viewMarwen;
+package tn.esprit.gui.pages;
 
-import java.util.Optional;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -24,17 +19,15 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  *
- * @author mghozzi
+ * @author mdsaadlaoui
  */
-public class Claim extends Application {
+public class PageCreateClaim extends VBox {
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        VBox main = new VBox(); // la division de notre ecran totlae
+    public PageCreateClaim() {
+
         HBox outils = new HBox(); // la division de notre ecran totlae
         VBox bu = new VBox();
         /**
@@ -72,14 +65,17 @@ public class Claim extends Application {
         textArea.setStyle("-fx-background-color:#dcdde1");
         textArea.setStyle("-fx-background-image: url(\"/resources/icons/writer.png\");-fx-background-size: auto;-fx-background-repeat: no-repeat;");
         Button c = new Button("Cancel");
+        c.setOnMouseClicked(e -> {
+            ((Stage) c.getScene().getWindow()).close();
+        });
         c.setPrefWidth(150);
         c.setPrefHeight(43);
         c.setAlignment(Pos.CENTER);
         c.setStyle("-fx-background-color:#c44569;-fx-text-fill:#ecf0f1");
 
-        main.setPadding(new Insets(20));
-        main.setSpacing(10);
-        main.setStyle("-fx-background-color:#192a56");
+        setPadding(new Insets(20));
+        setSpacing(10);
+        setStyle("-fx-background-color:#192a56");
         //    main.setStyle("-fx-background-image: url(\"/resources/images/alert.gif\");-fx-background-size: cover;");
 
         bu.setSpacing(15);
@@ -89,7 +85,6 @@ public class Claim extends Application {
         outils.setSpacing(30);
         outils.setAlignment(Pos.CENTER);
         outils.getChildren().addAll(textArea, bu);
-        Stage primarystage = new Stage();
 
         HBox hBox = new HBox();
         hBox.setSpacing(560);
@@ -103,36 +98,10 @@ public class Claim extends Application {
         r4.setToggleGroup(group);
         r5.setToggleGroup(group);
 
-        s.setOnMouseClicked(e -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            //alert.getDialogPane().setStyle("-fx-background-color:#218c74;-fx-text-fill:#ecf0f1");
-            alert.initStyle(StageStyle.UTILITY);
-
-            alert.setTitle("Confirmation");
-            alert.setHeaderText("tttttttt");
-            alert.setContentText("aaaaaa");
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                System.out.println("okey");
-            } else {
-                System.out.println("cancel !");
-
-            }
-
-        });
-
         vBox.getChildren().addAll(r1, r2, r3, r4, r5);
         hBox.getChildren().addAll(vBox, im);
-        main.getChildren().addAll(login, hBox, outils);
-        Scene scene = new Scene(main);
-        primarystage.setScene(scene);
-        primarystage.show();
+        getChildren().addAll(login, hBox, outils);
 
     }
 
-    public static void main(String[] args) {
-
-        launch(args);
-
-    }
 }

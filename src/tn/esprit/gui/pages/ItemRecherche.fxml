@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="59.0" prefWidth="796.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ToolBar layoutY="10.0" prefHeight="40.0" prefWidth="762.0" style="-fx-background-color: #34495e;">
+         <items>
+            <Label text="Filtre :" textFill="#fffefe" />
+            <TextField prefHeight="25.0" prefWidth="125.0" promptText="Insert text" />
+            <Label textFill="#fffefe" />
+            <MenuButton mnemonicParsing="false" text="Choix">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Name" />
+                <MenuItem mnemonicParsing="false" text="Company" />
+                  <MenuItem mnemonicParsing="false" text="Tous" />
+              </items>
+            </MenuButton>
+            <Label textFill="#fffefe" />
+            <Label prefHeight="27.0" prefWidth="41.0" text="Trie :" textFill="WHITE" />
+            <TextField prefHeight="25.0" prefWidth="155.0" promptText="Insert text" />
+            <MenuButton mnemonicParsing="false" text="Choix">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Name" />
+                  <MenuItem mnemonicParsing="false" text="Company" />
+               </items>
+            </MenuButton>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="success" stylesheets="@../../../../resources/css/theme.css" text="Valider" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="113.0" styleClass="danger" stylesheets="@../../../../resources/css/theme.css" text="Annule" />
+         </items>
+      </ToolBar>
+   </children>
+</AnchorPane>
