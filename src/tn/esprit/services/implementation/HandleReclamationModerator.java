@@ -10,9 +10,25 @@ package tn.esprit.services.implementation;
  * @author mghozzi
  */
 public enum HandleReclamationModerator {
+
+    /**
+     *
+     */
     REMOVE_COMMENT,    
+
+    /**
+     *
+     */
     DISABLE_JOB , 
+
+    /**
+     *
+     */
     REJECT ,
+
+    /**
+     *
+     */
     REDIRECT ,
     
     

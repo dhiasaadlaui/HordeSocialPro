@@ -26,9 +26,14 @@ public enum ReclamationStatus {
      */
     PENDING , 
     
-    
+    /**
+     *
+     */
     REDIRECTED ,
     
+    /**
+     *
+     */
     CANCELED
     
     

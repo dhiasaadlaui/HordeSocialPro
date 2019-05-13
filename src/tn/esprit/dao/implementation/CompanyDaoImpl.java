@@ -41,7 +41,7 @@ public final class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao 
         Company company = null;
         selectQuery = queriesFactory.newSelectQuery();
         selectQuery.select(queriesFactory.newAllField())
-                .from("company")
+                .from(Company.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("recruiter"), ":recruiter");
 
@@ -165,7 +165,7 @@ public final class CompanyDaoImpl extends GenericDaoImpl implements ICompanyDao 
 
         Integer rowDeleted = 1;
         deleteQuery = queriesFactory.newDeleteQuery();
-        deleteQuery.from("company")
+        deleteQuery.from(Company.class.getSimpleName().toLowerCase())
                 .where()
                 .where(queriesFactory.newStdField("recruiter"), ":recruiter");
         try {

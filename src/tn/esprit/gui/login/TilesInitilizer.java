@@ -158,8 +158,10 @@ public class TilesInitilizer  {
     private AnimationTimer  timer;
     private DoubleProperty  value;
 
-
-     public TilesInitilizer() {
+    /**
+     *
+     */
+    public TilesInitilizer() {
         long start = System.currentTimeMillis();
 
 
@@ -884,10 +886,18 @@ public class TilesInitilizer  {
      
      FlowGridPane GLOBAL_PANE ;
 
+    /**
+     *
+     * @return
+     */
     public FlowGridPane getGLOBAL_PANE() {
         return GLOBAL_PANE;
     }
 
+    /**
+     *
+     * @return
+     */
     public Tile getWorldTile() {
         return worldTile;
     }
