@@ -45,51 +45,185 @@ import tn.esprit.services.util.ServiceInputValidator;
  */
 public class SignupGUI extends HBox {
 
+    /**
+     *
+     */
     public static VBox LEFT_PANE;
+
+    /**
+     *
+     */
     public static VBox RIGHT_PANE;
 
+    /**
+     *
+     */
     public static Label USERNAME_LABEL;
+
+    /**
+     *
+     */
     public static Label FIRST_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label LAST_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label EMAIL_LABEL;
+
+    /**
+     *
+     */
     public static Label ADRESS_LABEL;
+
+    /**
+     *
+     */
     public static Label PASSWORD_LABEL;
+
+    /**
+     *
+     */
     public static Label PASSWORD_CONFIRM_LABEL;
+
+    /**
+     *
+     */
     public static Label SEXE_LABEL;
 
+    /**
+     *
+     */
     public static TextField USERNAME_TXT;
+
+    /**
+     *
+     */
     public static TextField FIRST_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField LAST_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField EMAIL_TXT;
+
+    /**
+     *
+     */
     public static TextField ADRESS_TXT;
+
+    /**
+     *
+     */
     public static PasswordField PASSWORD_TXT;
+
+    /**
+     *
+     */
     public static PasswordField PASSWORD_CONFIRM_TXT;
 
+    /**
+     *
+     */
     public static TextField COMPANY_NAME_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_DESCRIPTION_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_ADRESS_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_DOMAIN_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_IMAGE_TXT;
+
+    /**
+     *
+     */
     public static TextField COMPANY_PHONE_TXT;
 
+    /**
+     *
+     */
     public static Label COMPANY_NAME_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_DESCRIPTION_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_ADRESS_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_DOMAIN_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_IMAGE_LABEL;
+
+    /**
+     *
+     */
     public static Label COMPANY_PHONE_LABEL;
 
+    /**
+     *
+     */
     public static Button BTN_BACK;
+
+    /**
+     *
+     */
     public static Button BTN_SUBMIT;
+
+    /**
+     *
+     */
     public static Button BTN_PHOTO_CHOSE;
+
+    /**
+     *
+     */
     public static Button BTN_PHOTO_CHOSE_COMPANY;
 
     private Tile PHOTO;
     private Tile PHOTO_COMPANY;
     private Tile COUNTRY_TILE;
+
+    /**
+     *
+     */
     public static File filePhotoProfil;
     private IServiceUser serviceUser;
 
+    /**
+     *
+     * @param useRole
+     */
     public SignupGUI(UserRole useRole) {
 
         getStylesheets().add("/resources/css/theme.css");
@@ -112,30 +246,28 @@ public class SignupGUI extends HBox {
         ComboBox countries = new ComboBox(FXCollections.observableList(Arrays.asList(Country.values())));
         countries.getSelectionModel().selectFirst();
         COUNTRY_TILE = TileBuilder.create().skinType(Tile.SkinType.COUNTRY)
-                                          
-                                          .minValue(0)
-                                          .maxValue(40)
-                                          .title("Country")
-                                          .unit("Unit")
-                                          .country(Country.valueOf(countries.getValue().toString()))
-                                          .tooltipText("")
-                                          .animated(true)
-                                          .build();
+                .minValue(0)
+                .maxValue(40)
+                .title("Country")
+                .unit("Unit")
+                .country(Country.valueOf(countries.getValue().toString()))
+                .tooltipText("")
+                .animated(true)
+                .build();
 
         PHOTO = TileBuilder.create()
                 .skinType(Tile.SkinType.IMAGE)
-                
                 .image(new Image(this.getClass().getResourceAsStream("/resources/images/default.jpg")))
                 .imageMask(Tile.ImageMask.ROUND)
                 .backgroundColor(Color.TRANSPARENT)
                 .textAlignment(TextAlignment.CENTER)
                 .build();
-        
-                PHOTO_COMPANY = TileBuilder.create()
+
+        PHOTO_COMPANY = TileBuilder.create()
                 .skinType(Tile.SkinType.IMAGE)
-                
-                .image(new Image(this.getClass().getResourceAsStream("/resources/images/default.jpg")))
-                .imageMask(Tile.ImageMask.RECTANGULAR)
+                .image(new Image(this.getClass().getResourceAsStream("/resources/images/defaultcompany.jpg")))
+                .prefSize(400, 400)
+                .imageMask(Tile.ImageMask.NONE)
                 .backgroundColor(Color.TRANSPARENT)
                 .textAlignment(TextAlignment.CENTER)
                 .build();
@@ -346,15 +478,17 @@ public class SignupGUI extends HBox {
         });
         formCompany.setExpanded(false);
         if (useRole.name().equals("CANDIDATE")) {
-            LEFT_PANE.getChildren().removeAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
+            //  LEFT_PANE.getChildren().removeAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
             LEFT_PANE.getChildren().addAll(formCandidate, BTN_SUBMIT, spacer, BTN_BACK);
+            RIGHT_PANE.getChildren().addAll(PHOTO);
         }
         if (useRole.name().equals("RECRUITER")) {
-            LEFT_PANE.getChildren().removeAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
+            //     LEFT_PANE.getChildren().removeAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
             LEFT_PANE.getChildren().addAll(formCandidate, formCompany, BTN_SUBMIT, spacer, BTN_BACK);
+
+            RIGHT_PANE.getChildren().addAll(PHOTO, PHOTO_COMPANY, COUNTRY_TILE);
         }
 
-        RIGHT_PANE.getChildren().addAll(PHOTO,PHOTO_COMPANY,COUNTRY_TILE);
         this.getChildren().addAll(LEFT_PANE, RIGHT_PANE);
     }
 

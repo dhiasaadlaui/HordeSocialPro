@@ -5,12 +5,20 @@
  */
 package tn.esprit.unit.test.ui;
 
-import tn.esprit.gui.login.LoginGUI;
+import tn.esprit.gui.pages.PageViewJob;
 import javafx.application.Application;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
+
 import javafx.stage.Stage;
-import tn.esprit.entities.User;
+import tn.esprit.gui.home.HomeGUI;
+import tn.esprit.gui.home.SideBarBase;
+import tn.esprit.gui.items.generic.ItemJobBase;
+import tn.esprit.gui.items.generic.ItemReclamationBase;
+import tn.esprit.gui.pages.PageCreateClaim;
+import tn.esprit.gui.pages.PageJobsBase;
 
 /**
  *
@@ -18,50 +26,20 @@ import tn.esprit.entities.User;
  */
 public class DhiaApp extends Application {
 
-    /**
-     *
-     */
-    public static User USER_ONLINE = null;
-
-    /**
-     *
-     */
-    public static LoginGUI LOGIN_GUI;
-
-    /**
-     *
-     */
-    public static Scene GLOBAL_SCENE;
-
-    /**
-     *
-     */
-    public static Stage GLOBAL_STAGE;
-
-    /**
-     *
-     */
-    public static BorderPane GLOBAL_PANE_BORDER;
+    public DhiaApp() {
+    }
 
     @Override
     public void start(Stage primaryStage) {
         //--------initialisation-----------
-      
 
-        GLOBAL_STAGE = new Stage();
-        LOGIN_GUI = new LoginGUI();
-
-        GLOBAL_PANE_BORDER = new BorderPane();
-        GLOBAL_SCENE = new Scene(GLOBAL_PANE_BORDER);
+        Scene GLOBAL_SCENE = new Scene(new PageJobsBase() {
+        });
 
         //-----------styling----------------
-  
-        GLOBAL_PANE_BORDER.setStyle("-fx-background-color: #7f8c8d;");
-        GLOBAL_PANE_BORDER.setCenter(LOGIN_GUI);
-
         //------------logic-----------------
-        GLOBAL_STAGE.setScene(GLOBAL_SCENE);
-        GLOBAL_STAGE.show();
+        primaryStage.setScene(GLOBAL_SCENE);
+        primaryStage.show();
 
     }
 
@@ -76,7 +54,5 @@ public class DhiaApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-   
 
 }

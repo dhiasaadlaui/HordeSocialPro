@@ -52,7 +52,6 @@ public class TestMarwen {
     /**
      *
      * @param args
-     * @throws tn.esprit.services.exceptions.ObjectNotFoundException
      */
     public static void main(String[] args)  {
 

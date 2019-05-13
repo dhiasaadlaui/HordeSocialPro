@@ -18,7 +18,6 @@ import tn.esprit.gui.login.LanguageToolBar;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceUser;
-import tn.esprit.services.util.ServiceInputValidator;
 import tn.esprit.services.util.ServiceMail;
 
 /**
@@ -171,15 +170,19 @@ public class ServiceUserImpl implements IServiceUser {
     /**
      *
      * @param user
+     * @param reason
      * @throws ConstraintViolationException
      */
     @Override
-    public void banUser(User user) throws ConstraintViolationException {
+    public void banUser(User user, String reason) throws ConstraintViolationException {
 
         try {
             user.setAccountStatus(UserAccountStatus.BANNED);
             edit(user);
-        } catch (DataBaseException ex) {
+                        ServiceMail.sendMail(user.getEmail(), "SocialPro Account Banned",
+                    "Your Account has been banned for: "+reason
+                                );
+        } catch (DataBaseException | MessagingException ex) {
             throw new ConstraintViolationException(ex.getMessage());
         }
 
@@ -239,6 +242,10 @@ public class ServiceUserImpl implements IServiceUser {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public User getLoggedInUsers() {
         return loggedIn;  

@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.logging.Logger;
-import tn.esprit.gui.login.LanguageToolBar;
 
 /**
  *
@@ -40,8 +40,6 @@ public class Connexion {
     /**
      *
      */
-
-
     /**
      *
      */
@@ -86,10 +84,10 @@ public class Connexion {
             DB_URL = (String) p.get("url");
             DB_USER = (String) p.get("user");
             DB_PASSWORD = (String) p.get("password");
-            LOGGER.info("The class (" + LOGGER.getName() + ") attempting to connect database ..");
+            LOGGER.log(Level.INFO, "Attempting to connect database ..", LOGGER.getName());
             cn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 
-        } catch (IOException |SQLException e) {
+        } catch (IOException | SQLException e) {
             e.printStackTrace();// TODO: handle exception
 
         }
@@ -99,8 +97,6 @@ public class Connexion {
      *
      * @return @throws SQLException
      */
-
-
     /**
      *
      * @param query execute given querie via a new statement and return a

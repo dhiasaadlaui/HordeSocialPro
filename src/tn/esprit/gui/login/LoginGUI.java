@@ -5,7 +5,6 @@
  */
 package tn.esprit.gui.login;
 
-import eu.hansolo.tilesfx.Tile;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,7 +25,6 @@ import static tn.esprit.gui.login.LanguageToolBar.BUNDLE;
 import tn.esprit.gui.launch.App;
 
 import tn.esprit.gui.home.HomeGUI;
-import static tn.esprit.gui.launch.App.GLOBAL_PANE_BORDER;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
@@ -42,8 +40,19 @@ public class LoginGUI extends HBox {
      */
     public static Button BTN_LOGIN;
 
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_CANDIDATE;
+
+    /**
+     *
+     */
     public static Button BTN_SIGNUP_RECRUITER;
+
+    /**
+     *
+     */
     public static Button BTN_EXIT;
 
     /**
@@ -55,13 +64,25 @@ public class LoginGUI extends HBox {
      *
      */
     public static PasswordField TXT_PASSWORD;
+
+    /**
+     *
+     */
     public static Label LABEL_SIGNUP;
 
     /**
      *
      */
     public static LanguageToolBar LANGUAGE_BOX;
+
+    /**
+     *
+     */
     public static TilesInitilizer TILES;
+
+    /**
+     *
+     */
     public static WorldMap map = new WorldMap(800, 600);
 
     /**
@@ -142,9 +163,9 @@ public class LoginGUI extends HBox {
         });
         map = new WorldMap(400, 1000);
         leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
-        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/horde_xlarge.png")));
-        logoLarge.setFitHeight(289);
-        logoLarge.setFitWidth(187);
+        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/azer.png")));
+        logoLarge.setFitHeight(300);
+        logoLarge.setFitWidth(292);
         Region spacer = new Region();
         spacer.setPrefHeight(200);
         Region spacer2 = new Region();
