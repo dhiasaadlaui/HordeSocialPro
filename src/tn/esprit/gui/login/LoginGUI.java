@@ -163,7 +163,7 @@ public class LoginGUI extends HBox {
         });
         map = new WorldMap(400, 1000);
         leftPane.getChildren().addAll(LANGUAGE_BOX, map.worldMap);
-        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/logologin.png")));
+        ImageView logoLarge = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/azer.png")));
         logoLarge.setFitHeight(300);
         logoLarge.setFitWidth(292);
         Region spacer = new Region();

@@ -1,5 +1,7 @@
 package tn.esprit.gui.items.generic;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,9 +11,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import tn.esprit.entities.Comment;
 import tn.esprit.gui.pages.PageCreateClaim;
 
-public abstract class ItemCommentBase extends AnchorPane {
+public class ItemCommentBase extends AnchorPane {
 
     protected final ImageView userphoto;
     protected final TextArea textComment;
@@ -22,7 +25,7 @@ public abstract class ItemCommentBase extends AnchorPane {
     protected final Label txtUserName;
     protected final Button btnDelete;
 
-    public ItemCommentBase() {
+    public ItemCommentBase(Comment comment) {
 
         userphoto = new ImageView();
         textComment = new TextArea();
@@ -50,24 +53,24 @@ public abstract class ItemCommentBase extends AnchorPane {
         textComment.setLayoutY(17.0);
         textComment.setPrefHeight(59.0);
         textComment.setPrefWidth(348.0);
-        textComment.setText("Interesting job , i would like to contact HR Officer for more info,\n My mail");
-
+        textComment.setText(comment.getContent());
+        String DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
         labelDate.setLayoutX(374.0);
         labelDate.setLayoutY(77.0);
-        labelDate.setText("Date: 01/05/2019");
+        labelDate.setText("Date: " + comment.getDate().format(formatter));
 
         btnClaim.setLayoutX(516.0);
         btnClaim.setLayoutY(31.0);
         btnClaim.setMnemonicParsing(false);
         btnClaim.getStyleClass().add("danger");
         btnClaim.setText("!");
-        btnClaim.setOnMouseClicked(e->{
+        btnClaim.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
             Scene claimScene = new Scene(new PageCreateClaim());
             claimStage.setScene(claimScene);
             claimStage.show();
         });
-        
 
         btnRepply.setLayoutX(444.0);
         btnRepply.setLayoutY(31.0);
@@ -82,7 +85,7 @@ public abstract class ItemCommentBase extends AnchorPane {
 
         txtUserName.setLayoutX(72.0);
         txtUserName.setLayoutY(-3.0);
-        txtUserName.setText("Mehdi sarray:");
+        txtUserName.setText(comment.getUser().getFirstName() + " " + comment.getUser().getLastName() + ":");
 
         btnDelete.setLayoutX(553.0);
         btnDelete.setLayoutY(31.0);

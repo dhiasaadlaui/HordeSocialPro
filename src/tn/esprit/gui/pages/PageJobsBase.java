@@ -1,8 +1,12 @@
 package tn.esprit.gui.pages;
 
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -16,16 +20,24 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.TilePane;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Job;
 import tn.esprit.gui.items.generic.ItemJobBase;
+import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.implementation.SerivceJobImpl;
 
 public abstract class PageJobsBase extends BorderPane {
 
     protected final ImageView imageView;
     protected final TilePane tilePane;
     protected final ScrollPane scrollPane;
+    IServiceJob serviceJob;
+    List<Job> listJobs;
 
     public PageJobsBase() {
+        listJobs = new ArrayList<Job>();
 
+        serviceJob = new SerivceJobImpl();
         scrollPane = new ScrollPane();
         getStylesheets().add("/resources/css/theme.css");
         imageView = new ImageView();
@@ -39,10 +51,18 @@ public abstract class PageJobsBase extends BorderPane {
         setPadding(new Insets(0, 50, 50, 50));
         tilePane.setPrefHeight(600.0);
         tilePane.setPrefColumns(3);
-        for (int i = 0; i < 10; i++) {
-            tilePane.getChildren().add(new ItemJobBase() {
-            });
 
+        try {
+            listJobs = serviceJob.findAll();
+            for (Job job : listJobs) {
+                tilePane.getChildren().add(new ItemJobBase(job));
+            }
+
+        } catch (DataBaseException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("error connecting database");
+            alert.setContentText("error with database");
+            alert.show();
         }
 
         scrollPane.setStyle("-fx-background-color:transparent;");

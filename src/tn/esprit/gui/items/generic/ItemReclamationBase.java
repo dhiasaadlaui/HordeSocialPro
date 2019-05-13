@@ -7,8 +7,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
+import tn.esprit.entities.Reclamation;
 
-public abstract class ItemReclamationBase extends AnchorPane {
+public  class ItemReclamationBase extends AnchorPane {
 
     protected final Label label;
     protected final Label label0;
@@ -20,7 +21,7 @@ public abstract class ItemReclamationBase extends AnchorPane {
     protected final Separator separator;
     protected final Label label3;
 
-    public ItemReclamationBase() {
+    public ItemReclamationBase(Reclamation reclamation) {
 
         label = new Label();
         label0 = new Label();
@@ -42,17 +43,22 @@ public abstract class ItemReclamationBase extends AnchorPane {
         label.setLayoutY(28.0);
         label.setPrefHeight(18.0);
         label.setPrefWidth(48.0);
-        label.setText("Job1");
+        label.setText(reclamation.getJob().getTitle());
         label.setFont(new Font("Gill Sans MT", 15.0));
 
         label0.setLayoutX(483.0);
         label0.setLayoutY(28.0);
-        label0.setText("Scam");
+        label0.setText(reclamation.getType());
         label0.setFont(new Font("Gill Sans MT", 15.0));
 
         label1.setLayoutX(367.0);
         label1.setLayoutY(28.0);
-        label1.setText("Vermeg");
+        if (reclamation.getJob()!=null )
+        label1.setText(reclamation.getJob().getTitle());
+        if (reclamation.getComment()!=null)
+        label1.setText(reclamation.getComment().getJob().getTitle());
+        
+        
         label1.setFont(new Font("Gill Sans MT", 15.0));
 
         label2.setLayoutX(22.0);
@@ -60,8 +66,23 @@ public abstract class ItemReclamationBase extends AnchorPane {
         label2.setPrefHeight(32.0);
         label2.setPrefWidth(109.0);
 
-        label2.setText("Status: OPEN");
+        label2.setText("Status: "+reclamation.getStatus());
+        
+        if(reclamation.getStatus().equals("OPEN"))
         label2.getStyleClass().add("success");
+        
+        if(reclamation.getStatus().equals("CLOSED"))
+        label2.getStyleClass().add("primary");
+        
+        if(reclamation.getStatus().equals("PENDING"))
+        label2.getStyleClass().add("warning");
+     
+        if(reclamation.getStatus().equals("REDIRECTED"))
+        label2.getStyleClass().add("danger");
+        
+        if(reclamation.getStatus().equals("CANCELED"))
+        label2.getStyleClass().add("default");
+        
          label2.getStyleClass().add("button");
         menuButton.setLayoutX(631.0);
         menuButton.setLayoutY(21.0);

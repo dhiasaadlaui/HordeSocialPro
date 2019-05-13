@@ -2,9 +2,16 @@ package tn.esprit.gui.pages;
 
 import tn.esprit.gui.items.generic.ItemCommentBase;
 import java.lang.String;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,9 +24,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Comment;
+import tn.esprit.entities.Job;
+import tn.esprit.gui.launch.App;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
+import tn.esprit.services.implementation.ServiceCommentImpl;
+import tn.esprit.services.interfaces.IServiceComment;
 
-public abstract class PageViewJob extends VBox {
-    
+public class PageViewJob extends VBox {
+
     protected final AnchorPane anchorPane;
     protected final ImageView imageView;
     protected final Label label;
@@ -44,9 +58,12 @@ public abstract class PageViewJob extends VBox {
     protected final TitledPane titledPane;
     protected final ScrollPane scrollPane;
     protected final VBox commentsList;
-    
-    public PageViewJob() {
-        
+    private IServiceComment serviceComment;
+
+    public PageViewJob(Job job) {
+        List<Comment> listComments = new ArrayList<Comment>();
+        serviceComment = new ServiceCommentImpl();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         anchorPane = new AnchorPane();
         imageView = new ImageView();
         label = new Label();
@@ -71,16 +88,17 @@ public abstract class PageViewJob extends VBox {
         titledPane = new TitledPane();
         scrollPane = new ScrollPane();
         commentsList = new VBox();
-        
+
         setPrefHeight(478.0);
         setPrefWidth(1200.0);
         setStyle("-fx-background-color: #34495e;");
         getStylesheets().add("/resources/css/theme.css");
         setPadding(new Insets(20));
-        
+        setSpacing(50);
+
         anchorPane.setPrefHeight(231.0);
         anchorPane.setPrefWidth(618.0);
-        
+
         imageView.setFitHeight(100.0);
         imageView.setFitWidth(100.0);
         imageView.setLayoutX(14.0);
@@ -88,102 +106,102 @@ public abstract class PageViewJob extends VBox {
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         imageView.setImage(new Image(getClass().getResourceAsStream("/resources/images/defaultcompany.jpg")));
-        
+
         label.setLayoutX(131.0);
         label.setLayoutY(14.0);
         label.setStyle("-fx-text-fill: #FFFF;");
-        label.setText("Vermeg");
+        label.setText(job.getCompany().getName());
         label.setFont(new Font(35.0));
-        
+
         label0.setLayoutX(131.0);
         label0.setLayoutY(65.0);
         label0.setStyle("-fx-text-fill: #FFFF;");
-        label0.setText("Job Title: Software developer");
-        
+        label0.setText("Job Title: " + job.getTitle());
+
         label1.setLayoutX(659.0);
         label1.setLayoutY(14.0);
         label1.setText("Salary : 3000 EUR");
         label1.getStyleClass().add("danger");
         label1.getStyleClass().add("button");
-        
+
         label2.setLayoutX(131.0);
         label2.setLayoutY(100.0);
         label2.setStyle("-fx-text-fill: #FFFF;");
         label2.setText("Recruiter:");
-        
+
         label3.setLayoutX(131.0);
         label3.setLayoutY(137.0);
         label3.setStyle("-fx-text-fill: #FFFF;");
         label3.setText("Creation date:");
-        
+
         label4.setLayoutX(131.0);
         label4.setLayoutY(119.0);
         label4.setStyle("-fx-text-fill: #FFFF;");
         label4.setText("Category:");
-        
+
         label5.setLayoutX(131.0);
         label5.setLayoutY(155.0);
         label5.setStyle("-fx-text-fill: #FFFF;");
         label5.setText("Expire date:");
-        
+
         label6.setLayoutX(131.0);
         label6.setLayoutY(173.0);
         label6.setStyle("-fx-text-fill: #FFFF;");
         label6.setText("Location:");
-        
+
         label7.setLayoutX(131.0);
         label7.setLayoutY(191.0);
         label7.setStyle("-fx-text-fill: #FFFF;");
         label7.setText("Description:");
-        
+
         label8.setLayoutX(227.0);
         label8.setLayoutY(100.0);
         label8.setStyle("-fx-text-fill: #FFFF;");
-        label8.setText("Chiraz Fellah");
-        
+        label8.setText(job.getCompany().getRecruiter().getFirstName() + " " + job.getCompany().getRecruiter().getLastName());
+
         label9.setLayoutX(227.0);
         label9.setLayoutY(119.0);
         label9.setStyle("-fx-text-fill: #FFFF;");
-        label9.setText("Informatique");
-        
+        label9.setText(job.getCategory().getLabel());
+
         label10.setLayoutX(227.0);
         label10.setLayoutY(137.0);
         label10.setStyle("-fx-text-fill: #FFFF;");
-        label10.setText("01/05/2019");
-        
+        label10.setText(format.format(job.getCreationDate()));
+
         label11.setLayoutX(227.0);
         label11.setLayoutY(155.0);
         label11.setStyle("-fx-text-fill: #FFFF;");
-        label11.setText("02/06/2019");
-        
+        label11.setText(format.format(job.getExpireDate()));
+
         label12.setLayoutX(227.0);
         label12.setLayoutY(173.0);
         label12.setStyle("-fx-text-fill: #FFFF;");
-        label12.setText("Tunis, Tunisia");
-        
+        label12.setText(job.getLocation());
+
         textArea.setEditable(false);
         textArea.setLayoutX(227.0);
         textArea.setLayoutY(200.0);
-        textArea.setPrefHeight(51.0);
-        textArea.setPrefWidth(346.0);
-        textArea.setText("Vermeg looking for software developer with 2 years experience , with java entreprise edition");
-        
+        textArea.setPrefHeight(80.0);
+        textArea.setPrefWidth(600.0);
+        textArea.setText(job.getDescription());
+
         vBox.setLayoutX(609.0);
         vBox.setLayoutY(84.0);
         vBox.setSpacing(5.0);
-        
+
         button.setMnemonicParsing(false);
         button.setPrefHeight(32.0);
         button.setPrefWidth(150.0);
         button.getStyleClass().add("primary");
         button.setText("Appy");
-        
+
         button0.setMnemonicParsing(false);
         button0.setPrefHeight(32.0);
         button0.setPrefWidth(150.0);
         button0.getStyleClass().add("primary");
         button0.setText("Edit");
-        
+
         button1.setMnemonicParsing(false);
         button1.setPrefHeight(32.0);
         button1.setPrefWidth(76.0);
@@ -195,17 +213,15 @@ public abstract class PageViewJob extends VBox {
             claimStage.setScene(claimScene);
             claimStage.show();
         });
-        
+
         titledPane.setAnimated(false);
         titledPane.setExpanded(false);
         titledPane.setPrefHeight(500.0);
         titledPane.setPrefWidth(582.0);
         titledPane.getStyleClass().add("warning");
-        titledPane.setText("Comments (5)");
-        
         commentsList.setPrefHeight(500.0);
         commentsList.setPrefWidth(785.0);
-        
+
         TextArea textNewComment = new TextArea();
         textNewComment.setEditable(true);
         textNewComment.setLayoutX(72.0);
@@ -213,22 +229,53 @@ public abstract class PageViewJob extends VBox {
         textNewComment.setPrefHeight(59.0);
         textNewComment.setPrefWidth(600.0);
         textNewComment.setPromptText("Say some thing ...");
-        
+
         Button btnComment = new Button("Send");
+        btnComment.setOnMouseClicked(e -> {
+
+            Comment cmt = new Comment.Builder()
+                    .date(LocalDateTime.now())
+                    .content(textNewComment.getText())
+                    .user(App.USER_ONLINE)
+                    .job(job)
+                    .build();
+
+            try {
+                serviceComment.create(cmt);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
+
+            } catch (DataBaseException ex) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(ex.getMessage());
+                alert.show();
+            }
+        });
+
         btnComment.getStyleClass().add("primary");
-        
+
         HBox newCommentBox = new HBox(20, textNewComment, btnComment);
         newCommentBox.setPadding(new Insets(10));
         newCommentBox.setAlignment(Pos.BASELINE_LEFT);
-        
+
         commentsList.getChildren().add(newCommentBox);
-        for (int i = 0; i < 5; i++) {
-            commentsList.getChildren().add(new ItemCommentBase() {
-            });
+        try {
+            listComments = serviceComment.findCommentByJob(job);
+        } catch (ObjectNotFoundException ex) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(ex.getMessage());
+            alert.show();
         }
+
+        for (Comment comm : listComments) {
+            commentsList.getChildren().add(new ItemCommentBase(comm));
+        }
+
+        titledPane.setText("Comments (" + listComments.size() + ")");
+
         scrollPane.setContent(commentsList);
         titledPane.setContent(scrollPane);
-        
+
         anchorPane.getChildren().add(imageView);
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(label0);
@@ -251,6 +298,6 @@ public abstract class PageViewJob extends VBox {
         anchorPane.getChildren().add(vBox);
         getChildren().add(anchorPane);
         getChildren().add(titledPane);
-        
+
     }
 }

@@ -1,5 +1,6 @@
 package tn.esprit.gui.items.generic;
 
+import java.text.SimpleDateFormat;
 import tn.esprit.gui.pages.PageViewJob;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,10 +10,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tn.esprit.entities.Job;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.pages.PageJobsBase;
 
-public abstract class ItemJobBase extends Pane {
+public class ItemJobBase extends Pane {
 
     protected final Label label;
     protected final VBox vBox;
@@ -30,8 +32,8 @@ public abstract class ItemJobBase extends Pane {
     protected final Button button;
     protected final Button button0;
 
-    public ItemJobBase() {
-
+    public ItemJobBase(Job job) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         label = new Label();
         vBox = new VBox();
         label0 = new Label();
@@ -59,7 +61,7 @@ public abstract class ItemJobBase extends Pane {
 
         label.setLayoutX(141.0);
         label.setLayoutY(40.0);
-        label.setText("Vermeg");
+        label.setText(job.getCompany().getName());
         label.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
         label.setFont(new Font(18.0));
 
@@ -95,22 +97,22 @@ public abstract class ItemJobBase extends Pane {
 
         label4.setPrefHeight(39.0);
         label4.setPrefWidth(132.0);
-        label4.setText("Software Developper");
+        label4.setText(job.getTitle());
         label4.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         label5.setPrefHeight(52.0);
         label5.setPrefWidth(116.0);
-        label5.setText("Chiraz FELLAH");
+        label5.setText(job.getCompany().getRecruiter().getFirstName() + " " + job.getCompany().getRecruiter().getLastName());
         label5.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         label6.setPrefHeight(32.0);
         label6.setPrefWidth(77.0);
-        label6.setText("15/06/2018");
+        label6.setText(format.format(job.getCreationDate()));
         label6.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         label7.setPrefHeight(52.0);
         label7.setPrefWidth(82.0);
-        label7.setText("16/08/2018");
+        label7.setText(format.format(job.getExpireDate()));
         label7.setTextFill(javafx.scene.paint.Color.valueOf("#455051"));
 
         imageView.setFitHeight(72.0);
@@ -132,7 +134,7 @@ public abstract class ItemJobBase extends Pane {
         button.setText("View details");
         button.setOnMouseClicked(e -> {
             ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
-            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob() { });
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
         });
         button0.setMnemonicParsing(false);
         button0.setPrefHeight(0.0);

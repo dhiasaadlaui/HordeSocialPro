@@ -118,7 +118,7 @@ public abstract class SideBarBase extends VBox {
         label.setPrefHeight(38.0);
         label.setPrefWidth(220.0);
         label.setStyle("-fx-text-fill: #b8b1b1;");
-        label.setText("FirstName LastName");
+        label.setText(App.USER_ONLINE.getFirstName()+" "+App.USER_ONLINE.getLastName());
         label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         label.setFont(new Font(19.0));
 

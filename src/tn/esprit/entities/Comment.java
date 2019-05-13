@@ -39,11 +39,19 @@ public final class Comment implements Serializable {
      *
      */
     private String content;
-    
+
     /**
      *
      */
     private LocalDateTime date;
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
     /**
      *
@@ -58,7 +66,7 @@ public final class Comment implements Serializable {
         this.user = user;
         this.job = job;
         this.content = content;
-        this.date = date ;
+        this.date = date;
     }
 
     /**
@@ -90,7 +98,7 @@ public final class Comment implements Serializable {
          *
          */
         private LocalDateTime date;
-        
+
         /**
          *
          */
@@ -135,7 +143,8 @@ public final class Comment implements Serializable {
         public Builder content(String content) {
             this.content = content;
             return this;
-        } 
+        }
+
         /**
          *
          * @param date
@@ -167,7 +176,7 @@ public final class Comment implements Serializable {
      */
     @Override
     public String toString() {
-        return "Comment{" + "id=" + id + ", user=" + user.getId() + ", job id=" + job.getId() + ", content=" + content +", date=" + date;
+        return "Comment{" + "id=" + id + ", user=" + user.getId() + ", job id=" + job.getId() + ", content=" + content + ", date=" + date;
     }
 
     /**

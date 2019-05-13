@@ -8,6 +8,7 @@ import java.util.List;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Company;
+import tn.esprit.entities.Job;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 /**
  *
@@ -38,4 +39,6 @@ public interface IServiceComment extends IGenericService<Comment>{
      * @throws ObjectNotFoundException
      */
     public List<Comment> findCommentByName(String name) throws ObjectNotFoundException;
+    
+    public List<Comment> findCommentByJob(Job job) throws ObjectNotFoundException;
 }
