@@ -31,14 +31,17 @@ import org.controlsfx.control.Rating;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.Rate;
 import tn.esprit.gui.launch.App;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceCommentImpl;
 import tn.esprit.services.implementation.ServiceNotificationImpl;
+import tn.esprit.services.implementation.ServiceRateImpl;
 import tn.esprit.services.interfaces.IServiceApply;
 import tn.esprit.services.interfaces.IServiceComment;
 import tn.esprit.services.interfaces.IServiceNotification;
+import tn.esprit.services.interfaces.IServiceRate;
 
 public class PageViewJob extends VBox {
 
@@ -68,6 +71,8 @@ public class PageViewJob extends VBox {
     protected final VBox commentsList;
     private IServiceComment serviceComment;
     private IServiceNotification notificationServ;
+    private IServiceRate rateServ =  new ServiceRateImpl();
+    private List<Rate> rateList = new ArrayList();
 
     public PageViewJob(Job job) {
         List<Comment> listComments = new ArrayList<Comment>();
@@ -337,8 +342,16 @@ public class PageViewJob extends VBox {
         titledPane.setContent(scrollPane);
         Rating rate = new Rating();
         rate.setDisable(true);
-        
-        rate.setRating(3);
+        try {
+            rateList = rateServ.findByJob(job); 
+        } catch (ObjectNotFoundException ex) {
+            Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (Math.round(rateList.get(0).getNote())/rateList.size() > 0) // evading divide 0 exception
+            rate.setRating(Math.round(rateList.get(0).getNote())/rateList.size());
+        else 
+            rate.setRating(0.7);
+
         rate.setLayoutX(300.0);
         rate.setLayoutY(14.0);
         anchorPane.getChildren().add(rate);

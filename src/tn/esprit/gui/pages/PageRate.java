@@ -65,7 +65,7 @@ public class PageRate extends VBox{
         login.setStyle("-fx-font-size:29px;-fx-text-fill:#CAD3C8");
 
         try {
-            rateList = rateServ.findByJob(job); //hardcoded here must be changed
+            rateList = rateServ.findByJob(job); 
         } catch (ObjectNotFoundException ex) {
             Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -170,10 +170,6 @@ public class PageRate extends VBox{
             rateHbox = new HBox();
             scrate.setText(rateList.get(0).getJob().getTitle());
             scrate.setPrefWidth(370);
-//            Class<?> clazz = this.getClass();
-//             InputStream input = clazz.getResourceAsStream("/resources/images/icons8_star_512px.png");
-//            Image image = new Image(input);
-//            Starimg = new ImageView(image);
             ImageView im = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/icons8_star_512px.png")));
         im.setFitWidth(60);
 	im.setFitHeight(65);
