@@ -206,6 +206,15 @@ public class PageViewJob extends VBox {
         button1.setPrefHeight(32.0);
         button1.setPrefWidth(76.0);
         button1.getStyleClass().add("warning");
+
+        Button btnRate = new Button();
+        btnRate.setMnemonicParsing(false);
+        btnRate.setPrefHeight(32.0);
+        btnRate.setPrefWidth(76.0);
+        btnRate.getStyleClass().add("warning");
+        btnRate.setText("Rate");
+        
+
         button1.setText("Repport");
         button1.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
@@ -215,7 +224,7 @@ public class PageViewJob extends VBox {
         });
 
         titledPane.setAnimated(false);
-        titledPane.setExpanded(false);
+        titledPane.setExpanded(true);
         titledPane.setPrefHeight(500.0);
         titledPane.setPrefWidth(582.0);
         titledPane.getStyleClass().add("warning");
@@ -268,7 +277,22 @@ public class PageViewJob extends VBox {
         }
 
         for (Comment comm : listComments) {
-            commentsList.getChildren().add(new ItemCommentBase(comm));
+            ItemCommentBase itemCommentBase = new ItemCommentBase(comm);
+            itemCommentBase.getBtnDelete().setOnMouseClicked(e -> {
+
+                try {
+                    serviceComment.delete(itemCommentBase.getComment());
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
+                } catch (DataBaseException ex) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(ex.getMessage());
+                    alert.show();
+                }
+            });
+
+            commentsList.getChildren().add(itemCommentBase);
+
         }
 
         titledPane.setText("Comments (" + listComments.size() + ")");
@@ -294,7 +318,11 @@ public class PageViewJob extends VBox {
         anchorPane.getChildren().add(textArea);
         vBox.getChildren().add(button);
         vBox.getChildren().add(button0);
-        vBox.getChildren().add(button1);
+        
+        HBox hb = new HBox();
+        hb.getChildren().addAll(btnRate,button1);
+        hb.setSpacing(5.0);
+        vBox.getChildren().add(hb);
         anchorPane.getChildren().add(vBox);
         getChildren().add(anchorPane);
         getChildren().add(titledPane);
