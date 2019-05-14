@@ -213,6 +213,13 @@ public class PageViewJob extends VBox {
         btnRate.setPrefWidth(76.0);
         btnRate.getStyleClass().add("warning");
         btnRate.setText("Rate");
+        btnRate.setOnMouseClicked(e -> {
+            Stage claimStage = new Stage();
+            Scene claimScene = new Scene(new PageRate(job));
+            claimStage.setScene(claimScene);
+            claimStage.show();
+        
+        });
         
 
         button1.setText("Repport");
