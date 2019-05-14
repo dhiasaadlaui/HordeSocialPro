@@ -6,13 +6,16 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -28,9 +31,12 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
 import tn.esprit.gui.launch.App;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceCommentImpl;
+import tn.esprit.services.implementation.ServiceNotificationImpl;
 import tn.esprit.services.interfaces.IServiceComment;
+import tn.esprit.services.interfaces.IServiceNotification;
 
 public class PageViewJob extends VBox {
 
@@ -59,9 +65,11 @@ public class PageViewJob extends VBox {
     protected final ScrollPane scrollPane;
     protected final VBox commentsList;
     private IServiceComment serviceComment;
+    private IServiceNotification notificationServ;
 
     public PageViewJob(Job job) {
         List<Comment> listComments = new ArrayList<Comment>();
+        notificationServ = new ServiceNotificationImpl();
         serviceComment = new ServiceCommentImpl();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         anchorPane = new AnchorPane();
@@ -255,9 +263,20 @@ public class PageViewJob extends VBox {
                     .user(App.USER_ONLINE)
                     .job(job)
                     .build();
-
+            if (cmt.getContent().isEmpty()) {
+                        Alert ErrorAlert = new Alert(AlertType.ERROR);
+                        ErrorAlert.setTitle("Add Comment");
+                        String errorAlert = "Sorry , you can't add an empty comment";
+                        ErrorAlert.setContentText(errorAlert);
+                        ErrorAlert.showAndWait();}
+            else{
             try {
                 serviceComment.create(cmt);
+                try {
+                    notificationServ.craftNotification(job.getCompany(), cmt);
+                } catch (ConstraintViolationException ex) {
+                    Logger.getLogger(PageViewJob.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
 
@@ -266,7 +285,7 @@ public class PageViewJob extends VBox {
                 alert.setTitle(ex.getMessage());
                 alert.show();
             }
-        });
+        }});
 
         btnComment.getStyleClass().add("primary");
 
@@ -287,16 +306,24 @@ public class PageViewJob extends VBox {
             ItemCommentBase itemCommentBase = new ItemCommentBase(comm);
             itemCommentBase.getBtnDelete().setOnMouseClicked(e -> {
 
-                try {
+                
+                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                        alert.setTitle("Add Comment");
+                        String alertContent = "Are you sure to remove this comment ?";
+                        alert.setContentText(alertContent);
+                        Optional<ButtonType> result = alert.showAndWait();
+                    if ((result.isPresent()) && (result.get() == ButtonType.OK)) {   
+                    try {
                     serviceComment.delete(itemCommentBase.getComment());
                     ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                     ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
                 } catch (DataBaseException ex) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle(ex.getMessage());
                     alert.show();
-                }
-            });
+                }}
+            }
+            );
 
             commentsList.getChildren().add(itemCommentBase);
 
