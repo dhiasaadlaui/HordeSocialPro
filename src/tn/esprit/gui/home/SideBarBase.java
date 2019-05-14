@@ -1,6 +1,9 @@
 package tn.esprit.gui.home;
 
 import java.util.Optional;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Alert;
@@ -15,10 +18,12 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
 import tn.esprit.gui.pages.PageJobsBase;
 import tn.esprit.gui.pages.PageReclamationsBase;
+import tn.esprit.gui.pages.PageViewNotification;
 
 public abstract class SideBarBase extends VBox {
 
@@ -34,6 +39,9 @@ public abstract class SideBarBase extends VBox {
     protected final Label label2;
     protected final HBox hBox1;
     protected final ImageView imageView2;
+    protected final HBox hBoxNotif;
+    protected final ImageView imageViewNotif;
+    protected final Label labelNotif;
     protected final Label label3;
     protected final HBox hBox2;
     protected final ImageView imageView3;
@@ -58,6 +66,8 @@ public abstract class SideBarBase extends VBox {
     protected final VBox vBox2;
     protected final ImageView imageView9;
     protected final Label label11;
+    protected final VBox vBoxNotif;
+    private PageViewNotification pvn ;
 
     public SideBarBase() {
 
@@ -97,6 +107,11 @@ public abstract class SideBarBase extends VBox {
         vBox2 = new VBox();
         imageView9 = new ImageView();
         label11 = new Label();
+        hBoxNotif = new HBox();
+        imageViewNotif = new ImageView();
+        labelNotif = new Label();
+        vBoxNotif = new VBox();
+         
 
         setAlignment(javafx.geometry.Pos.TOP_CENTER);
         setMaxHeight(USE_PREF_SIZE);
@@ -187,7 +202,27 @@ public abstract class SideBarBase extends VBox {
         label3.setText("Favoris");
         label3.setFont(new Font(19.0));
         hBox1.setPadding(new Insets(0.0, 0.0, 0.0, 10.0));
-
+        
+        hBoxNotif.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+        hBoxNotif.setPrefHeight(12.0);
+        hBoxNotif.setPrefWidth(204.0);
+        hBoxNotif.setSpacing(20.0);
+        hBoxNotif.getStyleClass().add("sidebar-user-btn");
+        
+        imageViewNotif.setFitHeight(51.0);
+        imageViewNotif.setFitWidth(52.0);
+        imageViewNotif.setPickOnBounds(true);
+        imageViewNotif.setPreserveRatio(true);
+        imageViewNotif.setImage(new Image(getClass().getResource("/resources/images/icons8_Alarm_96px.png").toExternalForm()));
+        
+        labelNotif.setPrefHeight(53.0);
+        labelNotif.setPrefWidth(275.0);
+        labelNotif.setStyle("-fx-text-fill: #b8b1b1;");
+        labelNotif.setText("Notification");
+        labelNotif.setFont(new Font(19.0));
+        hBoxNotif.setPadding(new Insets(0.0, 0.0, 0.0, 10.0));
+        
+        
         hBox2.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
         hBox2.setPrefHeight(12.0);
         hBox2.setPrefWidth(204.0);
@@ -370,6 +405,14 @@ public abstract class SideBarBase extends VBox {
                 });
             }
         });
+        hBoxNotif.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewNotification(App.USER_ONLINE) {
+                });
+            }
+        });
 
         getChildren().add(imageView);
         getChildren().add(label);
@@ -384,6 +427,9 @@ public abstract class SideBarBase extends VBox {
         hBox1.getChildren().add(imageView2);
         hBox1.getChildren().add(label3);
         getChildren().add(hBox1);
+        hBoxNotif.getChildren().add(imageViewNotif);
+        hBoxNotif.getChildren().add(labelNotif);
+        getChildren().add(hBoxNotif);
         hBox2.getChildren().add(imageView3);
         hBox2.getChildren().add(label4);
         getChildren().add(hBox2);
@@ -407,6 +453,22 @@ public abstract class SideBarBase extends VBox {
         vBox2.getChildren().add(label11);
         tilePane.getChildren().add(vBox2);
         getChildren().add(tilePane);
+        
+        startPollRequests() ;
 
     }
+     public void startPollRequests() 
+     {
+            Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(7), new EventHandler<ActionEvent>() {
+
+                @Override
+                public void handle(ActionEvent event) {
+                    pvn = new PageViewNotification(App.USER_ONLINE);
+                      System.out.println("i've sent a request to the DB");
+
+                      }
+                         }));
+                fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+                fiveSecondsWonder.play();
+     }
 }

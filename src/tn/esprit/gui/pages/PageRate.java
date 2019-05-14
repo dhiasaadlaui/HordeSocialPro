@@ -46,14 +46,14 @@ public class PageRate extends VBox{
     private ImageView img;
     private ImageView Starimg;
     private HBox rateHbox;
-    
+    private List<Rate> rateList;
 
 
     public PageRate(Job job){
          HBox outils = new HBox(); // la division de notre ecran totlae
         VBox bu = new VBox();
         Rating rt = new Rating();
-        List<Rate> rateList = new ArrayList();
+       rateList = new ArrayList();
        scrate = new TitledPane();
         IServiceRate rateServ =  new ServiceRateImpl();;
         
@@ -66,6 +66,7 @@ public class PageRate extends VBox{
 
         try {
             rateList = rateServ.findByJob(job); 
+           // prepareTitlePane(rateList);
         } catch (ObjectNotFoundException ex) {
             Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,6 +90,11 @@ public class PageRate extends VBox{
             Rate rat = new Rate.Builder().job(job).candidate(App.USER_ONLINE).feedback(textArea.getText()).note(rt.getRating()).build();
             try {
             rateServ.create(rat);
+             try {
+            rateList = rateServ.findByJob(job); 
+        } catch (ObjectNotFoundException ex) {
+            Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         } catch (DataBaseException ex) {
             Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
        
@@ -182,9 +188,9 @@ public class PageRate extends VBox{
         rateHbox.getChildren().add(hachvox);
         
         }else 
-        {
+        {rateHbox = new HBox();
              HBox hachbox = new HBox() ;
-            hachbox.getChildren().add(new Label("No Rate found for this job"));
+            hachbox.getChildren().add(new Label("This job has no rate"));
             rateHbox.getChildren().add(hachbox);
         }
         scrate.setContent(rateHbox);

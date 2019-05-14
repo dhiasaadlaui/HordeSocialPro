@@ -347,7 +347,7 @@ public class PageViewJob extends VBox {
         } catch (ObjectNotFoundException ex) {
             Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (Math.round(rateList.get(0).getNote())/rateList.size() > 0) // evading divide 0 exception
+        if (!rateList.isEmpty() && Math.round(rateList.get(0).getNote())/rateList.size() > 0) // evading divide 0 exception
             rate.setRating(Math.round(rateList.get(0).getNote())/rateList.size());
         else 
             rate.setRating(0.7);
