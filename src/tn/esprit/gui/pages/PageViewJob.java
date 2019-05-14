@@ -27,6 +27,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
@@ -35,6 +36,7 @@ import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceCommentImpl;
 import tn.esprit.services.implementation.ServiceNotificationImpl;
+import tn.esprit.services.interfaces.IServiceApply;
 import tn.esprit.services.interfaces.IServiceComment;
 import tn.esprit.services.interfaces.IServiceNotification;
 
@@ -333,7 +335,13 @@ public class PageViewJob extends VBox {
 
         scrollPane.setContent(commentsList);
         titledPane.setContent(scrollPane);
-
+        Rating rate = new Rating();
+        rate.setDisable(true);
+        
+        rate.setRating(3);
+        rate.setLayoutX(300.0);
+        rate.setLayoutY(14.0);
+        anchorPane.getChildren().add(rate);
         anchorPane.getChildren().add(imageView);
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(label0);
