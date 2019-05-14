@@ -5,6 +5,9 @@
  */
 package tn.esprit.gui.pages;
 
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
@@ -15,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,6 +31,7 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.Rate;
 import tn.esprit.gui.launch.App;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceRateImpl;
 import tn.esprit.services.interfaces.IServiceRate;
 
@@ -35,12 +40,21 @@ import tn.esprit.services.interfaces.IServiceRate;
  * @author mmsarray
  */
 public class PageRate extends VBox{
-    boolean flag = true;
+
+    private boolean flag = true;
+    private TitledPane scrate;
+    private ImageView img;
+    private ImageView Starimg;
+    private HBox rateHbox;
     
+
+
     public PageRate(Job job){
          HBox outils = new HBox(); // la division de notre ecran totlae
         VBox bu = new VBox();
         Rating rt = new Rating();
+        List<Rate> rateList = new ArrayList();
+       scrate = new TitledPane();
         IServiceRate rateServ =  new ServiceRateImpl();;
         
         Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -50,8 +64,11 @@ public class PageRate extends VBox{
         Label login = new Label("Aidez nous a connaitre la raison de reclamation ! ");
         login.setStyle("-fx-font-size:29px;-fx-text-fill:#CAD3C8");
 
-
-
+        try {
+            rateList = rateServ.findByJob(job); //hardcoded here must be changed
+        } catch (ObjectNotFoundException ex) {
+            Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
         rt.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
 
         TextArea textArea = new TextArea();
@@ -61,7 +78,7 @@ public class PageRate extends VBox{
       
         im.setFitHeight(100);
         im.setFitWidth(100);
-       
+         prepareTitlePane(rateList);
         textArea.setFont(new Font(15));
         Button s = new Button("Submit");
         s.setPrefWidth(150);
@@ -117,18 +134,68 @@ public class PageRate extends VBox{
         bu.setAlignment(Pos.CENTER);
         outils.setSpacing(30);
         outils.setAlignment(Pos.CENTER);
-        outils.getChildren().addAll(textArea, bu);
+        
+        outils.getChildren().addAll(scrate,textArea, bu);
 
         HBox hBox = new HBox();
         hBox.setSpacing(560);
         VBox vBox = new VBox();
         vBox.setSpacing(5);
 
-
+        rt.setPartialRating(true);
         vBox.getChildren().addAll(rt);
         hBox.getChildren().addAll(vBox, im);
         getChildren().addAll(login, hBox, outils);
     }
+    
+    public void prepareTitlePane(List<Rate> rateList)
+    {
+        
+        scrate.setStyle(".titled-pane > .title\n"
+                + "{\n"
+                + "    -fx-background-color: rgba(0, 60, 136, 0.5);\n"
+                + "    -fx-border-color: rgba(0, 60, 136, 0.8);\n"
+                + "    -fx-font-family: 'Lucida Grande',Verdana,Geneva,Lucida,Arial,Helvetica,sans-serif;\n"
+                + "    -fx-font-size: 16px;\n"
+                + "    -fx-font-weight: bold;\n"
+                + "}\n"
+                + "\n"
+                + "\n"
+                + ".titled-pane > .title > .text\n"
+                + "{\n"
+                + "    -fx-fill: WHITE;\n"
+                + "}");
+         if (!rateList.isEmpty())
+        {
+            rateHbox = new HBox();
+            scrate.setText(rateList.get(0).getJob().getTitle());
+            scrate.setPrefWidth(370);
+//            Class<?> clazz = this.getClass();
+//             InputStream input = clazz.getResourceAsStream("/resources/images/icons8_star_512px.png");
+//            Image image = new Image(input);
+//            Starimg = new ImageView(image);
+            ImageView im = new ImageView(new Image(getClass().getResourceAsStream("/resources/images/icons8_star_512px.png")));
+        im.setFitWidth(60);
+	im.setFitHeight(65);
+        rateHbox.getChildren().add(im);
+        VBox hachvox = new VBox();
+        Label rateScore = new Label(Math.round(rateList.stream().mapToDouble(e -> e.getNote()).sum())+" Stars!!");
+        hachvox.getChildren().add(rateScore);
+        Label rateTimes = new Label("This Job Has Been rated "+rateList.size()+" times.");
+        hachvox.getChildren().add(rateTimes);
+        rateHbox.getChildren().add(hachvox);
+        
+        }else 
+        {
+             HBox hachbox = new HBox() ;
+            hachbox.getChildren().add(new Label("No Rate found for this job"));
+            rateHbox.getChildren().add(hachbox);
+        }
+        scrate.setContent(rateHbox);
+        
+    }
+    
+    
     
    
     
