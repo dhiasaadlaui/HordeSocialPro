@@ -351,7 +351,19 @@ public class SignupGUI extends HBox {
         // ---------- logic ----------------
         BTN_SUBMIT.setOnAction(e -> {
             try {
-                serviceUser.signUp(new User.Builder().build());
+                serviceUser.signUp(new User.Builder()
+                        .firstName(FIRST_NAME_TXT.getText())
+                        .lastName(LAST_NAME_TXT.getText())
+                        .userName(USERNAME_TXT.getText())
+                        .email(EMAIL_TXT.getText())
+                        .adress(ADRESS_TXT.getText())
+                        .password(PASSWORD_TXT.getText())
+                        .build());
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("success d'inscription");
+                alert.show();
+                App.GLOBAL_PANE_BORDER.setCenter(new LoginGUI());
+
             } catch (ConstraintViolationException ex) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(ex.getMessage());
