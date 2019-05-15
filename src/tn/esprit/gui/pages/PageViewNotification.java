@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tn.esprit.gui.pages;
 
 import java.util.ArrayList;
@@ -51,9 +46,9 @@ public class PageViewNotification extends BorderPane {
     ObservableList<Notification> observableList = FXCollections.observableArrayList();
     private IServiceNotification notificationServ = new ServiceNotificationImpl();
     private List<Notification> notifyMe = new ArrayList<>();
-    public static int NotifNumber= 0;
-    private boolean flag=true;
-   
+    public static int NotifNumber = 0;
+    private boolean flag = true;
+
     public PageViewNotification(User user) {
         hbox = new HBox();
         getStylesheets().add("/resources/css/theme.css");
@@ -71,11 +66,11 @@ public class PageViewNotification extends BorderPane {
         hbox.setPrefWidth(1500.0);
         hbox.setPadding(new Insets(20));
         hbox.setSpacing(50);
-       
+
     }
 
     public void setListView(User user) {
-         Notifications NotificationsBuilder = Notifications.create()
+        Notifications NotificationsBuilder = Notifications.create()
                 .darkStyle()
                 .title("Social Pro")
                 .text("You Have a New Notification")
@@ -93,7 +88,7 @@ public class PageViewNotification extends BorderPane {
         try {
 
             notificationList = notificationServ.findAll().stream().filter(e -> e.getCompany().getRecruiter().equals(App.USER_ONLINE)).collect(Collectors.toList());
-            System.out.println(notificationList.get(0).toString());
+            // System.out.println(notificationList.get(0).toString());
         } catch (DataBaseException ex) {
             Logger.getLogger(PageViewNotification.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -119,11 +114,11 @@ public class PageViewNotification extends BorderPane {
                             Logger.getLogger(PageViewNotification.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         notificationList.remove(ntf);
-                        NotifNumber=notificationList.size();
-                        
+                        NotifNumber = notificationList.size();
+
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(ntf.getJob()));
-                        
+
                     }
                 });
 
@@ -134,23 +129,18 @@ public class PageViewNotification extends BorderPane {
         listView.setOnMouseClicked(e -> {
             System.out.println("You clicked on an empty cell");
         });
-        
-        
-           if ( !notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
+//  if ((!notifyMe.isEmpty()) && (notifyMe.size() < notificationList.size() || (notifyMe.size() == 1) && (notificationList.size() == 1))) {
+        if (!notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
             NotificationsBuilder.showInformation();
             System.out.println(notifyMe.size());
             notifyMe = new ArrayList(notificationList);
-           
-        }
-           
-     
-        notifyMe = new ArrayList(notificationList);
-        
-        NotifNumber=notificationList.size();
-        
 
+        }
+
+        notifyMe = new ArrayList(notificationList);
+
+        NotifNumber = notificationList.size();
 
     }
-   
 
 }
