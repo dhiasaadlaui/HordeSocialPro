@@ -5,19 +5,14 @@
  */
 package tn.esprit.unit.test.ui;
 
-import tn.esprit.gui.pages.PageViewJob;
 import javafx.application.Application;
-import javafx.print.PrinterJob;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
+
 
 import javafx.stage.Stage;
-import tn.esprit.gui.home.HomeGUI;
-import tn.esprit.gui.home.SideBarBase;
-import tn.esprit.gui.items.generic.ItemJobBase;
-import tn.esprit.gui.items.generic.ItemReclamationBase;
-import tn.esprit.gui.pages.PageCreateClaim;
+import tn.esprit.gui.pages.PageAdminProcessJobs;
+
 import tn.esprit.gui.pages.PageJobsBase;
 
 /**
@@ -33,8 +28,9 @@ public class DhiaApp extends Application {
     public void start(Stage primaryStage) {
         //--------initialisation-----------
 
-        Scene GLOBAL_SCENE = new Scene(new PageJobsBase() {
-        });
+        PageAdminProcessJobs main = new PageAdminProcessJobs();
+        
+        Scene GLOBAL_SCENE = new Scene(new PageAdminProcessJobs() );
 
         //-----------styling----------------
         //------------logic-----------------

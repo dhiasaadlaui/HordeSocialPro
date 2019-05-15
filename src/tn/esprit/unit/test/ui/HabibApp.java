@@ -5,6 +5,15 @@
  */
 package tn.esprit.unit.test.ui;
 
+import HabibGuitest.CountdonwJob;
+import eu.hansolo.tilesfx.Tile;
+import eu.hansolo.tilesfx.TileBuilder;
+import eu.hansolo.tilesfx.tools.Helper;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import tn.esprit.gui.login.LoginGUI;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -22,48 +31,22 @@ public class HabibApp extends Application {
     /**
      *
      */
-    public static User USER_ONLINE = null;
-
-    /**
-     *
-     */
-    public static LoginGUI LOGIN_GUI;
-
-    /**
-     *
-     */
-    public static Scene GLOBAL_SCENE;
-
-    /**
-     *
-     */
-    public static Stage GLOBAL_STAGE;
-
-    /**
-     *
-     */
-    public static BorderPane GLOBAL_PANE_BORDER;
-
     @Override
     public void start(Stage primaryStage) {
         //--------initialisation-----------
-      
-
-        GLOBAL_STAGE = new Stage();
-        LOGIN_GUI = new LoginGUI();
-
-        GLOBAL_PANE_BORDER = new BorderPane();
-        GLOBAL_SCENE = new Scene(GLOBAL_PANE_BORDER);
-
-        //-----------styling----------------
-  
-        GLOBAL_PANE_BORDER.setStyle("-fx-background-color: #7f8c8d;");
-        GLOBAL_PANE_BORDER.setCenter(LOGIN_GUI);
-
-        //------------logic-----------------
-        GLOBAL_STAGE.setScene(GLOBAL_SCENE);
-        GLOBAL_STAGE.show();
-
+    String pattern = "yyyy-MM-dd";
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        try {
+            Date expireDate = simpleDateFormat.parse("2019-05-16");
+     
+        
+        CountdonwJob countdonwJob = new CountdonwJob(expireDate);
+        Scene scene = new Scene(countdonwJob);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+   } catch (ParseException ex) {
+            Logger.getLogger(HabibApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -77,7 +60,5 @@ public class HabibApp extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-   
 
 }

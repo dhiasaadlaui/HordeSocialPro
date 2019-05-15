@@ -6,13 +6,16 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -24,13 +27,21 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.controlsfx.control.Rating;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.Rate;
 import tn.esprit.gui.launch.App;
+import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceCommentImpl;
+import tn.esprit.services.implementation.ServiceNotificationImpl;
+import tn.esprit.services.implementation.ServiceRateImpl;
+import tn.esprit.services.interfaces.IServiceApply;
 import tn.esprit.services.interfaces.IServiceComment;
+import tn.esprit.services.interfaces.IServiceNotification;
+import tn.esprit.services.interfaces.IServiceRate;
 
 public class PageViewJob extends VBox {
 
@@ -59,9 +70,13 @@ public class PageViewJob extends VBox {
     protected final ScrollPane scrollPane;
     protected final VBox commentsList;
     private IServiceComment serviceComment;
+    private IServiceNotification notificationServ;
+    private IServiceRate rateServ =  new ServiceRateImpl();
+    private List<Rate> rateList = new ArrayList();
 
     public PageViewJob(Job job) {
         List<Comment> listComments = new ArrayList<Comment>();
+        notificationServ = new ServiceNotificationImpl();
         serviceComment = new ServiceCommentImpl();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         anchorPane = new AnchorPane();
@@ -206,6 +221,22 @@ public class PageViewJob extends VBox {
         button1.setPrefHeight(32.0);
         button1.setPrefWidth(76.0);
         button1.getStyleClass().add("warning");
+
+        Button btnRate = new Button();
+        btnRate.setMnemonicParsing(false);
+        btnRate.setPrefHeight(32.0);
+        btnRate.setPrefWidth(76.0);
+        btnRate.getStyleClass().add("warning");
+        btnRate.setText("Rate");
+        btnRate.setOnMouseClicked(e -> {
+            Stage claimStage = new Stage();
+            Scene claimScene = new Scene(new PageRate(job));
+            claimStage.setScene(claimScene);
+            claimStage.show();
+        
+        });
+        
+
         button1.setText("Repport");
         button1.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
@@ -215,7 +246,7 @@ public class PageViewJob extends VBox {
         });
 
         titledPane.setAnimated(false);
-        titledPane.setExpanded(false);
+        titledPane.setExpanded(true);
         titledPane.setPrefHeight(500.0);
         titledPane.setPrefWidth(582.0);
         titledPane.getStyleClass().add("warning");
@@ -239,9 +270,21 @@ public class PageViewJob extends VBox {
                     .user(App.USER_ONLINE)
                     .job(job)
                     .build();
-
+            if (cmt.getContent().isEmpty()) {
+                        Alert ErrorAlert = new Alert(AlertType.ERROR);
+                        ErrorAlert.setTitle("Add Comment");
+                        String errorAlert = "Sorry , you can't add an empty comment";
+                        ErrorAlert.setContentText(errorAlert);
+                        ErrorAlert.showAndWait();}
+            else{
             try {
                 serviceComment.create(cmt);
+                try {
+                    if (!job.getCompany().getRecruiter().equals(App.USER_ONLINE))
+                    notificationServ.craftNotification(job.getCompany(), cmt); // not getting a notification on your OWN POST
+                } catch (ConstraintViolationException ex) {
+                    Logger.getLogger(PageViewJob.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
 
@@ -250,7 +293,7 @@ public class PageViewJob extends VBox {
                 alert.setTitle(ex.getMessage());
                 alert.show();
             }
-        });
+        }});
 
         btnComment.getStyleClass().add("primary");
 
@@ -268,14 +311,51 @@ public class PageViewJob extends VBox {
         }
 
         for (Comment comm : listComments) {
-            commentsList.getChildren().add(new ItemCommentBase(comm));
+            ItemCommentBase itemCommentBase = new ItemCommentBase(comm);
+            itemCommentBase.getBtnDelete().setOnMouseClicked(e -> {
+
+                
+                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                        alert.setTitle("Add Comment");
+                        String alertContent = "Are you sure to remove this comment ?";
+                        alert.setContentText(alertContent);
+                        Optional<ButtonType> result = alert.showAndWait();
+                    if ((result.isPresent()) && (result.get() == ButtonType.OK)) {   
+                    try {
+                    serviceComment.delete(itemCommentBase.getComment());
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
+                } catch (DataBaseException ex) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(ex.getMessage());
+                    alert.show();
+                }}
+            }
+            );
+
+            commentsList.getChildren().add(itemCommentBase);
+
         }
 
         titledPane.setText("Comments (" + listComments.size() + ")");
 
         scrollPane.setContent(commentsList);
         titledPane.setContent(scrollPane);
+        Rating rate = new Rating();
+        rate.setDisable(true);
+        try {
+            rateList = rateServ.findByJob(job); 
+        } catch (ObjectNotFoundException ex) {
+            Logger.getLogger(PageRate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (!rateList.isEmpty() && Math.round(rateList.get(0).getNote())/rateList.size() > 0) // evading divide 0 exception
+            rate.setRating(Math.round(rateList.get(0).getNote())/rateList.size());
+        else 
+            rate.setRating(0.7);
 
+        rate.setLayoutX(300.0);
+        rate.setLayoutY(14.0);
+        anchorPane.getChildren().add(rate);
         anchorPane.getChildren().add(imageView);
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(label0);
@@ -294,7 +374,11 @@ public class PageViewJob extends VBox {
         anchorPane.getChildren().add(textArea);
         vBox.getChildren().add(button);
         vBox.getChildren().add(button0);
-        vBox.getChildren().add(button1);
+        
+        HBox hb = new HBox();
+        hb.getChildren().addAll(btnRate,button1);
+        hb.setSpacing(5.0);
+        vBox.getChildren().add(hb);
         anchorPane.getChildren().add(vBox);
         getChildren().add(anchorPane);
         getChildren().add(titledPane);

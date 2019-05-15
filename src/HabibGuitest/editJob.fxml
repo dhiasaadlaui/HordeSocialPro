@@ -46,7 +46,7 @@
          </children>
       </VBox>
       <Button layoutX="860.0" layoutY="302.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" styleClass="danger" stylesheets="@../resources/css/theme.css" text="Cancel" />
-    <Button layoutX="860.0" layoutY="211.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" styleClass="success" stylesheets="@../resources/css/theme.css" text="Post" />
+    <Button layoutX="860.0" layoutY="211.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="88.0" styleClass="success" stylesheets="@../resources/css/theme.css" text="Save" />
       <VBox layoutX="384.0" layoutY="115.0" prefHeight="521.0" prefWidth="321.0" spacing="22.0">
          <children>
             <TextField prefHeight="2.0" prefWidth="321.0" />
@@ -57,7 +57,7 @@
             <DatePicker />
          </children>
       </VBox>
-      <Label layoutX="82.0" layoutY="51.0" style="-fx-border-color: #4B515D;" styleClass="primary" stylesheets="@../resources/css/theme.css" text="Create your job offer" textFill="#c1cdfc">
+      <Label layoutX="82.0" layoutY="51.0" style="-fx-border-color: #4B515D;" styleClass="primary" stylesheets="@../resources/css/theme.css" text="Edit your job offer" textFill="#c1cdfc">
          <font>
             <Font size="30.0" />
          </font>
