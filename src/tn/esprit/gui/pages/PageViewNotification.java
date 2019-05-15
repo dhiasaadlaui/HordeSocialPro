@@ -15,9 +15,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -39,25 +46,36 @@ import tn.esprit.services.interfaces.IServiceNotification;
 public class PageViewNotification extends BorderPane {
 
     private ListView listView;
-    private Text topText = new Text("Notification List");
     private HBox hbox;
     private List<Notification> notificationList = new ArrayList();
     ObservableList<Notification> observableList = FXCollections.observableArrayList();
     private IServiceNotification notificationServ = new ServiceNotificationImpl();
     private List<Notification> notifyMe = new ArrayList<>();
-
+    public static int NotifNumber= 0;
+    private boolean flag=true;
+   
     public PageViewNotification(User user) {
         hbox = new HBox();
         getStylesheets().add("/resources/css/theme.css");
         listView = new ListView();
+        listView.setPrefWidth(600);
+//       
+        setStyle("-fx-background-image: url(\"/resources/images/background_1.jpg\");-fx-background-repeat: stretch;   \n"
+                + "    -fx-background-position: center center;\n"
+                + " -fx-background-size: cover, auto;");
+        listView.setPrefHeight(50);
         setListView(App.USER_ONLINE);
         hbox.getChildren().add(listView);
-        setTop(topText);
         setCenter(hbox);
+        hbox.setPrefHeight(500);
+        hbox.setPrefWidth(1500.0);
+        hbox.setPadding(new Insets(20));
+        hbox.setSpacing(50);
+       
     }
 
     public void setListView(User user) {
-        Notifications NotificationsBuilder = Notifications.create()
+         Notifications NotificationsBuilder = Notifications.create()
                 .darkStyle()
                 .title("Social Pro")
                 .text("You Have a New Notification")
@@ -100,10 +118,14 @@ public class PageViewNotification extends BorderPane {
                         } catch (DataBaseException ex) {
                             Logger.getLogger(PageViewNotification.class.getName()).log(Level.SEVERE, null, ex);
                         }
+                        notificationList.remove(ntf);
+                        NotifNumber=notificationList.size();
                         
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(ntf.getJob()));
                         
+//                        System.out.println("From delete"+NotifNumber);
+//                        System.out.println("From delete"+PageViewNotification.NotifNumber);
                     }
                 });
 
@@ -114,13 +136,23 @@ public class PageViewNotification extends BorderPane {
         listView.setOnMouseClicked(e -> {
             System.out.println("You clicked on an empty cell");
         });
-
-        if (!notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
-            NotificationsBuilder.showInformation();
-        }
         
+        
+           if ( !notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
+            NotificationsBuilder.showInformation();
+            System.out.println(notifyMe.size());
+            notifyMe = new ArrayList(notificationList);
+           
+        }
+           
+     
         notifyMe = new ArrayList(notificationList);
+        
+        NotifNumber=notificationList.size();
+        
+
 
     }
+   
 
 }

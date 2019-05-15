@@ -280,7 +280,8 @@ public class PageViewJob extends VBox {
             try {
                 serviceComment.create(cmt);
                 try {
-                    notificationServ.craftNotification(job.getCompany(), cmt);
+                    if (!job.getCompany().getRecruiter().equals(App.USER_ONLINE))
+                    notificationServ.craftNotification(job.getCompany(), cmt); // not getting a notification on your OWN POST
                 } catch (ConstraintViolationException ex) {
                     Logger.getLogger(PageViewJob.class.getName()).log(Level.SEVERE, null, ex);
                 }

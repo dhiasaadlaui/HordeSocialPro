@@ -67,7 +67,8 @@ public abstract class SideBarBase extends VBox {
     protected final ImageView imageView9;
     protected final Label label11;
     protected final VBox vBoxNotif;
-    private PageViewNotification pvn ;
+    private PageViewNotification pvn = new PageViewNotification(App.USER_ONLINE);
+   
 
     public SideBarBase() {
 
@@ -218,7 +219,7 @@ public abstract class SideBarBase extends VBox {
         labelNotif.setPrefHeight(53.0);
         labelNotif.setPrefWidth(275.0);
         labelNotif.setStyle("-fx-text-fill: #b8b1b1;");
-        labelNotif.setText("Notification");
+        labelNotif.setText("Notification("+PageViewNotification.NotifNumber+")");
         labelNotif.setFont(new Font(19.0));
         hBoxNotif.setPadding(new Insets(0.0, 0.0, 0.0, 10.0));
         
@@ -463,8 +464,9 @@ public abstract class SideBarBase extends VBox {
 
                 @Override
                 public void handle(ActionEvent event) {
-                    pvn = new PageViewNotification(App.USER_ONLINE);
-                      System.out.println("i've sent a request to the DB");
+                        pvn.setListView(App.USER_ONLINE);
+                     
+                     System.out.println(PageViewNotification.NotifNumber);
 
                       }
                          }));
