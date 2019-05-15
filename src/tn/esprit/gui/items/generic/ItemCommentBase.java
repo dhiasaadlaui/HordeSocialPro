@@ -12,7 +12,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tn.esprit.entities.Comment;
+import tn.esprit.gui.launch.App;
 import tn.esprit.gui.pages.PageCreateClaim;
+import tn.esprit.services.interfaces.IServiceComment;
 
 public class ItemCommentBase extends AnchorPane {
 
@@ -24,9 +26,18 @@ public class ItemCommentBase extends AnchorPane {
     protected final Separator separator;
     protected final Label txtUserName;
     protected final Button btnDelete;
+    private Comment comment;
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public Button getBtnDelete() {
+        return btnDelete;
+    }
 
     public ItemCommentBase(Comment comment) {
-
+        this.comment = comment;
         userphoto = new ImageView();
         textComment = new TextArea();
         labelDate = new Label();
@@ -100,6 +111,7 @@ public class ItemCommentBase extends AnchorPane {
         getChildren().add(btnRepply);
         getChildren().add(separator);
         getChildren().add(txtUserName);
+        if((App.USER_ONLINE.getAuthorization().equals("ADMINISTRATOR"))||(App.USER_ONLINE.equals(comment.getUser())))
         getChildren().add(btnDelete);
 
     }
