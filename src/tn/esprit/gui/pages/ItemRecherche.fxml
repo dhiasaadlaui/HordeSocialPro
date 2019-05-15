@@ -22,7 +22,6 @@
                   <MenuItem mnemonicParsing="false" text="Tous" />
               </items>
             </MenuButton>
-            <Label textFill="#fffefe" />
             <Label prefHeight="27.0" prefWidth="41.0" text="Trie :" textFill="WHITE" />
             <TextField prefHeight="25.0" prefWidth="155.0" promptText="Insert text" />
             <MenuButton mnemonicParsing="false" text="Choix">
