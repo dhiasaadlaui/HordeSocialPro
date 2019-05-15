@@ -18,7 +18,7 @@
    <children>
       <ScrollPane layoutX="11.0" layoutY="136.0">
          <content>
-            <VBox alignment="TOP_CENTER" prefHeight="434.0" prefWidth="779.0" spacing="20.0" style="-fx-background-color: E7E7E7; -fx-background-radius: 10;" styleClass="s">
+            <VBox alignment="TOP_CENTER" prefHeight="424.0" prefWidth="770.0" spacing="20.0" style="-fx-background-color: E7E7E7; -fx-background-radius: 10;" styleClass="s">
                <children>
                   <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="776.0" spacing="1.0" style="-fx-background-color: #A4A4A4; -fx-background-radius: 10;" stylesheets="@../resources/css/theme.css">
                      <children>
