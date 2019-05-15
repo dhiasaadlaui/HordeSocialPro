@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
+import tn.esprit.gui.pages.PageAdminProcessJobs;
 import tn.esprit.gui.pages.PageJobsBase;
 import tn.esprit.gui.pages.PageReclamationsBase;
 
@@ -118,7 +119,7 @@ public abstract class SideBarBase extends VBox {
         label.setPrefHeight(38.0);
         label.setPrefWidth(220.0);
         label.setStyle("-fx-text-fill: #b8b1b1;");
-        label.setText(App.USER_ONLINE.getFirstName()+" "+App.USER_ONLINE.getLastName());
+        label.setText(App.USER_ONLINE.getFirstName() + " " + App.USER_ONLINE.getLastName());
         label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         label.setFont(new Font(19.0));
 
@@ -368,6 +369,13 @@ public abstract class SideBarBase extends VBox {
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageJobsBase() {
                 });
+            }
+        });
+        vBox1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageAdminProcessJobs());
             }
         });
 

@@ -16,8 +16,8 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
  *
  * @author habib
  */
-public interface IServiceJob extends IGenericService<Job>{
-       
+public interface IServiceJob extends IGenericService<Job> {
+
     /**
      *
      * @param id
@@ -25,7 +25,7 @@ public interface IServiceJob extends IGenericService<Job>{
      * @throws ObjectNotFoundException
      */
     Job findByID(Integer id) throws ObjectNotFoundException;
-        
+
     /**
      *
      * @param job
@@ -54,14 +54,14 @@ public interface IServiceJob extends IGenericService<Job>{
      *
      * @param job
      */
-    void jobActivation(Job job);
-       
+    void jobActivation(Job job) throws ConstraintViolationException;
+
     /**
      *
      * @param job
      */
-    void jobDisable (Job job);
-       
+    void jobDisable(Job job) throws ConstraintViolationException;
+
     /**
      *
      * @param job
@@ -69,9 +69,5 @@ public interface IServiceJob extends IGenericService<Job>{
      * @throws ConstraintViolationException
      */
     void postJob(Job job, User loggedUser) throws ConstraintViolationException;
-        
-        
-         
-        
 
 }
