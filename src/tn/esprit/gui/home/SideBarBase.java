@@ -219,7 +219,7 @@ public abstract class SideBarBase extends VBox {
         labelNotif.setPrefHeight(53.0);
         labelNotif.setPrefWidth(275.0);
         labelNotif.setStyle("-fx-text-fill: #b8b1b1;");
-        labelNotif.setText("Notification("+PageViewNotification.NotifNumber+")");
+        labelNotif.setText("Notification");
         labelNotif.setFont(new Font(19.0));
         hBoxNotif.setPadding(new Insets(0.0, 0.0, 0.0, 10.0));
         

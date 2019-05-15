@@ -124,8 +124,6 @@ public class PageViewNotification extends BorderPane {
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                         ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(ntf.getJob()));
                         
-//                        System.out.println("From delete"+NotifNumber);
-//                        System.out.println("From delete"+PageViewNotification.NotifNumber);
                     }
                 });
 
