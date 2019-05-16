@@ -23,6 +23,7 @@ import javafx.scene.layout.TilePane;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
 import tn.esprit.gui.items.generic.ItemJobBase;
+import tn.esprit.gui.launch.App;
 import tn.esprit.services.interfaces.IServiceJob;
 import tn.esprit.services.implementation.SerivceJobImpl;
 
@@ -92,7 +93,7 @@ public abstract class PageJobsBase extends BorderPane {
         TextField textField = new TextField();
         Region region1 = new Region();
         Region region5 = new Region();
-        Button btnSearch = new Button();
+        Button btnCreate = new Button();
 
         searchBar.setAlignment(Pos.BASELINE_LEFT);
 
@@ -150,13 +151,17 @@ public abstract class PageJobsBase extends BorderPane {
         region1.setPrefHeight(26.0);
         region1.setPrefWidth(100.0);
 
-        btnSearch.setMnemonicParsing(false);
+        btnCreate.setMnemonicParsing(false);
 
-        btnSearch.setText("Create");
+        btnCreate.setText("Create");
+        btnCreate.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageCreateJob());
+        });
 
         menuButton.getStyleClass().add("primary");
         menuButton0.getStyleClass().add("primary");
-        btnSearch.getStyleClass().add("success");
+        btnCreate.getStyleClass().add("success");
 
         menuButton.getItems().add(menuItem);
         menuButton.getItems().add(menuItem0);
@@ -168,7 +173,7 @@ public abstract class PageJobsBase extends BorderPane {
         menuButton0.getItems().add(menuItem6);
         menuButton0.getItems().add(menuItem7);
         menuButton0.getItems().add(menuItem8);
-        searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1, btnSearch);
+        searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1, btnCreate);
 
         setTop(searchBar);
 

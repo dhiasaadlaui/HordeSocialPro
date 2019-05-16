@@ -12,6 +12,7 @@ import eu.hansolo.tilesfx.fonts.Fonts;
 import eu.hansolo.tilesfx.tools.Helper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javafx.animation.AnimationTimer;
@@ -56,17 +57,21 @@ public class CountdonwJob extends HBox {
         hours = createTile("HOURS", "0");
         minutes = createTile("MINUTES", "0");
         seconds = createTile("SECONDS", "0");
-Date now = new Date();
- double year = expireDate.getYear() -now.getYear() ;
-double month = expireDate.getMonth() - now.getMonth() ;
-double day = expireDate.getDay() - now.getDay();
- double hour = expireDate.getHours()- now.getHours();
- double mins = expireDate.getMinutes() - now.getMinutes() ;
- 
-double numberOfDays = year*360+month*30+day;
-double numberOfhours = numberOfDays*24+hour+(mins/60);
+        Date now = new Date();
+        double year = expireDate.getYear() - now.getYear();
+        System.out.println(year);
+        double month = expireDate.getMonth() - now.getMonth();
+        System.out.println(month);
+        double day = expireDate.getDay() - now.getDay();
+        System.out.println(day);
+        double hour = expireDate.getHours() - LocalTime.now().getHour();
+        System.out.println(hour);
+        double mins = expireDate.getMinutes() - LocalTime.now().getMinute();
+
+        double numberOfDays = year * 360 + month * 30 + day;
+        double numberOfhours = numberOfDays * 24 + hour + (mins / 60);
         duration = Duration.hours(numberOfhours);
-        
+
         lastTimerCall = System.nanoTime();
         timer = new AnimationTimer() {
             @Override

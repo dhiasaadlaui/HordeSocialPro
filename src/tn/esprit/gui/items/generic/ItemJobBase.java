@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import tn.esprit.entities.Job;
 import tn.esprit.gui.launch.App;
+import tn.esprit.gui.pages.PageEditJob;
 import tn.esprit.gui.pages.PageJobsBase;
 
 public class ItemJobBase extends Pane {
@@ -141,6 +142,10 @@ public class ItemJobBase extends Pane {
         button0.setPrefWidth(100.0);
         button0.getStyleClass().add("success");
         button0.setText("Edit");
+        button0.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageEditJob(job));
+        });
 
         getChildren().add(label);
         vBox.getChildren().add(label0);
@@ -155,6 +160,7 @@ public class ItemJobBase extends Pane {
         getChildren().add(vBox0);
         getChildren().add(imageView);
         hBox.getChildren().add(button);
+        if(job.getCompany().getRecruiter().equals(App.USER_ONLINE))
         hBox.getChildren().add(button0);
         getChildren().add(hBox);
 

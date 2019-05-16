@@ -9,9 +9,9 @@ import javafx.application.Application;
 
 import javafx.scene.Scene;
 
-
 import javafx.stage.Stage;
 import tn.esprit.gui.pages.PageAdminProcessJobs;
+import tn.esprit.gui.pages.PageCreateJob;
 
 import tn.esprit.gui.pages.PageJobsBase;
 
@@ -29,8 +29,8 @@ public class DhiaApp extends Application {
         //--------initialisation-----------
 
         PageAdminProcessJobs main = new PageAdminProcessJobs();
-        
-        Scene GLOBAL_SCENE = new Scene(new PageAdminProcessJobs() );
+
+        Scene GLOBAL_SCENE = new Scene(new PageCreateJob());
 
         //-----------styling----------------
         //------------logic-----------------
