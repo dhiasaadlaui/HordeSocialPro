@@ -52,7 +52,6 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
                         .photo(resultSet.getString("photo"))
                         .accountStatus(Enum.valueOf(UserAccountStatus.class, resultSet.getString("accountstatus")))
                         .activationCode(resultSet.getString("activationcode"))
-                        .photo(resultSet.getString("activationcode"))
                         .build();
 
             }
@@ -90,7 +89,6 @@ public final class UserDaoImpl extends GenericDaoImpl implements IUserDao {
                         .photo(resultSet.getString("photo"))
                         .accountStatus(Enum.valueOf(UserAccountStatus.class, resultSet.getString("accountstatus")))
                         .activationCode(resultSet.getString("activationcode"))
-                        .photo(resultSet.getString("activationcode"))
                         .build());
 
             }

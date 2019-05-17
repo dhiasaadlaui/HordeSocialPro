@@ -88,6 +88,7 @@ public class PageViewNotification extends BorderPane {
         try {
 
             notificationList = notificationServ.findAll().stream().filter(e -> e.getCompany().getRecruiter().equals(App.USER_ONLINE)).collect(Collectors.toList());
+            int i = 0;
             // System.out.println(notificationList.get(0).toString());
         } catch (DataBaseException ex) {
             Logger.getLogger(PageViewNotification.class.getName()).log(Level.SEVERE, null, ex);

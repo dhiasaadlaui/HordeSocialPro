@@ -14,6 +14,8 @@ import tn.esprit.dao.implementation.CompanyDaoImpl;
 import tn.esprit.dao.implementation.JobDaoImpl;
 import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.dao.interfaces.IJobDao;
+import tn.esprit.entities.Category;
+import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.JobStatus;
 import tn.esprit.entities.User;
@@ -80,12 +82,12 @@ public class SerivceJobImpl implements IServiceJob {
      * @throws ObjectNotFoundException
      */
     @Override
-    public List<Job> findByCompany(Job job) throws ObjectNotFoundException {
+    public List<Job> findByCompany(Company company) throws ObjectNotFoundException {
 
         try {
             return (ArrayList<Job>) findAll()
                     .stream()
-                    .filter(t -> t.getCompany().getName().equals(job.getCompany().getName())
+                    .filter(t -> t.getCompany().equals(company)
                     ).collect(Collectors.toList());
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
@@ -99,11 +101,11 @@ public class SerivceJobImpl implements IServiceJob {
      * @throws ObjectNotFoundException
      */
     @Override
-    public List<Job> findByLocation(Job job) throws ObjectNotFoundException {
+    public List<Job> findByLocation(String location) throws ObjectNotFoundException {
         try {
             return (ArrayList<Job>) findAll()
                     .stream()
-                    .filter(t -> t.getLocation().contains(job.getLocation())
+                    .filter(t -> t.getLocation().contains(location)
                     ).collect(Collectors.toList());
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
@@ -117,11 +119,11 @@ public class SerivceJobImpl implements IServiceJob {
      * @throws ObjectNotFoundException
      */
     @Override
-    public List<Job> findByCategory(Job job) throws ObjectNotFoundException {
+    public List<Job> findByCategory(Category category) throws ObjectNotFoundException {
         try {
             return (ArrayList<Job>) findAll()
                     .stream()
-                    .filter(t -> t.getCategory().getId().equals(job.getCategory().getId())
+                    .filter(t -> t.getCategory().equals(category)
                     ).collect(Collectors.toList());
 
         } catch (DataBaseException ex) {
