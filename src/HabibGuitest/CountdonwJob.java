@@ -12,9 +12,13 @@ import eu.hansolo.tilesfx.fonts.Fonts;
 import eu.hansolo.tilesfx.tools.Helper;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -52,66 +56,94 @@ public class CountdonwJob extends HBox {
     private long lastTimerCall;
     private AnimationTimer timer;
 
-    public CountdonwJob(Date expireDate) {
-        days = createTile("DAYS", "0");
-        hours = createTile("HOURS", "0");
-        minutes = createTile("MINUTES", "0");
-        seconds = createTile("SECONDS", "0");
-        Date now = new Date();
-        double year = expireDate.getYear() - now.getYear();
-        System.out.println(year);
-        double month = expireDate.getMonth() - now.getMonth();
-        System.out.println(month);
-        double day = expireDate.getDay() - now.getDay();
-        System.out.println(day);
-        double hour = expireDate.getHours() - LocalTime.now().getHour();
-        System.out.println(hour);
-        double mins = expireDate.getMinutes() - LocalTime.now().getMinute();
+    public CountdonwJob( Date expireDate) {
+      
+            days = createTile("DAYS", "0");
+            hours = createTile("HOURS", "0");
+            minutes = createTile("MINUTES", "0");
+            seconds = createTile("SECONDS", "0");
+            String pattern = "yyyy-MM-dd";
+            
+         //   SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            
+            // Date expireDate = simpleDateFormat.parse(job.getExpireDate().toString());
+     
+            LocalDateTime now = LocalDateTime.now(); 
+           // Date now = new Date() ;
+        String date = expireDate.toString();
 
-        double numberOfDays = year * 360 + month * 30 + day;
-        double numberOfhours = numberOfDays * 24 + hour + (mins / 60);
-        duration = Duration.hours(numberOfhours);
+            int c = date.indexOf("-");
+            String yearS = date.substring(0, c);
+              Double year = Double.valueOf(yearS);
+              
+         
+String m = date.substring(c+1, date.length());
+int c1 = m.indexOf("-");
 
-        lastTimerCall = System.nanoTime();
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(final long now) {
-                if (now > lastTimerCall + 1_000_000_000l) {
-                    duration = duration.subtract(Duration.seconds(1));
-
-                    int remainingSeconds = (int) duration.toSeconds();
-                    int d = remainingSeconds / SECONDS_PER_DAY;
-                    int h = (remainingSeconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR;
-                    int m = ((remainingSeconds % SECONDS_PER_DAY) % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
-                    int s = (((remainingSeconds % SECONDS_PER_DAY) % SECONDS_PER_HOUR) % SECONDS_PER_MINUTE);
-
-                    if (d == 0 && h == 0 && m == 0 && s == 0) {
-                        timer.stop();
+String monthS = m.substring(0,c1);
+         Double month = Double.valueOf(monthS);
+            
+            String dayS = date.substring(date.length()-2, date.length());
+            
+            
+            
+            Double day = Double.valueOf(dayS);
+         System.out.println(year+"-"+month+"-"+day);
+            
+       double years = year -now.getYear() ;
+        System.out.println("now years"+now.getYear());
+            double months = month- now.getMonthValue();
+                    double dayss = day- now.getDayOfMonth();
+        double hourss = 24- now.getHour();
+        double minss = 60 - now.getMinute();
+                  System.out.println("years ="+years+"monts="+months+"dayss"+dayss);    
+            double numberOfDays = years*360+months*30+dayss;
+            System.out.println("numberofdays = "+numberOfDays);
+            double numberOfhours = numberOfDays*24- now.getHour()-(now.getMinute()/60);
+            duration = Duration.hours(numberOfhours);
+           System.out.println(numberOfhours+" rr"+now.getMinute());
+            lastTimerCall = System.nanoTime();
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(final long now) {
+                    if (now > lastTimerCall + 1_000_000_000l) {
+                        duration = duration.subtract(Duration.seconds(1));
+                        
+                        int remainingSeconds = (int) duration.toSeconds();
+                        int d = remainingSeconds / SECONDS_PER_DAY;
+                        int h = (remainingSeconds % SECONDS_PER_DAY) / SECONDS_PER_HOUR;
+                        int m = ((remainingSeconds % SECONDS_PER_DAY) % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
+                        int s = (((remainingSeconds % SECONDS_PER_DAY) % SECONDS_PER_HOUR) % SECONDS_PER_MINUTE);
+                        
+                        if (d == 0 && h == 0 && m == 0 && s == 0) {
+                            timer.stop();
+                        }
+                        
+                        days.setDescription(Integer.toString(d));
+                        hours.setDescription(Integer.toString(h));
+                        minutes.setDescription(String.format("%02d", m));
+                        seconds.setDescription(String.format("%02d", s));
+                        
+                        lastTimerCall = now;
                     }
 
-                    days.setDescription(Integer.toString(d));
-                    hours.setDescription(Integer.toString(h));
-                    minutes.setDescription(String.format("%02d", m));
-                    seconds.setDescription(String.format("%02d", s));
-
-                    lastTimerCall = now;
                 }
-
-            }
-        };
-
-        //HBox pane = new HBox(20, days, hours, minutes, seconds);
-        this.setPadding(new Insets(10));
-        this.setBackground(new Background(new BackgroundFill(Color.web("#606060"), CornerRadii.EMPTY, Insets.EMPTY)));
-        this.setSpacing(20);
-        this.getChildren().addAll(days, hours, minutes, seconds);
-
-        timer.start();
+            };
+            
+            //HBox pane = new HBox(20, days, hours, minutes, seconds);
+            this.setPadding(new Insets(10));
+            this.setBackground(new Background(new BackgroundFill(Color.web("#606060"), CornerRadii.EMPTY, Insets.EMPTY)));
+            this.setSpacing(20);
+            this.getChildren().addAll(days, hours, minutes, seconds);
+            
+            timer.start();
+      
     }
 
+    
     private Tile createTile(final String TITLE, final String TEXT) {
         return TileBuilder.create().skinType(SkinType.CHARACTER)
-                .prefSize(200, 200)
+                .prefSize(500, 500)
                 .title(TITLE)
                 .titleAlignment(TextAlignment.CENTER)
                 .description(TEXT)
