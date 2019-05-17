@@ -32,6 +32,7 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.Rate;
+import tn.esprit.gui.cache.Cache;
 import tn.esprit.gui.launch.App;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
@@ -120,7 +121,7 @@ public class PageViewJob extends VBox {
         imageView.setLayoutY(14.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(getClass().getResourceAsStream("/resources/images/defaultcompany.jpg")));
+        imageView.setImage(new Image(Cache.httpResources+job.getCompany().getImage()));
 
         label.setLayoutX(131.0);
         label.setLayoutY(14.0);

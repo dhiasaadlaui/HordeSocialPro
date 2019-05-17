@@ -10,10 +10,17 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 
 import javafx.stage.Stage;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.dao.implementation.CompanyDaoImpl;
+import tn.esprit.dao.interfaces.ICompanyDao;
+import tn.esprit.entities.Company;
+import tn.esprit.gui.graphic.StatsPerCompany;
+import tn.esprit.gui.graphic.TopCompaniesPieChart;
 import tn.esprit.gui.pages.PageAdminProcessJobs;
 import tn.esprit.gui.pages.PageCreateJob;
 
 import tn.esprit.gui.pages.PageJobsBase;
+import tn.esprit.gui.pages.PageStats;
 
 /**
  *
@@ -25,12 +32,14 @@ public class DhiaApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws DataBaseException {
         //--------initialisation-----------
 
         PageAdminProcessJobs main = new PageAdminProcessJobs();
 
-        Scene GLOBAL_SCENE = new Scene(new PageCreateJob());
+        ICompanyDao companyDao = new CompanyDaoImpl();
+
+        Scene GLOBAL_SCENE = new Scene(new TopCompaniesPieChart());
 
         //-----------styling----------------
         //------------logic-----------------

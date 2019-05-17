@@ -149,8 +149,7 @@ public class PageCreateJob extends AnchorPane {
             if (datePicker != null) {
                 try {
                     Date date = Date.from(datePicker.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-//                    System.out.println(datePicker.getValue());
-//                    System.out.println(serviceCategory.findByLabel(textField0.getText()));
+
                     job = new Job.Builder()
                             .title(textField.getText())
                             .category(serviceCategory.findByLabel(textField0.getText()))

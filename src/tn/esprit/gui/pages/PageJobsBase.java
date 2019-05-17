@@ -1,9 +1,13 @@
 package tn.esprit.gui.pages;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -14,6 +18,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
@@ -34,8 +40,20 @@ public abstract class PageJobsBase extends BorderPane {
     protected final ScrollPane scrollPane;
     IServiceJob serviceJob;
     List<Job> listJobs;
+    public MenuButton menuButton = new MenuButton();
+    public MenuButton menuButton0 = new MenuButton();
+    public static String SEARCH_CRITERIA = "";
+    public static Predicate<Job> SEARCH_PREDICATE = p -> p.getCategory().getLabel().contains(SEARCH_CRITERIA);
+    public static Comparator<Job> SORT_COMPARATOR = (o1, o2) -> o2.getCreationDate().compareTo(o1.getCreationDate());
 
     public PageJobsBase() {
+
+        Predicate<Job> predicateSearchByCategory = p -> p.getCategory().getLabel().contains(SEARCH_CRITERIA);
+        Predicate<Job> predicateSearchByLocation = p -> p.getLocation().contains(SEARCH_CRITERIA);
+        Predicate<Job> predicateSearchBySalary = p -> SEARCH_CRITERIA.equalsIgnoreCase(p.getSalary().toString());
+        Predicate<Job> predicateSearchByCompany = p -> p.getCompany().getName().contains(SEARCH_CRITERIA);
+        Predicate<Job> predicateSearchByCreationDate = p -> p.getCreationDate().toString().contains(SEARCH_CRITERIA);
+
         listJobs = new ArrayList<Job>();
 
         serviceJob = new SerivceJobImpl();
@@ -54,9 +72,15 @@ public abstract class PageJobsBase extends BorderPane {
         tilePane.setPrefColumns(3);
 
         try {
-            listJobs = serviceJob.findAll();
+            listJobs = serviceJob.findAll()
+                    .stream()
+                    .filter(SEARCH_PREDICATE)
+                    .sorted(SORT_COMPARATOR)
+                    .collect(Collectors.toList());
             for (Job job : listJobs) {
-                tilePane.getChildren().add(new ItemJobBase(job));
+                if ((job.getCompany().getRecruiter().equals(App.USER_ONLINE)) || job.getStatus().equals("CONFIRMED")) {
+                    tilePane.getChildren().add(new ItemJobBase(job));
+                }
             }
 
         } catch (DataBaseException ex) {
@@ -76,14 +100,14 @@ public abstract class PageJobsBase extends BorderPane {
         setCenter(scrollPane);
 
         HBox searchBar = new HBox();
-        MenuButton menuButton = new MenuButton();
+
         MenuItem menuItem = new MenuItem();
         MenuItem menuItem0 = new MenuItem();
         MenuItem menuItem1 = new MenuItem();
         MenuItem menuItem2 = new MenuItem();
         MenuItem menuItem3 = new MenuItem();
         Region region = new Region();
-        MenuButton menuButton0 = new MenuButton();
+
         MenuItem menuItem4 = new MenuItem();
         MenuItem menuItem5 = new MenuItem();
         MenuItem menuItem6 = new MenuItem();
@@ -128,15 +152,27 @@ public abstract class PageJobsBase extends BorderPane {
 
         menuItem4.setMnemonicParsing(false);
         menuItem4.setText("Category");
+        menuItem4.setOnAction(e -> {
+            SEARCH_PREDICATE = predicateSearchByCategory;
+
+        });
 
         menuItem5.setMnemonicParsing(false);
         menuItem5.setText("Salary");
-
+        menuItem5.setOnAction(e -> {
+            SEARCH_PREDICATE = predicateSearchBySalary;
+        });
         menuItem6.setMnemonicParsing(false);
         menuItem6.setText("Location");
+        menuItem6.setOnAction(e -> {
+            SEARCH_PREDICATE = predicateSearchByLocation;
+        });
 
         menuItem7.setMnemonicParsing(false);
         menuItem7.setText("Company ");
+        menuItem7.setOnAction(e -> {
+            SEARCH_PREDICATE = predicateSearchByCompany;
+        });
 
         menuItem8.setMnemonicParsing(false);
         menuItem8.setText("Creation date");
@@ -174,6 +210,18 @@ public abstract class PageJobsBase extends BorderPane {
         menuButton0.getItems().add(menuItem7);
         menuButton0.getItems().add(menuItem8);
         searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1, btnCreate);
+
+        textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (ke.getCode().equals(KeyCode.ENTER)) {
+                    SEARCH_CRITERIA = textField.getText();
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                    ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageJobsBase() {
+                    });
+                }
+            }
+        });
 
         setTop(searchBar);
 

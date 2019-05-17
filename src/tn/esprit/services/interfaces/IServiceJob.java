@@ -7,6 +7,8 @@ package tn.esprit.services.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import tn.esprit.entities.Category;
+import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.User;
 import tn.esprit.services.exceptions.ConstraintViolationException;
@@ -32,7 +34,7 @@ public interface IServiceJob extends IGenericService<Job> {
      * @return
      * @throws ObjectNotFoundException
      */
-    List<Job> findByCompany(Job job) throws ObjectNotFoundException;
+    List<Job> findByCompany(Company company) throws ObjectNotFoundException;
 
     /**
      *
@@ -40,7 +42,7 @@ public interface IServiceJob extends IGenericService<Job> {
      * @return
      * @throws ObjectNotFoundException
      */
-    List<Job> findByLocation(Job job) throws ObjectNotFoundException;
+    List<Job> findByLocation(String location) throws ObjectNotFoundException;
 
     /**
      *
@@ -48,7 +50,7 @@ public interface IServiceJob extends IGenericService<Job> {
      * @return
      * @throws ObjectNotFoundException
      */
-    List<Job> findByCategory(Job job) throws ObjectNotFoundException;
+    List<Job> findByCategory(Category category) throws ObjectNotFoundException;
 
     /**
      *
