@@ -17,8 +17,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 /**
  *
@@ -35,23 +39,27 @@ public class PageCreateClaim extends VBox {
          */
         Label login = new Label("Aidez nous a connaitre la raison de reclamation ! ");
         login.setStyle("-fx-font-size:29px;-fx-text-fill:#CAD3C8");
-        RadioButton r1 = new RadioButton("rasicm");
-        RadioButton r2 = new RadioButton("scam");
-        RadioButton r3 = new RadioButton("fraud");
-        RadioButton r4 = new RadioButton("klem zeyed");
-        RadioButton r5 = new RadioButton("bleda");
+        RadioButton r1 = new RadioButton("RACISM");
+        RadioButton r2 = new RadioButton("SCAM");
+        RadioButton r3 = new RadioButton("SCAM");
+        RadioButton r4 = new RadioButton("FAKE USER");
+        RadioButton r5 = new RadioButton("POLICYVIOLATION");
+        RadioButton r6 = new RadioButton("HARASSEMENT");
+        RadioButton r7 = new RadioButton("VIOLENCE");
         r1.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r2.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r3.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r4.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r5.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
+         r6.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
+          r7.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         TextArea textArea = new TextArea();
 
         textArea.setPromptText("Ajoutez une petite description (Pas Obligatoire) ! ");
         ImageView im = new ImageView(new Image(getClass().getResourceAsStream("/resources/icons/ancient.png")));
         //    ImageView im1 = new ImageView(new Image(getClass().getResourceAsStream("/resources/icons/writer.png")));
         im.setFitHeight(100);
-        im.setFitWidth(100);
+        im.setFitWidth(150);
         //   im1.setFitHeight(80);
         //   im1.setFitWidth(80);
         // textArea.setPromptText("entrez une petite description si vous voulez ");
@@ -67,6 +75,18 @@ public class PageCreateClaim extends VBox {
         Button c = new Button("Cancel");
         c.setOnMouseClicked(e -> {
             ((Stage) c.getScene().getWindow()).close();
+        });
+          s.setOnMouseClicked(e -> {
+            ((Stage) s.getScene().getWindow()).close();
+            
+            Notifications.create()
+        .darkStyle()
+         .title("Notificaiton")
+         .text("Votre reclamation a éte ajouté avec succée !  ")
+        .hideAfter(Duration.seconds(5))
+        .showInformation();
+            
+            
         });
         c.setPrefWidth(150);
         c.setPrefHeight(43);
@@ -89,7 +109,7 @@ public class PageCreateClaim extends VBox {
         HBox hBox = new HBox();
         hBox.setSpacing(560);
         VBox vBox = new VBox();
-        vBox.setSpacing(5);
+        vBox.setSpacing(7);
 
         ToggleGroup group = new ToggleGroup();
         r1.setToggleGroup(group);
@@ -97,9 +117,13 @@ public class PageCreateClaim extends VBox {
         r3.setToggleGroup(group);
         r4.setToggleGroup(group);
         r5.setToggleGroup(group);
+        r6.setToggleGroup(group);
+        r7.setToggleGroup(group);
+      
 
-        vBox.getChildren().addAll(r1, r2, r3, r4, r5);
-        hBox.getChildren().addAll(vBox, im);
+        vBox.getChildren().addAll(r1, r2, r3, r4, r5 ,r6 , r7);
+        
+        hBox.getChildren().addAll(vBox,im);
         getChildren().addAll(login, hBox, outils);
 
     }

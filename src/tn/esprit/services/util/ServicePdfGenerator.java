@@ -29,9 +29,6 @@ public class ServicePdfGenerator {
 
     public static void createAndSendRepport(List<Reclamation> reclamations, Job job) throws Exception {
 
-        
-        
-        
         Font greenFonts = FontFactory.getFont(FontFactory.HELVETICA_BOLDOBLIQUE, 12, BaseColor.CYAN) ;
         Font greenFont = FontFactory.getFont(FontFactory.TIMES_BOLDITALIC, 12 , BaseColor.MAGENTA) ;
         Font blueFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, new CMYKColor(255, 0, 0, 0));
