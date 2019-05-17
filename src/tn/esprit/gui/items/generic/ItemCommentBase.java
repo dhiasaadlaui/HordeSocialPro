@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import tn.esprit.entities.Comment;
+import tn.esprit.gui.cache.Cache;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.pages.PageCreateClaim;
 import tn.esprit.services.interfaces.IServiceComment;
@@ -57,7 +58,8 @@ public class ItemCommentBase extends AnchorPane {
         userphoto.setLayoutY(13.0);
         userphoto.setPickOnBounds(true);
         userphoto.setPreserveRatio(true);
-        userphoto.setImage(new Image(getClass().getResourceAsStream("/resources/images/default.jpg")));
+        // System.out.println(Cache.httpResources+comment.getUser().getPhoto());
+        userphoto.setImage(new Image(Cache.httpResources + comment.getUser().getPhoto()));
 
         textComment.setEditable(false);
         textComment.setLayoutX(72.0);
@@ -111,8 +113,9 @@ public class ItemCommentBase extends AnchorPane {
         getChildren().add(btnRepply);
         getChildren().add(separator);
         getChildren().add(txtUserName);
-        if((App.USER_ONLINE.getAuthorization().equals("ADMINISTRATOR"))||(App.USER_ONLINE.equals(comment.getUser())))
-        getChildren().add(btnDelete);
+        if ((App.USER_ONLINE.getAuthorization().equals("ADMINISTRATOR")) || (App.USER_ONLINE.equals(comment.getUser()))) {
+            getChildren().add(btnDelete);
+        }
 
     }
 }
