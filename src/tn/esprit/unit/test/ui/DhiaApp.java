@@ -5,20 +5,23 @@
  */
 package tn.esprit.unit.test.ui;
 
-import tn.esprit.gui.pages.PageViewJob;
 import javafx.application.Application;
-import javafx.print.PrinterJob;
+
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 
 import javafx.stage.Stage;
-import tn.esprit.gui.home.HomeGUI;
-import tn.esprit.gui.home.SideBarBase;
-import tn.esprit.gui.items.generic.ItemJobBase;
-import tn.esprit.gui.items.generic.ItemReclamationBase;
-import tn.esprit.gui.pages.PageCreateClaim;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.dao.implementation.CompanyDaoImpl;
+import tn.esprit.dao.interfaces.ICompanyDao;
+import tn.esprit.entities.Company;
+import tn.esprit.gui.graphic.StatsPerCompany;
+import tn.esprit.gui.graphic.TopCompaniesPieChart;
+import tn.esprit.gui.pages.PageTicketsManagements;
+import tn.esprit.gui.pages.PageModeratorProcessJobs;
+import tn.esprit.gui.pages.PageCreateJob;
+
 import tn.esprit.gui.pages.PageJobsBase;
+import tn.esprit.gui.pages.PageStats;
 
 /**
  *
@@ -30,11 +33,14 @@ public class DhiaApp extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws DataBaseException {
         //--------initialisation-----------
 
-        Scene GLOBAL_SCENE = new Scene(new PageJobsBase() {
-        });
+        PageModeratorProcessJobs main = new PageModeratorProcessJobs();
+
+        ICompanyDao companyDao = new CompanyDaoImpl();
+
+        Scene GLOBAL_SCENE = new Scene(new PageTicketsManagements());
 
         //-----------styling----------------
         //------------logic-----------------

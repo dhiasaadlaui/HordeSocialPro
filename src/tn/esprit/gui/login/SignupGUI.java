@@ -9,6 +9,7 @@ import eu.hansolo.tilesfx.Tile;
 import eu.hansolo.tilesfx.TileBuilder;
 import eu.hansolo.tilesfx.tools.Country;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -31,12 +32,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.User;
 import tn.esprit.entities.UserRole;
 import tn.esprit.gui.launch.App;
 import tn.esprit.services.exceptions.ConstraintViolationException;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceUser;
+import tn.esprit.services.util.ServiceImageUpload;
 import tn.esprit.services.util.ServiceInputValidator;
 
 /**
@@ -351,8 +355,29 @@ public class SignupGUI extends HBox {
         // ---------- logic ----------------
         BTN_SUBMIT.setOnAction(e -> {
             try {
-                serviceUser.signUp(new User.Builder().build());
-            } catch (ConstraintViolationException ex) {
+
+                int imageId = 0;
+                imageId = serviceUser.signUp(new User.Builder()
+                        .firstName(FIRST_NAME_TXT.getText())
+                        .lastName(LAST_NAME_TXT.getText())
+                        .userName(USERNAME_TXT.getText())
+                        .email(EMAIL_TXT.getText())
+                        .adress(ADRESS_TXT.getText())
+                        .password(PASSWORD_TXT.getText())
+                        .build());
+                if (imageId != 0) {
+                    User usr = serviceUser.findByID(imageId);
+                    usr.setPhoto(ServiceImageUpload.sendFileToHTTP(filePhotoProfil, "USER_" + imageId));
+                    serviceUser.edit(usr);
+                } else {
+
+                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("success d'inscription");
+                alert.show();
+                App.GLOBAL_PANE_BORDER.setCenter(new LoginGUI());
+
+            } catch (ConstraintViolationException | ObjectNotFoundException | DataBaseException | IOException ex) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle(ex.getMessage());
                 alert.setContentText(ex.getMessage());

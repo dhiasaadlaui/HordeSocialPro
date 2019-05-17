@@ -37,7 +37,7 @@ public class ServiceUserImpl implements IServiceUser {
      */
     public ServiceUserImpl() {
         userDao = new UserDaoImpl();
-       
+
     }
 
     /**
@@ -57,7 +57,7 @@ public class ServiceUserImpl implements IServiceUser {
                     .filter(e -> e.getPassword().equals(password))
                     .findFirst();
             if (optional.isPresent()) {
-                loggedIn = optional.get() ; // JUST ADDING THE LOGGED IN USER
+                loggedIn = optional.get(); // JUST ADDING THE LOGGED IN USER
                 return optional.get();
             } else {
                 throw new ObjectNotFoundException(LanguageToolBar.BUNDLE.getString("loginfail"));
@@ -132,10 +132,12 @@ public class ServiceUserImpl implements IServiceUser {
      * @param user
      * @throws ConstraintViolationException
      */
+
     @Override
-    public void signUp(User user) throws ConstraintViolationException {
+    public Integer signUp(User user) throws ConstraintViolationException {
+
         try {
-           
+
             user.setAccountStatus(UserAccountStatus.PENDING);
             user.setActivationCode(gnerateActivationCode(10));
             create(user);
@@ -161,10 +163,12 @@ public class ServiceUserImpl implements IServiceUser {
                     + "<br />\n"
                     + "Please do not reply to this message. Replies to this message are routed to an unmonitored mailbox. If you have any queries visit</span>&nbsp;<span style=\"font-size:9px\"><a href=\"https://github.com/dhiasaadlaui/HordeSocialPro\">https://github.com/dhiasaadlaui/HordeSocialPro</a>"
             );
+
+            return user.getId();
         } catch (DataBaseException | MessagingException cvx) {
             throw new ConstraintViolationException(cvx.getMessage());
 
-        }
+        } 
     }
 
     /**
@@ -173,15 +177,16 @@ public class ServiceUserImpl implements IServiceUser {
      * @param reason
      * @throws ConstraintViolationException
      */
+    
     @Override
     public void banUser(User user, String reason) throws ConstraintViolationException {
 
         try {
             user.setAccountStatus(UserAccountStatus.BANNED);
             edit(user);
-                        ServiceMail.sendMail(user.getEmail(), "SocialPro Account Banned",
-                    "Your Account has been banned for: "+reason
-                                );
+            ServiceMail.sendMail(user.getEmail(), "SocialPro Account Banned",
+                    "Your Account has been banned for: " + reason
+            );
         } catch (DataBaseException | MessagingException ex) {
             throw new ConstraintViolationException(ex.getMessage());
         }
@@ -248,7 +253,7 @@ public class ServiceUserImpl implements IServiceUser {
      */
     @Override
     public User getLoggedInUsers() {
-        return loggedIn;  
+        return loggedIn;
     }
 
 }

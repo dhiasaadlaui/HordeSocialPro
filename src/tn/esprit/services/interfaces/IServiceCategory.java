@@ -5,15 +5,15 @@
  */
 package tn.esprit.services.interfaces;
 
-
 import tn.esprit.entities.Category;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 
 /**
  *
  * @author habib
  */
-public interface IServiceCategory extends IGenericService<Category>{
-   
-    
-    
+public interface IServiceCategory extends IGenericService<Category> {
+
+    Category findByLabel(String label) throws ObjectNotFoundException;
+
 }

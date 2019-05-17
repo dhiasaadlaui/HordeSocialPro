@@ -9,15 +9,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import tn.esprit.entities.Reclamation;
 
-public  class ItemReclamationBase extends AnchorPane {
+public class ItemReclamationBase extends AnchorPane {
 
     protected final Label label;
     protected final Label label0;
     protected final Label label1;
     protected final Label label2;
     protected final MenuButton menuButton;
-    protected final MenuItem menuItem;
-    protected final MenuItem menuItem0;
+
     protected final Separator separator;
     protected final Label label3;
 
@@ -28,15 +27,14 @@ public  class ItemReclamationBase extends AnchorPane {
         label1 = new Label();
         label2 = new Label();
         menuButton = new MenuButton();
-        menuItem = new MenuItem();
-        menuItem0 = new MenuItem();
+
         separator = new Separator();
         label3 = new Label();
         getStylesheets().add("/resources/css/theme.css");
 
-
         setPrefHeight(50.0);
         setPrefWidth(781.0);
+        setMaxWidth(781);
         setStyle("-fx-background-color: #f7f1e3; -fx-border-width: 5; -fx-border-color: #2980b9; -fx-border-radius: 25 0 25 0; -fx-background-radius: 25 0 25 0;");
 
         label.setLayoutX(278.0);
@@ -53,12 +51,13 @@ public  class ItemReclamationBase extends AnchorPane {
 
         label1.setLayoutX(367.0);
         label1.setLayoutY(28.0);
-        if (reclamation.getJob()!=null )
-        label1.setText(reclamation.getJob().getTitle());
-        if (reclamation.getComment()!=null)
-        label1.setText(reclamation.getComment().getJob().getTitle());
-        
-        
+        if (reclamation.getJob() != null) {
+            label1.setText(reclamation.getJob().getTitle());
+        }
+        if (reclamation.getComment() != null) {
+            label1.setText(reclamation.getComment().getJob().getTitle());
+        }
+
         label1.setFont(new Font("Gill Sans MT", 15.0));
 
         label2.setLayoutX(22.0);
@@ -66,24 +65,29 @@ public  class ItemReclamationBase extends AnchorPane {
         label2.setPrefHeight(32.0);
         label2.setPrefWidth(109.0);
 
-        label2.setText("Status: "+reclamation.getStatus());
-        
-        if(reclamation.getStatus().equals("OPEN"))
-        label2.getStyleClass().add("success");
-        
-        if(reclamation.getStatus().equals("CLOSED"))
-        label2.getStyleClass().add("primary");
-        
-        if(reclamation.getStatus().equals("PENDING"))
-        label2.getStyleClass().add("warning");
-     
-        if(reclamation.getStatus().equals("REDIRECTED"))
-        label2.getStyleClass().add("danger");
-        
-        if(reclamation.getStatus().equals("CANCELED"))
-        label2.getStyleClass().add("default");
-        
-         label2.getStyleClass().add("button");
+        label2.setText(reclamation.getStatus());
+
+        if (reclamation.getStatus().equals("OPEN")) {
+            label2.getStyleClass().add("success");
+        }
+
+        if (reclamation.getStatus().equals("CLOSED")) {
+            label2.getStyleClass().add("primary");
+        }
+
+        if (reclamation.getStatus().equals("PENDING")) {
+            label2.getStyleClass().add("warning");
+        }
+
+        if (reclamation.getStatus().equals("REDIRECTED")) {
+            label2.getStyleClass().add("danger");
+        }
+
+        if (reclamation.getStatus().equals("CANCELED")) {
+            label2.getStyleClass().add("default");
+        }
+
+        label2.getStyleClass().add("button");
         menuButton.setLayoutX(631.0);
         menuButton.setLayoutY(21.0);
         menuButton.setMnemonicParsing(false);
@@ -93,11 +97,13 @@ public  class ItemReclamationBase extends AnchorPane {
 
         menuButton.setText("Action");
 
+        MenuItem menuItem = new MenuItem();
         menuItem.setMnemonicParsing(false);
-        menuItem.setText("Action 1");
+        menuItem.setText("Inspect");
 
-        menuItem0.setMnemonicParsing(false);
-        menuItem0.setText("Action 2");
+        MenuItem menuItem1 = new MenuItem();
+        menuItem1.setMnemonicParsing(false);
+        menuItem1.setText("Discard");
 
         separator.setLayoutX(579.0);
         separator.setOrientation(javafx.geometry.Orientation.VERTICAL);
@@ -108,7 +114,7 @@ public  class ItemReclamationBase extends AnchorPane {
         label3.setLayoutY(28.0);
         label3.setPrefHeight(18.0);
         label3.setPrefWidth(116.0);
-        label3.setText("Marwen Ghozzi");
+        label3.setText(reclamation.getClaimer().getFirstName() + " " + reclamation.getClaimer().getLastName());
         label3.setFont(new Font("Gill Sans MT", 15.0));
 
         getChildren().add(label);
@@ -116,7 +122,7 @@ public  class ItemReclamationBase extends AnchorPane {
         getChildren().add(label1);
         getChildren().add(label2);
         menuButton.getItems().add(menuItem);
-        menuButton.getItems().add(menuItem0);
+        menuButton.getItems().add(menuItem1);
         getChildren().add(menuButton);
         getChildren().add(separator);
         getChildren().add(label3);

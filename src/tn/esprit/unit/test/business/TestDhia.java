@@ -30,12 +30,16 @@ import tn.esprit.dao.interfaces.IReclamationDao;
 import tn.esprit.dao.interfaces.IUserDao;
 import tn.esprit.entities.Reclamation;
 import tn.esprit.entities.ReclamationType;
+import tn.esprit.gui.launch.App;
 import tn.esprit.services.exceptions.ConstraintViolationException;
+import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceApplyImpl;
+import tn.esprit.services.implementation.ServiceCategoryImpl;
 import tn.esprit.services.implementation.ServiceCommentImpl;
 import tn.esprit.services.implementation.ServiceReclamationImpl;
 import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceApply;
+import tn.esprit.services.interfaces.IServiceCategory;
 import tn.esprit.services.interfaces.IServiceComment;
 import tn.esprit.services.interfaces.IServiceReclamation;
 import tn.esprit.services.interfaces.IServiceUser;
@@ -64,27 +68,27 @@ public class TestDhia {
         INotificationDao notificationDao = new NotificationDaoImpl();
 
         //-----------SERVICE LAYER-------------
-        
         IServiceUser serviceUser = new ServiceUserImpl();
         IServiceApply serviceApply = new ServiceApplyImpl();
         IServiceComment serviceComment = new ServiceCommentImpl();
         IServiceReclamation serviceReclamation = new ServiceReclamationImpl();
-        
-        
-        
+        IServiceCategory serviceCategory = new ServiceCategoryImpl();
+
         try {
-            System.out.println(userDao.findAll());
-            System.out.println(categoryDao.findAll());
-            System.out.println(companyDao.findAll());
-            System.out.println(jobDao.findAll());
-            System.out.println(applyDao.findAll());
-            System.out.println(commentDao.findAll());
-            System.out.println(reclamationdao.findAll());
-            System.out.println(abonnementDao.findAll());
-            System.out.println(rateDao.findAll());
-            System.out.println(notificationDao.findAll());
-            
-        } catch (DataBaseException ex) {
+//            System.out.println(userDao.findAll());
+//            System.out.println(categoryDao.findAll());
+//            System.out.println(companyDao.findAll());
+//            System.out.println(jobDao.findAll());
+//            System.out.println(applyDao.findAll());
+//            System.out.println(commentDao.findAll());
+//            System.out.println(reclamationdao.findAll());
+//            System.out.println(abonnementDao.findAll());
+//            System.out.println(rateDao.findAll());
+//            System.out.println(notificationDao.findAll());
+
+            System.out.println(companyDao.findByRecruter(userDao.findByID(2)));
+            System.out.println(serviceCategory.findByLabel("java"));
+        } catch (ObjectNotFoundException | DataBaseException ex) {
             System.out.println(ex.getMessage());
         }
 //        

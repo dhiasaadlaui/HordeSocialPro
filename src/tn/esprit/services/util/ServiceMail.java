@@ -5,14 +5,28 @@
  */
 package tn.esprit.services.util;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 /**
  *
@@ -49,10 +63,9 @@ public class ServiceMail {
         props.put("mail.smtp.socketFactory.fallback", "false");
 
         Session mailSession = Session.getDefaultInstance(props, null);
-        
-        //enable the comment below to activate console debug
-       // mailSession.setDebug(true);
 
+        //enable the comment below to activate console debug
+        // mailSession.setDebug(true);
         Message mailMessage = new MimeMessage(mailSession);
 
         mailMessage.setFrom(new InternetAddress(FROM));
@@ -64,7 +77,7 @@ public class ServiceMail {
         transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 
     }
-    
+
     /**
      *
      * @param adresses
@@ -84,17 +97,16 @@ public class ServiceMail {
         props.put("mail.smtp.socketFactory.fallback", "false");
 
         Session mailSession = Session.getDefaultInstance(props, null);
-        
-        //enable the comment below to activate console debug
-       // mailSession.setDebug(true);
 
+        //enable the comment below to activate console debug
+        // mailSession.setDebug(true);
         Message mailMessage = new MimeMessage(mailSession);
 
         mailMessage.setFrom(new InternetAddress(FROM));
-            for (String adresse : adresses) {
-                mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(adresse));
-            }
-    
+        for (String adresse : adresses) {
+            mailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(adresse));
+        }
+
         mailMessage.setContent(message, "text/html; charset=utf-8");
         mailMessage.setSubject(subject);
         Transport transport = mailSession.getTransport("smtp");
@@ -102,7 +114,38 @@ public class ServiceMail {
         transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
 
     }
-    
-    
+
+    public static void sendMailWithFile(
+            String toMail, String subject, File file) throws AddressException, MessagingException {
+
+        Properties props = System.getProperties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.port", "465");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+
+        Session mailSession = Session.getDefaultInstance(props, null);
+        Multipart multipart = new MimeMultipart();
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        String filename = file.getName();
+        DataSource source = new FileDataSource(file);
+        messageBodyPart.setDataHandler(new DataHandler(source));
+        messageBodyPart.setFileName(filename);
+        multipart.addBodyPart(messageBodyPart);
+
+        //enable the comment below to activate console debug
+        // mailSession.setDebug(true);
+        Message mailMessage = new MimeMessage(mailSession);
+
+        mailMessage.setFrom(new InternetAddress(FROM));
+        mailMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(toMail));
+        mailMessage.setContent(multipart);
+        mailMessage.setSubject(subject);
+        Transport transport = mailSession.getTransport("smtp");
+        transport.connect("smtp.gmail.com", FROM, PASSWORD);
+        transport.sendMessage(mailMessage, mailMessage.getAllRecipients());
+
+    }
 
 }
