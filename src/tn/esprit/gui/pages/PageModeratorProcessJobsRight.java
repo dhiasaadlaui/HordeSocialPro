@@ -27,7 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
-import static tn.esprit.gui.pages.PageAdminProcessJobsLeft.jobsList;
+import static tn.esprit.gui.pages.PageModeratorProcessJobsLeft.jobsList;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.implementation.SerivceJobImpl;
 import tn.esprit.services.interfaces.IServiceJob;
@@ -36,7 +36,7 @@ import tn.esprit.services.interfaces.IServiceJob;
  *
  * @author mdsaadlaoui
  */
-public class PageAdminProcessJobsRight extends VBox {
+public class PageModeratorProcessJobsRight extends VBox {
 
     static Label jobTitle;
     static Label jobCategory;
@@ -49,7 +49,7 @@ public class PageAdminProcessJobsRight extends VBox {
     IServiceJob serviceJob;
     static Predicate<Job> countPredicate = e -> e.getStatus().equals("PENDING");
 
-    public PageAdminProcessJobsRight() {
+    public PageModeratorProcessJobsRight() {
         serviceJob = new SerivceJobImpl();
 
         gauge = GaugeBuilder.create().skinType(SkinType.MODERN)
@@ -100,12 +100,12 @@ public class PageAdminProcessJobsRight extends VBox {
                 alert.showAndWait();
 
                 if (alert.getResult() == ButtonType.YES) {
-                    serviceJob.jobActivation(PageAdminProcessJobsLeft.SELECTED_JOB);
+                    serviceJob.jobActivation(PageModeratorProcessJobsLeft.SELECTED_JOB);
                     List<Job> allJobs = serviceJob.findAll();
                     gauge.setValue(allJobs.stream().filter(countPredicate).count());
                     jobsList.removeAll(allJobs);
                     jobsList = FXCollections.observableArrayList(allJobs);
-                    PageAdminProcessJobsLeft.table.setItems(jobsList);
+                    PageModeratorProcessJobsLeft.table.setItems(jobsList);
 
                 }
             } catch (ConstraintViolationException | DataBaseException ex) {
@@ -123,12 +123,12 @@ public class PageAdminProcessJobsRight extends VBox {
 
                 if (alert.getResult() == ButtonType.YES) {
 
-                    serviceJob.jobDisable(PageAdminProcessJobsLeft.SELECTED_JOB);
+                    serviceJob.jobDisable(PageModeratorProcessJobsLeft.SELECTED_JOB);
                     List<Job> allJobs = serviceJob.findAll();
                     gauge.setValue(allJobs.stream().filter(countPredicate).count());
                     jobsList.removeAll(allJobs);
                     jobsList = FXCollections.observableArrayList(allJobs);
-                    PageAdminProcessJobsLeft.table.setItems(jobsList);
+                    PageModeratorProcessJobsLeft.table.setItems(jobsList);
                 }
 
             } catch (ConstraintViolationException | DataBaseException ex) {

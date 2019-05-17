@@ -24,8 +24,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
-import static tn.esprit.gui.pages.PageAdminProcessJobsRight.countPredicate;
-import static tn.esprit.gui.pages.PageAdminProcessJobsRight.gauge;
+import static tn.esprit.gui.pages.PageTicketsManagementsRight.countPredicate;
+import static tn.esprit.gui.pages.PageTicketsManagementsRight.gauge;
 import tn.esprit.services.implementation.SerivceJobImpl;
 import tn.esprit.services.interfaces.IServiceJob;
 
@@ -33,7 +33,7 @@ import tn.esprit.services.interfaces.IServiceJob;
  *
  * @author mdsaadlaoui
  */
-public class PageAdminProcessJobsLeft extends VBox {
+public class PageTicketsManagementsLeft extends VBox {
 
     static HBox searchPane;
     static TextField txtSearch;
@@ -43,7 +43,7 @@ public class PageAdminProcessJobsLeft extends VBox {
     static ObservableList<Job> jobsList;
     static Job SELECTED_JOB;
 
-    public PageAdminProcessJobsLeft() {
+    public PageTicketsManagementsLeft() {
         this.getStylesheets().add("/resources/css/theme.css");
         txtSearch = new TextField();
         btnSearch = new Button("search");
@@ -79,10 +79,10 @@ public class PageAdminProcessJobsLeft extends VBox {
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 SELECTED_JOB = newSelection;
-                PageAdminProcessJobsRight.jobTitle.setText(SELECTED_JOB.getTitle());
-                PageAdminProcessJobsRight.jobCategory.setText(SELECTED_JOB.getTitle());
-                PageAdminProcessJobsRight.jobDescription.setText(SELECTED_JOB.getTitle());
-                PageAdminProcessJobsRight.salary.setText(SELECTED_JOB.getSalary().toString());
+                PageTicketsManagementsRight.jobTitle.setText(SELECTED_JOB.getTitle());
+                PageTicketsManagementsRight.jobCategory.setText(SELECTED_JOB.getTitle());
+                PageTicketsManagementsRight.jobDescription.setText(SELECTED_JOB.getTitle());
+                PageTicketsManagementsRight.salary.setText(SELECTED_JOB.getSalary().toString());
                 try {
                     gauge.setValue(serviceJob.findAll().stream().filter(countPredicate).count());
                 } catch (DataBaseException ex) {
