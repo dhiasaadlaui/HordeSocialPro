@@ -42,16 +42,20 @@ public class Claim extends Application {
          */
         Label login = new Label("Aidez nous a connaitre la raison de reclamation ! ");
         login.setStyle("-fx-font-size:29px;-fx-text-fill:#CAD3C8");
-        RadioButton r1 = new RadioButton("rasicm");
-        RadioButton r2 = new RadioButton("scam");
-        RadioButton r3 = new RadioButton("fraud");
-        RadioButton r4 = new RadioButton("klem zeyed");
-        RadioButton r5 = new RadioButton("bleda");
+        RadioButton r1 = new RadioButton("RASICM");
+        RadioButton r2 = new RadioButton("SCAM");
+        RadioButton r3 = new RadioButton("FRAUD");
+        RadioButton r4 = new RadioButton("FAKE USER");
+        RadioButton r5 = new RadioButton("POLICYVIOLATION");
+          RadioButton r6 = new RadioButton("HARASSEMENT");
+            RadioButton r7 = new RadioButton("VIOLENCE");
         r1.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r2.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r3.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r4.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         r5.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
+         r6.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
+          r7.setStyle("-fx-font-size:15px;-fx-text-fill:#d2dae2");
         TextArea textArea = new TextArea();
 
         textArea.setPromptText("Ajoutez une petite description (Pas Obligatoire) ! ");
@@ -102,7 +106,8 @@ public class Claim extends Application {
         r3.setToggleGroup(group);
         r4.setToggleGroup(group);
         r5.setToggleGroup(group);
-
+          r6.setToggleGroup(group);
+            r7.setToggleGroup(group);
         s.setOnMouseClicked(e -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             //alert.getDialogPane().setStyle("-fx-background-color:#218c74;-fx-text-fill:#ecf0f1");
@@ -121,7 +126,7 @@ public class Claim extends Application {
 
         });
 
-        vBox.getChildren().addAll(r1, r2, r3, r4, r5);
+        vBox.getChildren().addAll(r1, r2, r3, r4, r5 , r6 , r7);
         hBox.getChildren().addAll(vBox, im);
         main.getChildren().addAll(login, hBox, outils);
         Scene scene = new Scene(main);

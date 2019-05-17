@@ -129,8 +129,8 @@ public class PageViewNotification extends BorderPane {
         listView.setOnMouseClicked(e -> {
             System.out.println("You clicked on an empty cell");
         });
-//  if ((!notifyMe.isEmpty()) && (notifyMe.size() < notificationList.size() || (notifyMe.size() == 1) && (notificationList.size() == 1))) {
-        if (!notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
+        if ((!notifyMe.isEmpty()) && (notifyMe.size() < notificationList.size() || (notifyMe.size() == 1) && (notificationList.size() == 1))) {
+            // if (!notifyMe.isEmpty() && notifyMe.size() < notificationList.size()) {
             NotificationsBuilder.showInformation();
             System.out.println(notifyMe.size());
             notifyMe = new ArrayList(notificationList);
