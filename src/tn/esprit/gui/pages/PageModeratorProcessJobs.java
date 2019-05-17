@@ -11,14 +11,14 @@ import javafx.scene.layout.HBox;
  *
  * @author mdsaadlaoui
  */
-public class PageAdminProcessJobs extends HBox {
+public class PageModeratorProcessJobs extends HBox {
 
-    public static PageAdminProcessJobsLeft pageAdminProcessJobsLeft;
-    public static PageAdminProcessJobsRight pageAdminProcessJobsRight;
+    public static PageModeratorProcessJobsLeft pageAdminProcessJobsLeft;
+    public static PageModeratorProcessJobsRight pageAdminProcessJobsRight;
 
-    public PageAdminProcessJobs() {
-        pageAdminProcessJobsLeft = new PageAdminProcessJobsLeft();
-        pageAdminProcessJobsRight = new PageAdminProcessJobsRight();
+    public PageModeratorProcessJobs() {
+        pageAdminProcessJobsLeft = new PageModeratorProcessJobsLeft();
+        pageAdminProcessJobsRight = new PageModeratorProcessJobsRight();
 
         getChildren().addAll(pageAdminProcessJobsLeft, pageAdminProcessJobsRight);
     }

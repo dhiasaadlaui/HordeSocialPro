@@ -22,10 +22,13 @@ import javafx.util.Duration;
 import tn.esprit.gui.cache.Cache;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
-import tn.esprit.gui.pages.PageAdminProcessJobs;
+import tn.esprit.gui.pages.PageAbonnementsBase;
+import tn.esprit.gui.pages.PageAdminManagements;
+import tn.esprit.gui.pages.PageModeratorProcessJobs;
 import tn.esprit.gui.pages.PageJobsBase;
 import tn.esprit.gui.pages.PageReclamationsBase;
 import tn.esprit.gui.pages.PageStats;
+import tn.esprit.gui.pages.PageTicketsManagements;
 import tn.esprit.gui.pages.PageViewNotification;
 
 public abstract class SideBarBase extends VBox {
@@ -136,7 +139,7 @@ public abstract class SideBarBase extends VBox {
         label.setPrefHeight(38.0);
         label.setPrefWidth(220.0);
         label.setStyle("-fx-text-fill: #b8b1b1;");
-        label.setText(App.USER_ONLINE.getFirstName() + " " + App.USER_ONLINE.getLastName());
+        label.setText(App.USER_ONLINE.getFirstName() + " " + App.USER_ONLINE.getLastName() + " (" + App.USER_ONLINE.getAuthorization().substring(0, 1).toUpperCase() + App.USER_ONLINE.getAuthorization().substring(1).toLowerCase() + ")");
         label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
         label.setFont(new Font(19.0));
 
@@ -421,7 +424,7 @@ public abstract class SideBarBase extends VBox {
             @Override
             public void handle(MouseEvent event) {
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
-                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageAdminProcessJobs());
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageModeratorProcessJobs());
 
             }
         });
@@ -430,6 +433,31 @@ public abstract class SideBarBase extends VBox {
             public void handle(MouseEvent event) {
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageStats());
+
+            }
+        });
+        vBox2.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageTicketsManagements());
+
+            }
+        });
+        vBox0.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageAdminManagements());
+
+            }
+        });
+        hBox1.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageAbonnementsBase() {
+                });
 
             }
         });

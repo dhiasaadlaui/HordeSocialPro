@@ -16,7 +16,8 @@ import tn.esprit.dao.interfaces.ICompanyDao;
 import tn.esprit.entities.Company;
 import tn.esprit.gui.graphic.StatsPerCompany;
 import tn.esprit.gui.graphic.TopCompaniesPieChart;
-import tn.esprit.gui.pages.PageAdminProcessJobs;
+import tn.esprit.gui.pages.PageTicketsManagements;
+import tn.esprit.gui.pages.PageModeratorProcessJobs;
 import tn.esprit.gui.pages.PageCreateJob;
 
 import tn.esprit.gui.pages.PageJobsBase;
@@ -35,11 +36,11 @@ public class DhiaApp extends Application {
     public void start(Stage primaryStage) throws DataBaseException {
         //--------initialisation-----------
 
-        PageAdminProcessJobs main = new PageAdminProcessJobs();
+        PageModeratorProcessJobs main = new PageModeratorProcessJobs();
 
         ICompanyDao companyDao = new CompanyDaoImpl();
 
-        Scene GLOBAL_SCENE = new Scene(new TopCompaniesPieChart());
+        Scene GLOBAL_SCENE = new Scene(new PageTicketsManagements());
 
         //-----------styling----------------
         //------------logic-----------------

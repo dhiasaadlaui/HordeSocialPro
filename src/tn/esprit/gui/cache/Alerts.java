@@ -20,4 +20,11 @@ public class Alerts {
         alert.show();
     }
 
+    public static void displaySuccess(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.show();
+    }
+
 }

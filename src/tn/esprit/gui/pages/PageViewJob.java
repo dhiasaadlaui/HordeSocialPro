@@ -1,5 +1,6 @@
 package tn.esprit.gui.pages;
 
+import HabibGuitest.PageCompanyViewBase;
 import tn.esprit.gui.items.generic.ItemCommentBase;
 import java.lang.String;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,7 @@ import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Comment;
 import tn.esprit.entities.Job;
 import tn.esprit.entities.Rate;
+import tn.esprit.gui.cache.Alerts;
 import tn.esprit.gui.cache.Cache;
 import tn.esprit.gui.launch.App;
 import tn.esprit.services.exceptions.ConstraintViolationException;
@@ -39,10 +41,12 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.ServiceCommentImpl;
 import tn.esprit.services.implementation.ServiceNotificationImpl;
 import tn.esprit.services.implementation.ServiceRateImpl;
+import tn.esprit.services.implementation.ServiceReclamationImpl;
 import tn.esprit.services.interfaces.IServiceApply;
 import tn.esprit.services.interfaces.IServiceComment;
 import tn.esprit.services.interfaces.IServiceNotification;
 import tn.esprit.services.interfaces.IServiceRate;
+import tn.esprit.services.interfaces.IServiceReclamation;
 
 public class PageViewJob extends VBox {
 
@@ -73,9 +77,11 @@ public class PageViewJob extends VBox {
     private IServiceComment serviceComment;
     private IServiceNotification notificationServ;
     private IServiceRate rateServ = new ServiceRateImpl();
+    private IServiceReclamation serviceReclamation;
     private List<Rate> rateList = new ArrayList();
 
     public PageViewJob(Job job) {
+        serviceReclamation = new ServiceReclamationImpl();
         List<Comment> listComments = new ArrayList<Comment>();
         notificationServ = new ServiceNotificationImpl();
         serviceComment = new ServiceCommentImpl();
@@ -121,7 +127,7 @@ public class PageViewJob extends VBox {
         imageView.setLayoutY(14.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
-        imageView.setImage(new Image(Cache.httpResources+job.getCompany().getImage()));
+        imageView.setImage(new Image(Cache.httpResources + job.getCompany().getImage()));
 
         label.setLayoutX(131.0);
         label.setLayoutY(14.0);
@@ -210,7 +216,7 @@ public class PageViewJob extends VBox {
         button.setPrefHeight(32.0);
         button.setPrefWidth(150.0);
         button.getStyleClass().add("primary");
-        button.setText("Appy");
+        button.setText("Apply");
 
         button0.setMnemonicParsing(false);
         button0.setPrefHeight(32.0);
@@ -247,6 +253,15 @@ public class PageViewJob extends VBox {
             claimStage.setScene(claimScene);
             claimStage.show();
         });
+
+        try {
+            Boolean claimed = serviceReclamation.findByClaimer(App.USER_ONLINE)
+                    .stream()
+                    .anyMatch(e -> job.equals(e.getJob()));
+            button1.setDisable(claimed);
+        } catch (ObjectNotFoundException ex) {
+            Alerts.displayError("Error", ex.getMessage());
+        }
 
         titledPane.setAnimated(false);
         titledPane.setExpanded(true);
@@ -362,8 +377,21 @@ public class PageViewJob extends VBox {
 
         rate.setLayoutX(300.0);
         rate.setLayoutY(14.0);
+
+        Button btnCompanyView = new Button("View company");
+        btnCompanyView.setLayoutX(500.0);
+        btnCompanyView.setLayoutY(14.0);
+        btnCompanyView.getStyleClass().add("primary");
+        btnCompanyView.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageCompanyViewBase(job.getCompany()) {
+            });
+        });
+
+        rate.setLayoutY(14.0);
         anchorPane.getChildren().add(rate);
         anchorPane.getChildren().add(imageView);
+        anchorPane.getChildren().add(btnCompanyView);
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(label0);
         anchorPane.getChildren().add(label1);
@@ -380,8 +408,9 @@ public class PageViewJob extends VBox {
         anchorPane.getChildren().add(label12);
         anchorPane.getChildren().add(textArea);
         vBox.getChildren().add(button);
-         if(job.getCompany().getRecruiter().equals(App.USER_ONLINE))
-        vBox.getChildren().add(button0);
+        if (job.getCompany().getRecruiter().equals(App.USER_ONLINE)) {
+            vBox.getChildren().add(button0);
+        }
 
         HBox hb = new HBox();
         hb.getChildren().addAll(btnRate, button1);
