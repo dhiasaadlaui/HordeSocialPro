@@ -29,6 +29,7 @@ import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.interfaces.IServiceComment;
 import tn.esprit.services.interfaces.IServiceReclamation;
 import tn.esprit.services.interfaces.IServiceUser;
+import tn.esprit.services.util.ServicePdfGenerator;
 
 /**
  *
@@ -69,24 +70,23 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         reclamation.setClaimer(loggedUser);
         try {
             create(reclamation);
-            List<Job> listClaims = findAll()
+            List<Reclamation> listClaims = findAll()
                     .stream()
+                    .filter(e -> e.getJob().equals(reclamation.getJob()))
                     .filter(e -> e.getType().equals(reclamation.getType()))
-                    .map(e -> e.getJob())
-                    .filter(e -> e.getId().equals(reclamation.getJob().getId()))
                     .collect(Collectors.toList());
 
             if (listClaims.size() > 5) {
-
+                ServicePdfGenerator.createAndSendRepport(listClaims, reclamation.getJob());
                 handleModerator(reclamation, HandleReclamationModerator.DISABLE_JOB);
-              for(Reclamation rec: findAll()){
-                  if (rec.getJob().equals(reclamation.getJob())){
-                     handleModerator(rec, HandleReclamationModerator.REJECT);
-                  }
-              }
+                for (Reclamation rec : findAll()) {
+                    if (rec.getJob().equals(reclamation.getJob())) {
+                        handleModerator(rec, HandleReclamationModerator.REJECT);
+                    }
+                }
             }
 
-        } catch (DataBaseException ex) {
+        } catch (Exception ex) {
             throw new ConstraintViolationException(ex.getMessage());
         }
 
@@ -100,8 +100,8 @@ public class ServiceReclamationImpl implements IServiceReclamation {
      */
     @Override
     public List<Reclamation> findByClaimer(User claimerUser) throws ObjectNotFoundException {
-       
-         try {
+
+        try {
             return findAll().stream().filter(e -> e.getClaimer().equals(claimerUser)).collect(Collectors.toList());
         } catch (DataBaseException ex) {
             throw new ObjectNotFoundException(ex.getMessage());
@@ -137,51 +137,51 @@ public class ServiceReclamationImpl implements IServiceReclamation {
      */
     @Override
     public void handleModerator(Reclamation reclamation, HandleReclamationModerator action) throws ConstraintViolationException {
-        
-             if (action.name().equals("DISABLE_JOB")) {
-                reclamation.getJob().setStatus(JobStatus.DISABLED); // en attente hbib
-                reclamation.setStatus(ReclamationStatus.CLOSED);
-                try {
 
-                    jobDao.edit(reclamation.getJob());
-                    reclamationDao.edit(reclamation);
-                } catch (DataBaseException ex) {
-                    throw new ConstraintViolationException(ex.getMessage());
-                }
+        if (action.name().equals("DISABLE_JOB")) {
+            reclamation.getJob().setStatus(JobStatus.DISABLED); // en attente hbib
+            reclamation.setStatus(ReclamationStatus.CLOSED);
+            try {
+
+                jobDao.edit(reclamation.getJob());
+                reclamationDao.edit(reclamation);
+            } catch (DataBaseException ex) {
+                throw new ConstraintViolationException(ex.getMessage());
             }
-             
-            if (action.name().equals("REJECT")){
-                reclamation.setStatus(ReclamationStatus.CLOSED);
-                try {
-                    reclamationDao.edit(reclamation);
-                } catch (DataBaseException ex) {
-                    throw new ConstraintViolationException(ex.getMessage());
-                }
+        }
 
-            }
-           
-             if (action.name().equals("REMOVE_COMMENT")) {
-                reclamation.setStatus(ReclamationStatus.OPEN);
-                try {
-                    if (reclamation.getComment() != null) {
-
-                        commentDao.delete(reclamation.getComment());
-                    }
-                } catch (DataBaseException ex) {
-                    throw new ConstraintViolationException(ex.getMessage());
-                }
-
+        if (action.name().equals("REJECT")) {
+            reclamation.setStatus(ReclamationStatus.CLOSED);
+            try {
+                reclamationDao.edit(reclamation);
+            } catch (DataBaseException ex) {
+                throw new ConstraintViolationException(ex.getMessage());
             }
 
-            if (action.name().equals("REDIRECT")){
-                reclamation.setStatus(ReclamationStatus.REDIRECTED);
+        }
 
-                try {
-                    edit(reclamation);
-                } catch (DataBaseException ex) {
-                    throw new ConstraintViolationException(ex.getMessage());
+        if (action.name().equals("REMOVE_COMMENT")) {
+            reclamation.setStatus(ReclamationStatus.OPEN);
+            try {
+                if (reclamation.getComment() != null) {
+
+                    commentDao.delete(reclamation.getComment());
                 }
-            
+            } catch (DataBaseException ex) {
+                throw new ConstraintViolationException(ex.getMessage());
+            }
+
+        }
+
+        if (action.name().equals("REDIRECT")) {
+            reclamation.setStatus(ReclamationStatus.REDIRECTED);
+
+            try {
+                edit(reclamation);
+            } catch (DataBaseException ex) {
+                throw new ConstraintViolationException(ex.getMessage());
+            }
+
         }
     }
 
@@ -285,7 +285,7 @@ public class ServiceReclamationImpl implements IServiceReclamation {
         try {
             reclamationDao.edit(reclamation);
         } catch (DataBaseException e) {
-             throw new ObjectNotFoundException(e.getMessage());
+            throw new ObjectNotFoundException(e.getMessage());
         }
 
     }
