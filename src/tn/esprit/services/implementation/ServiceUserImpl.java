@@ -132,8 +132,10 @@ public class ServiceUserImpl implements IServiceUser {
      * @param user
      * @throws ConstraintViolationException
      */
+
     @Override
     public Integer signUp(User user) throws ConstraintViolationException {
+
         try {
 
             user.setAccountStatus(UserAccountStatus.PENDING);
@@ -166,7 +168,7 @@ public class ServiceUserImpl implements IServiceUser {
         } catch (DataBaseException | MessagingException cvx) {
             throw new ConstraintViolationException(cvx.getMessage());
 
-        }
+        } 
     }
 
     /**
@@ -175,6 +177,7 @@ public class ServiceUserImpl implements IServiceUser {
      * @param reason
      * @throws ConstraintViolationException
      */
+    
     @Override
     public void banUser(User user, String reason) throws ConstraintViolationException {
 

@@ -53,8 +53,8 @@ public class TestMarwen {
      *
      * @param args
      */
-    public static void main(String[] args)  {
-
+    public static void main(String[] args) {
+        
         IUserDao userDao = new UserDaoImpl();
         ICategoryDao categoryDao = new CategoryDaoImpl();
         ICompanyDao companyDao = new CompanyDaoImpl();
@@ -67,11 +67,17 @@ public class TestMarwen {
         IRateDao rateDao = new RateDaoImpl();
         IServiceReclamation serviceReclamation = new ServiceReclamationImpl();
         
-        Reclamation reclamation = new Reclamation.Builder().build() ;
-        
         try {
-            System.out.println(serviceReclamation.findAll());
-        } catch (DataBaseException ex) {
+            serviceReclamation.claim(
+                    new Reclamation.Builder()
+                            .claimer(serviceUser.findByID(4))
+                            .status(ReclamationStatus.PENDING)
+                            .details("this guy scamed me")
+                            .type(ReclamationType.SCAM)
+                            .job(jobDao.findByID(3))
+                            .build(),
+                     serviceUser.findByID(4));
+        } catch (ObjectNotFoundException | ConstraintViolationException |DataBaseException ex) {
             System.out.println(ex.getMessage());
         }
         
