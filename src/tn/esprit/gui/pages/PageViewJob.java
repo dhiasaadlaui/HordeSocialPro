@@ -1,5 +1,6 @@
 package tn.esprit.gui.pages;
 
+import HabibGuitest.CountdonwJob;
 import tn.esprit.gui.items.generic.ItemCommentBase;
 import java.lang.String;
 import java.text.SimpleDateFormat;
@@ -88,9 +89,13 @@ public class PageViewJob extends VBox {
         titledPane = new TitledPane();
         scrollPane = new ScrollPane();
         commentsList = new VBox();
-
+ CountdonwJob countdonwJob = new CountdonwJob(job.getExpireDate());
         setPrefHeight(478.0);
         setPrefWidth(1200.0);
+        countdonwJob.setMaxSize(500, 80);
+        countdonwJob.setLayoutX(690);
+                countdonwJob.setLayoutY(500);
+
         setStyle("-fx-background-color: #34495e;");
         getStylesheets().add("/resources/css/theme.css");
         setPadding(new Insets(20));
@@ -144,6 +149,9 @@ public class PageViewJob extends VBox {
         label5.setStyle("-fx-text-fill: #FFFF;");
         label5.setText("Expire date:");
 
+        
+        
+        
         label6.setLayoutX(131.0);
         label6.setLayoutY(173.0);
         label6.setStyle("-fx-text-fill: #FFFF;");
@@ -174,6 +182,9 @@ public class PageViewJob extends VBox {
         label11.setStyle("-fx-text-fill: #FFFF;");
         label11.setText(format.format(job.getExpireDate()));
 
+        
+        
+        
         label12.setLayoutX(227.0);
         label12.setLayoutY(173.0);
         label12.setStyle("-fx-text-fill: #FFFF;");
@@ -210,7 +221,9 @@ public class PageViewJob extends VBox {
         button1.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
             Scene claimScene = new Scene(new PageCreateClaim());
+        //    Scene countdownscene = new Scene()
             claimStage.setScene(claimScene);
+           // claimStage.setScene(countdonwJob);
             claimStage.show();
         });
 
@@ -280,6 +293,8 @@ public class PageViewJob extends VBox {
         anchorPane.getChildren().add(label);
         anchorPane.getChildren().add(label0);
         anchorPane.getChildren().add(label1);
+     //   anchorPane.getChildren().add(countdonwJob);
+
         anchorPane.getChildren().add(label2);
         anchorPane.getChildren().add(label3);
         anchorPane.getChildren().add(label4);
@@ -292,12 +307,16 @@ public class PageViewJob extends VBox {
         anchorPane.getChildren().add(label11);
         anchorPane.getChildren().add(label12);
         anchorPane.getChildren().add(textArea);
+      //  anchorPane.getChildren().add(countdonwJob);
+
         vBox.getChildren().add(button);
         vBox.getChildren().add(button0);
         vBox.getChildren().add(button1);
         anchorPane.getChildren().add(vBox);
+      anchorPane.getChildren().add(countdonwJob);
+
         getChildren().add(anchorPane);
         getChildren().add(titledPane);
-
+//anchorPane.getChildren().add(countdonwJob);
     }
 }
