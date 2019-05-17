@@ -1,31 +1,24 @@
 package tn.esprit.gui.pages;
 
-import com.itextpdf.text.Chapter;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.CMYKColor;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public abstract class PageViewReclamModeratorBase extends AnchorPane {
 
-    protected final HBox hBox;
-    protected final Button button;
-    protected final Button button0;
-    protected final Button button1;
-    protected final Button button2;
     protected final ImageView imageView;
     protected final TitledPane titledPane;
     protected final AnchorPane anchorPane;
+    protected final ScrollPane scrollPane;
+    protected final VBox vBox;
     protected final Label label;
     protected final Label label0;
     protected final Label label1;
@@ -34,18 +27,18 @@ public abstract class PageViewReclamModeratorBase extends AnchorPane {
     protected final Label label4;
     protected final Label label5;
     protected final Label label6;
-    protected final Button button3;
+    protected final Button button;
+    protected final Button button0;
+    protected final Button button1;
+    protected final Button button2;
 
     public PageViewReclamModeratorBase() {
 
-        hBox = new HBox();
-        button = new Button();
-        button0 = new Button();
-        button1 = new Button();
-        button2 = new Button();
         imageView = new ImageView();
         titledPane = new TitledPane();
         anchorPane = new AnchorPane();
+        scrollPane = new ScrollPane();
+        vBox = new VBox();
         label = new Label();
         label0 = new Label();
         label1 = new Label();
@@ -54,46 +47,15 @@ public abstract class PageViewReclamModeratorBase extends AnchorPane {
         label4 = new Label();
         label5 = new Label();
         label6 = new Label();
-        button3 = new Button();
+        button = new Button();
+        button0 = new Button();
+        button1 = new Button();
+        button2 = new Button();
 
         setId("AnchorPane");
-        setPrefHeight(447.0);
-        setPrefWidth(712.0);
+        setPrefHeight(701.0);
+        setPrefWidth(986.0);
         setStyle("-fx-background-color: #2C3A47;");
-
-        hBox.setLayoutX(93.0);
-        hBox.setLayoutY(340.0);
-        hBox.setPrefHeight(32.0);
-        hBox.setPrefWidth(572.0);
-        hBox.setSpacing(50.0);
-
-        button.setMnemonicParsing(false);
-        button.setPrefHeight(32.0);
-        button.setPrefWidth(141.0);
-        button.getStyleClass().add("warning");
-        button.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
-        button.setText("Remove Comment");
-
-        button0.setMnemonicParsing(false);
-        button0.setPrefHeight(32.0);
-        button0.setPrefWidth(118.0);
-        button0.getStyleClass().add("primary");
-        button0.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
-        button0.setText("DisableJob");
-
-        button1.setMnemonicParsing(false);
-        button1.setPrefHeight(32.0);
-        button1.setPrefWidth(101.0);
-        button1.getStyleClass().add("primary");
-        button1.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
-        button1.setText("Reject");
-
-        button2.setMnemonicParsing(false);
-        button2.setPrefHeight(32.0);
-        button2.setPrefWidth(171.0);
-        button2.getStyleClass().add("danger");
-        button2.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
-        button2.setText("Redirect");
 
         imageView.setFitHeight(87.0);
         imageView.setFitWidth(129.0);
@@ -107,13 +69,22 @@ public abstract class PageViewReclamModeratorBase extends AnchorPane {
         titledPane.setLayoutX(248.0);
         titledPane.setLayoutY(14.0);
         titledPane.setPrefHeight(294.0);
-        titledPane.setPrefWidth(417.0);
+        titledPane.setPrefWidth(711.0);
         titledPane.setText("Comments");
 
         anchorPane.setMinHeight(0.0);
         anchorPane.setMinWidth(0.0);
         anchorPane.setPrefHeight(262.0);
         anchorPane.setPrefWidth(402.0);
+
+        scrollPane.setLayoutX(-1.0);
+        scrollPane.setLayoutY(7.0);
+        scrollPane.setPrefHeight(263.0);
+        scrollPane.setPrefWidth(711.0);
+
+        vBox.setPrefHeight(474.0);
+        vBox.setPrefWidth(689.0);
+        scrollPane.setContent(vBox);
         titledPane.setContent(anchorPane);
 
         label.setLayoutX(23.0);
@@ -156,68 +127,100 @@ public abstract class PageViewReclamModeratorBase extends AnchorPane {
         label6.setText("JobTitle");
         label6.setTextFill(javafx.scene.paint.Color.valueOf("#d7caca"));
 
-        button3.setLayoutX(524.0);
-        button3.setLayoutY(387.0);
-        button3.setMnemonicParsing(false);
-        button3.setPrefHeight(31.0);
-        button3.setPrefWidth(144.0);
-        button3.setText("SendMail");
-        button3.setOnAction((event) -> {
-               Font blueFont = FontFactory.getFont(FontFactory.HELVETICA, 8, Font.NORMAL, new CMYKColor(255, 0, 0, 0));
-		Font redFont = FontFactory.getFont(FontFactory.COURIER, 12, Font.BOLD, new CMYKColor(0, 255, 0, 0));
-		Font yellowFont = FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD, new CMYKColor(0, 0, 255, 0));
-           
-            try {
-           
-          Document document  = new Document() ;
-          PdfWriter instance = PdfWriter.getInstance(document, new FileOutputStream("C:/Users/mghozzi/Desktop/plll.pdf"));
-         
-            document.open();
-              com.itextpdf.text.Image image1 = com.itextpdf.text.Image.getInstance("src/resources/images/azer.png");
-             double percent = 0.5;
-           image1.scaleAbsolute(150,130);
- 
-               Paragraph chapterTitle = new Paragraph("Horde Social Pro ADMINISTRATION ", redFont);
-                Paragraph paragraphOne = new Paragraph("Objet : Reclamation a propos de votre publication ");
-                 Paragraph paragraphtwo = new Paragraph("Madame, Monsieur,\n" +
-"Le 8 septembre 1996, j’ai acheté chez vous un téléviseur (marque), (modèle),\n" +
-"(n° de série) (facture n°).3\n" +
-"Depuis l’achat, ce téléviseur n’a jamais bien fonctionné : (Décrivez le problème). Je\n" +
-"l’ai rapporté à trois reprises (les 15 janvier, 12 février et 18 mars 1997) à votre\n" +
-"magasin, pour des périodes d’examen d’environ trois semaines chaque fois. Quand\n" +
-"je reprenais possession de l’appareil, vos techniciens m’affirmaient que le problème\n" +
-"était résolu, mais ce téléviseur ne fonctionnait pas bien et ne fonctionne toujours\n" +
-"pas bien.4\n" +
-"Puisque ce téléviseur est défectueux et que vos techniciens ne peuvent le réparer,\n" +
-"je vous demande de le remplacer.5\n" +
-" J’attends votre réponse dans les 10 jours de la\n" +
-"réception de la présente, à défaut de quoi j’intenterai des poursuites judiciaires\n" +
-"contre vous sans autre avis ni délai.\n" +
-"Veuillez donc agir en conséquence.  ", blueFont);
-                  Paragraph paragraphsignature = new Paragraph("ADMINISTRATION", yellowFont) ;
-		    Chapter chapter1 = new Chapter(chapterTitle, 1);
-		    chapter1.setNumberDepth(0);
-          
-        
-         document.add(chapter1);
-         document.add(paragraphOne);
-         document.add(paragraphtwo);
-          document.add(image1);
-          document.add(paragraphsignature);
-        document.close();
-      }catch(Exception e) {
-          System.out.println(e);
-      }
-      System.out.println("generated success"); 
- 
+        button.setLayoutX(506.0);
+        button.setLayoutY(619.0);
+        button.setMnemonicParsing(false);
+        button.setPrefHeight(32.0);
+        button.setPrefWidth(171.0);
+        button.getStyleClass().add("danger");
+        button.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
+        button.setText("DisableJob");
+          button.setOnMouseClicked(e -> {
+            ((Stage) button.getScene().getWindow()).close();
+            
+            Notifications.create()
+        .darkStyle()
+         .title("Notificaiton")
+         .text("La publication a été désactivé avec succées !  ")
+        .hideAfter(Duration.seconds(5))
+        .showConfirm();
+            
+            
         });
-    
-        hBox.getChildren().add(button);
-        hBox.getChildren().add(button0);
-        hBox.getChildren().add(button1);
-        hBox.getChildren().add(button2);
-        getChildren().add(hBox);
+        
+        
+        
+        
+        
+        
+        button0.setLayoutX(281.0);
+        button0.setLayoutY(619.0);
+        button0.setMnemonicParsing(false);
+        button0.setPrefHeight(32.0);
+        button0.setPrefWidth(171.0);
+        button0.getStyleClass().add("success");
+        button0.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
+        button0.setText("Reject");
+   button0.setOnMouseClicked(e -> {
+            ((Stage) button0.getScene().getWindow()).close();
+            
+            Notifications.create()
+        .darkStyle()
+         .title("Notificaiton")
+         .text("la reclamation est rejecté !  ")
+        .hideAfter(Duration.seconds(5))
+        .showError();
+            
+            
+        });
+        button1.setLayoutX(506.0);
+        button1.setLayoutY(550.0);
+        button1.setMnemonicParsing(false);
+        button1.setPrefHeight(32.0);
+        button1.setPrefWidth(171.0);
+        button1.getStyleClass().add("danger");
+        button1.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
+        button1.setText("RemoveComment");
+          button1.setOnMouseClicked(e -> {
+            ((Stage) button1.getScene().getWindow()).close();
+            
+            Notifications.create()
+        .darkStyle()
+         .title("Notificaiton")
+         .text("Le commentaire a été désactivé avec succées !  ")
+        .hideAfter(Duration.seconds(5))
+        .showWarning();
+            
+            
+        });
+        
+        
+        
+        
+        
+        
+        button2.setLayoutX(281.0);
+        button2.setLayoutY(549.0);
+        button2.setMnemonicParsing(false);
+        button2.setPrefHeight(32.0);
+        button2.setPrefWidth(171.0);
+        button2.getStyleClass().add("primary");
+        button2.getStylesheets().add("/tn/esprit/gui/pages/../../../../resources/css/theme.css");
+        button2.setText("Redirect");
+           button2.setOnMouseClicked(e -> {
+            ((Stage) button2.getScene().getWindow()).close();
+            
+            Notifications.create()
+        .darkStyle()
+         .title("Notificaiton")
+         .text("Le reclamation est redirigé vers l'administrateur !  ")
+        .hideAfter(Duration.seconds(5))
+        .showError();
+            
+            
+        });
         getChildren().add(imageView);
+        anchorPane.getChildren().add(scrollPane);
         getChildren().add(titledPane);
         getChildren().add(label);
         getChildren().add(label0);
@@ -227,7 +230,10 @@ public abstract class PageViewReclamModeratorBase extends AnchorPane {
         getChildren().add(label4);
         getChildren().add(label5);
         getChildren().add(label6);
-        getChildren().add(button3);
+        getChildren().add(button);
+        getChildren().add(button0);
+        getChildren().add(button1);
+        getChildren().add(button2);
 
     }
 }
