@@ -480,8 +480,9 @@ public abstract class SideBarBase extends VBox {
         getChildren().add(hBox);
         hBox0.getChildren().add(imageView1);
         hBox0.getChildren().add(label2);
-        if(App.USER_ONLINE.getAuthorization().equalsIgnoreCase("CANDIDATE")||App.USER_ONLINE.getAuthorization().equalsIgnoreCase("RECRUITER"))
-        getChildren().add(hBox0);
+        if (App.USER_ONLINE.getAuthorization().equalsIgnoreCase("CANDIDATE") || App.USER_ONLINE.getAuthorization().equalsIgnoreCase("RECRUITER")) {
+            getChildren().add(hBox0);
+        }
         hBox1.getChildren().add(imageView2);
         hBox1.getChildren().add(label3);
         getChildren().add(hBox1);
@@ -500,16 +501,23 @@ public abstract class SideBarBase extends VBox {
         getChildren().add(label7);
         vBox.getChildren().add(imageView6);
         vBox.getChildren().add(label8);
-        tilePane.getChildren().add(vBox);
+        if (App.USER_ONLINE.getAuthorization().equalsIgnoreCase("ADMINISTRATOR")) {
+            tilePane.getChildren().add(vBox);
+        }
         vBox0.getChildren().add(imageView7);
         vBox0.getChildren().add(label9);
-        tilePane.getChildren().add(vBox0);
+        if (App.USER_ONLINE.getAuthorization().equalsIgnoreCase("ADMINISTRATOR")) {
+            tilePane.getChildren().add(vBox0);
+        }
         vBox1.getChildren().add(imageView8);
         vBox1.getChildren().add(label10);
-        tilePane.getChildren().add(vBox1);
+        if (App.USER_ONLINE.getAuthorization().equalsIgnoreCase("MODERATOR")) {
+            tilePane.getChildren().add(vBox1);
+        }
         vBox2.getChildren().add(imageView9);
         vBox2.getChildren().add(label11);
         tilePane.getChildren().add(vBox2);
+        if ((App.USER_ONLINE.getAuthorization().equalsIgnoreCase("MODERATOR"))||(App.USER_ONLINE.getAuthorization().equalsIgnoreCase("ADMINISTRATOR")))
         getChildren().add(tilePane);
 
         startPollRequests();

@@ -27,10 +27,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
-import static tn.esprit.gui.pages.PageAdminManagementsLeft.jobsList;
+import tn.esprit.entities.User;
+import static tn.esprit.gui.pages.PageAdminManagementsLeft.usersList;
 import tn.esprit.services.exceptions.ConstraintViolationException;
 import tn.esprit.services.implementation.SerivceJobImpl;
-import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.implementation.ServiceUserImpl;
+import tn.esprit.services.interfaces.IServiceUser;
 
 /**
  *
@@ -38,20 +40,20 @@ import tn.esprit.services.interfaces.IServiceJob;
  */
 public class PageAdminManagementsRight extends VBox {
 
-    static Label jobTitle;
-    static Label jobCategory;
-    static Label salary;
-    static Text jobDescription;
+    static Label fullName;
+    static Label accountStatus;
+    static Label userAuthorization;
+    static Text adress;
     static Gauge gauge;
 
     Button btnAccept;
     Button btnReject;
-    IServiceJob serviceJob;
+    IServiceUser serviceUser;
     
-    static Predicate<Job> countPredicate = e -> e.getStatus().equals("PENDING");
+    static Predicate<User> countPredicate = e -> e.getAccountStatus().equals("ADMINISTRATOR");
 
     public PageAdminManagementsRight() {
-        serviceJob = new SerivceJobImpl();
+        serviceUser = new ServiceUserImpl();
 
         gauge = GaugeBuilder.create().skinType(SkinType.MODERN)
                 .decimals(0)
@@ -64,26 +66,26 @@ public class PageAdminManagementsRight extends VBox {
                 .build();
 
         this.getStylesheets().add("/resources/css/theme.css");
-        jobTitle = new Label("Job Title");
-        jobTitle.setStyle("-fx-text-fill: white;");
-        jobCategory = new Label("Job Categorie");
-        jobCategory.setStyle("-fx-text-fill: white;");
-        salary = new Label("2500 EUR");
-        salary.setStyle("-fx-text-fill: white;");
-        jobDescription = new Text("description");
-        jobDescription.setFill(Color.WHITE);
+        fullName = new Label("Job Title");
+        fullName.setStyle("-fx-text-fill: white;");
+        accountStatus = new Label("Job Categorie");
+        accountStatus.setStyle("-fx-text-fill: white;");
+        userAuthorization = new Label("2500 EUR");
+        userAuthorization.setStyle("-fx-text-fill: white;");
+        adress = new Text("description");
+        adress.setFill(Color.WHITE);
         setStyle("-fx-background-color:#34495e");
 
-        btnAccept = new Button("Accept");
+        btnAccept = new Button("BAN USER");
         btnAccept.setPrefWidth(150);
-        btnReject = new Button("Reject");
+        btnReject = new Button("PROMOTE TO ADMIN");
         btnReject.setPrefWidth(150);
 
-        jobDescription.wrappingWidthProperty().set(300);
+        adress.wrappingWidthProperty().set(300);
         try {
 
-            List<Job> allJobs = serviceJob.findAll();
-            gauge.setValue(allJobs.stream().filter(countPredicate).count());
+            List<User> allUsers = serviceUser.findAll();
+            gauge.setValue(allUsers.stream().filter(countPredicate).count());
 
         } catch (DataBaseException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -101,12 +103,13 @@ public class PageAdminManagementsRight extends VBox {
                 alert.showAndWait();
 
                 if (alert.getResult() == ButtonType.YES) {
-                    serviceJob.jobActivation(PageAdminManagementsLeft.SELECTED_JOB);
-                    List<Job> allJobs = serviceJob.findAll();
-                    gauge.setValue(allJobs.stream().filter(countPredicate).count());
-                    jobsList.removeAll(allJobs);
-                    jobsList = FXCollections.observableArrayList(allJobs);
-                    PageAdminManagementsLeft.table.setItems(jobsList);
+                    serviceUser.banUser(PageAdminManagementsLeft.SELECTED_USER,"banned");
+                    
+                    List<User> allUsers = serviceUser.findAll();
+                    gauge.setValue(allUsers.stream().filter(countPredicate).count());
+                    usersList.removeAll(allUsers);
+                    usersList = FXCollections.observableArrayList(allUsers);
+                    PageAdminManagementsLeft.table.setItems(usersList);
 
                 }
             } catch (ConstraintViolationException | DataBaseException ex) {
@@ -117,31 +120,10 @@ public class PageAdminManagementsRight extends VBox {
             }
         });
         btnReject.getStyleClass().add("danger");
-        btnReject.setOnMouseClicked(e -> {
-            try {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "Disable selected job " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
-                alert.showAndWait();
 
-                if (alert.getResult() == ButtonType.YES) {
-
-                    serviceJob.jobDisable(PageAdminManagementsLeft.SELECTED_JOB);
-                    List<Job> allJobs = serviceJob.findAll();
-                    gauge.setValue(allJobs.stream().filter(countPredicate).count());
-                    jobsList.removeAll(allJobs);
-                    jobsList = FXCollections.observableArrayList(allJobs);
-                    PageAdminManagementsLeft.table.setItems(jobsList);
-                }
-
-            } catch (ConstraintViolationException | DataBaseException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText(ex.getMessage());
-                alert.setTitle(ex.getMessage());
-                alert.show();
-            }
-        });
         Region spacer = new Region();
         spacer.setPrefHeight(200);
-        getChildren().addAll(jobTitle, jobCategory, salary, jobDescription, spacer, btnAccept, btnReject, gauge);
+        getChildren().addAll(fullName, accountStatus, userAuthorization, adress, spacer, btnAccept, btnReject, gauge);
     }
 
 }
