@@ -24,10 +24,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.User;
 import static tn.esprit.gui.pages.PageAdminManagementsRight.countPredicate;
 import static tn.esprit.gui.pages.PageAdminManagementsRight.gauge;
 import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.implementation.ServiceUserImpl;
 import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.interfaces.IServiceUser;
 
 /**
  *
@@ -38,10 +41,10 @@ public class PageAdminManagementsLeft extends VBox {
     static HBox searchPane;
     static TextField txtSearch;
     static Button btnSearch;
-    static TableView<Job> table;
-    IServiceJob serviceJob;
-    static ObservableList<Job> jobsList;
-    static Job SELECTED_JOB;
+    static TableView<User> table;
+    IServiceUser serviceUser;
+    static ObservableList<User> usersList;
+    static User SELECTED_USER;
 
     public PageAdminManagementsLeft() {
         this.getStylesheets().add("/resources/css/theme.css");
@@ -49,28 +52,24 @@ public class PageAdminManagementsLeft extends VBox {
         btnSearch = new Button("search");
         btnSearch.getStyleClass().add("primary");
         table = new TableView();
-        serviceJob = new SerivceJobImpl();
+        serviceUser = new ServiceUserImpl();
         searchPane = new HBox();
-        jobsList = FXCollections.observableArrayList();
+        usersList = FXCollections.observableArrayList();
         searchPane.setStyle("-fx-background-color:#34495e");
         setStyle("-fx-background-color:#34495e");
         this.setSpacing(15);
         this.setPadding(new Insets(15));
         this.setAlignment(Pos.CENTER);
 
-        TableColumn<Job, String> columnTitle = new TableColumn("Title");
-        columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<User, String> columnUsername = new TableColumn("Username");
+        columnUsername.setCellValueFactory(new PropertyValueFactory<>("userName"));
 
-        TableColumn<Job, String> columnCompany = new TableColumn("Company");
-        columnCompany.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+   
 
-        TableColumn<Job, String> columnStatus = new TableColumn("Status");
-        columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        table.getColumns().addAll(columnTitle, columnCompany, columnStatus);
+        table.getColumns().add(columnUsername);
 
         try {
-            jobsList = FXCollections.observableArrayList(serviceJob.findAll());
+            usersList = FXCollections.observableArrayList(serviceUser.findAll());
         } catch (DataBaseException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Data error");
@@ -78,13 +77,10 @@ public class PageAdminManagementsLeft extends VBox {
         }
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                SELECTED_JOB = newSelection;
-                PageAdminManagementsRight.jobTitle.setText(SELECTED_JOB.getTitle());
-                PageAdminManagementsRight.jobCategory.setText(SELECTED_JOB.getTitle());
-                PageAdminManagementsRight.jobDescription.setText(SELECTED_JOB.getTitle());
-                PageAdminManagementsRight.salary.setText(SELECTED_JOB.getSalary().toString());
+                SELECTED_USER = newSelection;
+    
                 try {
-                    gauge.setValue(serviceJob.findAll().stream().filter(countPredicate).count());
+                    gauge.setValue(serviceUser.findAll().stream().filter(countPredicate).count());
                 } catch (DataBaseException ex) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(ex.getMessage());
@@ -94,10 +90,10 @@ public class PageAdminManagementsLeft extends VBox {
             }
         });
 
-        table.setItems(jobsList);
+        table.setItems(usersList);
         table.setPrefWidth(800);
         table.setPrefHeight(800);
-        columnTitle.setPrefWidth(500);
+        columnUsername.setPrefWidth(500);
         searchPane.getChildren().addAll(txtSearch, btnSearch);
         getChildren().addAll(searchPane, table);
 
