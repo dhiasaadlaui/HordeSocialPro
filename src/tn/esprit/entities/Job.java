@@ -69,6 +69,16 @@ public final class Job implements Serializable {
      */
     private String status;
 
+    private String companyName;
+
+    public String getCompanyName() {
+        return company.getName();
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     /**
      *
      * @param id

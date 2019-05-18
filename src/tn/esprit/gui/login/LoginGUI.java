@@ -142,6 +142,7 @@ public class LoginGUI extends HBox {
                 App.USER_ONLINE = serviceUser.authentication(TXT_USER.getText(), TXT_PASSWORD.getText());
                 HomeGUI home = new HomeGUI();
                 App.GLOBAL_PANE_BORDER.setCenter(home);
+                App.GLOBAL_PANE_BORDER.setStyle("-fx-background-color: rgb(58,69,88);");
                 // traitement
             } catch (ObjectNotFoundException ex) {
 

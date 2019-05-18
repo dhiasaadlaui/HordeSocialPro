@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="339.0" prefWidth="545.0" style="-fx-background-color: #34495e; -fx-border-radius: 25 25 25 25; -fx-border-color: #2980b9; -fx-border-width: 5; -fx-background-radius: 25 25 25 25;" stylesheets="@../../../../resources/css/theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="280.0" layoutY="293.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="115.0" styleClass="danger" stylesheets="@../../../../resources/css/theme.css" text="Désabonner">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="416.0" layoutY="293.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="115.0" styleClass="success" text="View">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Pane layoutX="14.0" layoutY="106.0" prefHeight="200.0" prefWidth="254.0">
+         <children>
+            <Label layoutX="94.0" layoutY="123.0" prefHeight="24.0" prefWidth="186.0" text="companydomaine" textFill="#d7caca" />
+            <Label layoutY="116.0" prefHeight="32.0" prefWidth="115.0" text="Domaine :" textFill="#fffffff2" />
+            <Label layoutX="94.0" layoutY="91.0" prefHeight="24.0" prefWidth="186.0" text="companyNumber" textFill="#d7caca" />
+            <Label layoutY="84.0" prefHeight="32.0" prefWidth="115.0" text="Recruiter  :" textFill="#fffffff2" />
+            <Label layoutX="94.0" layoutY="56.0" prefHeight="24.0" prefWidth="200.0" text="companyAdresse" textFill="#d7caca" />
+            <Label layoutY="49.0" prefHeight="32.0" prefWidth="115.0" text="Adress :" textFill="#fffffff2" />
+            <Label layoutY="13.0" prefHeight="32.0" prefWidth="115.0" text="Name     :" textFill="#fffffff2" />
+            <Label layoutX="94.0" layoutY="17.0" prefHeight="24.0" prefWidth="200.0" text="companyName" textFill="#d7caca" />
+         </children>
+      </Pane>
+      <ImageView fitHeight="117.0" fitWidth="115.0">
+         <image>
+            <Image url="@../../../../resources/images/heart_14746.png" />
+         </image>
+      </ImageView>
+      <TitledPane layoutX="280.0" layoutY="17.0" prefHeight="262.0" prefWidth="254.0" styleClass="info" text="Lastest posts">
+         <content>
+            <ScrollPane prefHeight="220.0" prefWidth="306.0">
+               <content>
+                  <VBox id="jobsList" prefHeight="426.0" prefWidth="238.0" />
+               </content>
+            </ScrollPane>
+         </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

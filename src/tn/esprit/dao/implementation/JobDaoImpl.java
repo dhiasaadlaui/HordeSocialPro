@@ -96,7 +96,7 @@ public final class JobDaoImpl extends GenericDaoImpl implements IJobDao {
                 .from("job")
                 .where()
                 .where(queriesFactory.newStdField(Company.class.getSimpleName().toLowerCase()), ":idcompany");
-        try {
+        try { 
             preparedStatement = cnx.prepareStatement(selectQuery.getQueryString());
             preparedStatement.setInt(selectQuery.getPlaceholderIndex(":idcompany"), company.getRecruiter().getId());
             resultSet = preparedStatement.executeQuery();

@@ -32,14 +32,13 @@ public class ServiceImageUpload {
      *?>
      *
      */
-    public static final String URL = "http://localhost/pidev/services/image.php";
+    public static final String URL = "http://localhost/pidev/services/uploadImage.php";
 
     /**
      *
      * Append the image full name to this url to get the image from server
      */
-    public static final String IMAGES_RESOURCES = "http://localhost/pidev/services/images/";
-
+    //  public static final String IMAGES_RESOURCES = "http://localhost/pidev/services/images/";
     /**
      *
      * @param file
