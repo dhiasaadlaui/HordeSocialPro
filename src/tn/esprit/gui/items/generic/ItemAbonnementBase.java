@@ -1,5 +1,6 @@
 package tn.esprit.gui.items.generic;
 
+import tn.esprit.gui.pages.PageCompanyViewBase;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -11,14 +12,22 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import tn.esprit.dao.exceptions.DataBaseException;
+import tn.esprit.entities.Abonnement;
 import tn.esprit.entities.Company;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.User;
 import tn.esprit.gui.cache.Alerts;
+import tn.esprit.gui.launch.App;
+import tn.esprit.gui.pages.PageAbonnementsBase;
 import tn.esprit.services.exceptions.ObjectNotFoundException;
 import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.implementation.ServiceAbonnementImpl;
+import tn.esprit.services.interfaces.IServiceAbonnement;
 import tn.esprit.services.interfaces.IServiceJob;
 
 public abstract class ItemAbonnementBase extends AnchorPane {
@@ -40,10 +49,11 @@ public abstract class ItemAbonnementBase extends AnchorPane {
     protected final VBox vBox;
 
     IServiceJob serviceJob;
+    IServiceAbonnement serviceAbonnement;
 
     public ItemAbonnementBase(Company company) {
         serviceJob = new SerivceJobImpl();
-
+        serviceAbonnement = new ServiceAbonnementImpl();
         button = new Button();
         button0 = new Button();
         pane = new Pane();
@@ -74,6 +84,21 @@ public abstract class ItemAbonnementBase extends AnchorPane {
         button.getStylesheets().add("/resources/css/theme.css");
         button.setText("Desabonner");
         button.setFont(new Font(15.0));
+        button.setOnMouseClicked(e -> {
+            List<Abonnement> abonnements = new ArrayList<>();
+            try {
+                abonnements = serviceAbonnement.findByCandidate(App.USER_ONLINE);
+                if (abonnements.size() > 0) {
+                    serviceAbonnement.delete(abonnements.get(0));
+                }
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageAbonnementsBase() {
+                });
+            } catch (ObjectNotFoundException | DataBaseException ex) {
+                Alerts.displayError("ObjectNotFoundException", ex.getMessage());
+            }
+
+        });
 
         button0.setLayoutX(416.0);
         button0.setLayoutY(293.0);
@@ -83,6 +108,11 @@ public abstract class ItemAbonnementBase extends AnchorPane {
         button0.getStyleClass().add("success");
         button0.setText("View");
         button0.setFont(new Font(15.0));
+        button0.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageCompanyViewBase(company) {
+            });
+        });
 
         pane.setLayoutX(14.0);
         pane.setLayoutY(106.0);
@@ -188,6 +218,7 @@ public abstract class ItemAbonnementBase extends AnchorPane {
         getChildren().add(pane);
         getChildren().add(imageView);
         getChildren().add(titledPane);
-
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        vBox.setStyle("-fx-background-color: transparent;");
     }
 }

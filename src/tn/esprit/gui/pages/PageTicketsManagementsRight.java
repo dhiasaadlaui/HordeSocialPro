@@ -26,11 +26,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import tn.esprit.dao.exceptions.DataBaseException;
-import tn.esprit.entities.Job;
-import static tn.esprit.gui.pages.PageTicketsManagementsLeft.jobsList;
+import tn.esprit.entities.Reclamation;
+import static tn.esprit.gui.pages.PageTicketsManagementsLeft.reclamationList;
 import tn.esprit.services.exceptions.ConstraintViolationException;
-import tn.esprit.services.implementation.SerivceJobImpl;
-import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.implementation.HandleReclamationAdmin;
+import tn.esprit.services.implementation.ServiceReclamationImpl;
+import tn.esprit.services.interfaces.IServiceReclamation;
 
 /**
  *
@@ -38,51 +39,51 @@ import tn.esprit.services.interfaces.IServiceJob;
  */
 public class PageTicketsManagementsRight extends VBox {
 
-    static Label jobTitle;
-    static Label jobCategory;
+    static Label reclamationTitle;
+    static Label reclamationCategory;
     static Label salary;
-    static Text jobDescription;
+    static Text reclamationDescription;
     static Gauge gauge;
 
-    Button btnAccept;
+    Button btnBan;
     Button btnReject;
-    IServiceJob serviceJob;
-    static Predicate<Job> countPredicate = e -> e.getStatus().equals("PENDING");
+    IServiceReclamation serviceReclamation;
+    static Predicate<Reclamation> countPredicate = e -> e.getStatus().equalsIgnoreCase("REDIRECTED");
 
     public PageTicketsManagementsRight() {
-        serviceJob = new SerivceJobImpl();
+        serviceReclamation = new ServiceReclamationImpl();
 
         gauge = GaugeBuilder.create().skinType(SkinType.MODERN)
                 .decimals(0)
                 .minValue(0)
                 .maxValue(20)
                 .autoScale(false)
-                .unit("Pending")
+                .unit("REDIRECTED")
                 .value(0)
                 .animated(true)
                 .build();
 
         this.getStylesheets().add("/resources/css/theme.css");
-        jobTitle = new Label("Job Title");
-        jobTitle.setStyle("-fx-text-fill: white;");
-        jobCategory = new Label("Job Categorie");
-        jobCategory.setStyle("-fx-text-fill: white;");
+        reclamationTitle = new Label("Reclamation Title");
+        reclamationTitle.setStyle("-fx-text-fill: white;");
+        reclamationCategory = new Label("Reclamation Categorie");
+        reclamationCategory.setStyle("-fx-text-fill: white;");
         salary = new Label("2500 EUR");
         salary.setStyle("-fx-text-fill: white;");
-        jobDescription = new Text("description");
-        jobDescription.setFill(Color.WHITE);
+        reclamationDescription = new Text("description");
+        reclamationDescription.setFill(Color.WHITE);
         setStyle("-fx-background-color:#34495e");
 
-        btnAccept = new Button("Accept");
-        btnAccept.setPrefWidth(150);
+        btnBan = new Button("Ban user");
+        btnBan.setPrefWidth(150);
         btnReject = new Button("Reject");
         btnReject.setPrefWidth(150);
 
-        jobDescription.wrappingWidthProperty().set(300);
+        reclamationDescription.wrappingWidthProperty().set(300);
         try {
 
-            List<Job> allJobs = serviceJob.findAll();
-            gauge.setValue(allJobs.stream().filter(countPredicate).count());
+            List<Reclamation> allReclamations = serviceReclamation.findAll();
+            gauge.setValue(allReclamations.stream().filter(countPredicate).count());
 
         } catch (DataBaseException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -93,19 +94,19 @@ public class PageTicketsManagementsRight extends VBox {
         this.setSpacing(15);
         this.setPadding(new Insets(20));
         this.setAlignment(Pos.CENTER);
-        btnAccept.getStyleClass().add("success");
-        btnAccept.setOnMouseClicked(e -> {
+        btnBan.getStyleClass().add("success");
+        btnBan.setOnMouseClicked(e -> {
             try {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "Confirm selected job " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                Alert alert = new Alert(AlertType.CONFIRMATION, "Confirm selected reclamation " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 alert.showAndWait();
 
                 if (alert.getResult() == ButtonType.YES) {
-                    serviceJob.jobActivation(PageTicketsManagementsLeft.SELECTED_JOB);
-                    List<Job> allJobs = serviceJob.findAll();
-                    gauge.setValue(allJobs.stream().filter(countPredicate).count());
-                    jobsList.removeAll(allJobs);
-                    jobsList = FXCollections.observableArrayList(allJobs);
-                    PageTicketsManagementsLeft.table.setItems(jobsList);
+                    serviceReclamation.handleAdmin(PageTicketsManagementsLeft.SELECTED_RECLAMATION, HandleReclamationAdmin.BAN);
+                    List<Reclamation> allReclamations = serviceReclamation.findAll();
+                    gauge.setValue(allReclamations.stream().filter(countPredicate).count());
+                    reclamationList.removeAll(allReclamations);
+                    reclamationList = FXCollections.observableArrayList(allReclamations);
+                    PageTicketsManagementsLeft.table.setItems(reclamationList);
 
                 }
             } catch (ConstraintViolationException | DataBaseException ex) {
@@ -118,17 +119,17 @@ public class PageTicketsManagementsRight extends VBox {
         btnReject.getStyleClass().add("danger");
         btnReject.setOnMouseClicked(e -> {
             try {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "Disable selected job " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+                Alert alert = new Alert(AlertType.CONFIRMATION, "Disable selected reclamation " + " ?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
                 alert.showAndWait();
 
                 if (alert.getResult() == ButtonType.YES) {
 
-                    serviceJob.jobDisable(PageTicketsManagementsLeft.SELECTED_JOB);
-                    List<Job> allJobs = serviceJob.findAll();
-                    gauge.setValue(allJobs.stream().filter(countPredicate).count());
-                    jobsList.removeAll(allJobs);
-                    jobsList = FXCollections.observableArrayList(allJobs);
-                    PageTicketsManagementsLeft.table.setItems(jobsList);
+                     serviceReclamation.handleAdmin(PageTicketsManagementsLeft.SELECTED_RECLAMATION, HandleReclamationAdmin.REJECT);
+                    List<Reclamation> allReclamations = serviceReclamation.findAll();
+                    gauge.setValue(allReclamations.stream().filter(countPredicate).count());
+                    reclamationList.removeAll(allReclamations);
+                    reclamationList = FXCollections.observableArrayList(allReclamations);
+                    PageTicketsManagementsLeft.table.setItems(reclamationList);
                 }
 
             } catch (ConstraintViolationException | DataBaseException ex) {
@@ -140,7 +141,7 @@ public class PageTicketsManagementsRight extends VBox {
         });
         Region spacer = new Region();
         spacer.setPrefHeight(200);
-        getChildren().addAll(jobTitle, jobCategory, salary, jobDescription, spacer, btnAccept, btnReject, gauge);
+        getChildren().addAll(reclamationTitle, reclamationCategory, salary, reclamationDescription, spacer, btnBan, btnReject, gauge);
     }
 
 }

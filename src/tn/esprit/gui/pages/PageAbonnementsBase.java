@@ -5,8 +5,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Company;
@@ -25,7 +27,7 @@ public abstract class PageAbonnementsBase extends AnchorPane {
 
     public PageAbonnementsBase() {
         serviceAbonnement = new ServiceAbonnementImpl();
-
+        getStylesheets().add("/resources/css/theme.css");
         scrollPane = new ScrollPane();
         vBox = new VBox();
 
@@ -36,15 +38,15 @@ public abstract class PageAbonnementsBase extends AnchorPane {
 
         scrollPane.setLayoutX(275.0);
         scrollPane.setLayoutY(14.0);
-        scrollPane.setPrefHeight(598.0);
-        scrollPane.setPrefWidth(583.0);
-        scrollPane.setStyle("-fx-background-color: transparent;");
+        scrollPane.setPrefHeight(800.0);
 
         vBox.setId("abonnementsList");
-        vBox.setPrefHeight(710.0);
-        vBox.setPrefWidth(546.0);
+        vBox.setPrefHeight(2000.0);
+        vBox.setPrefWidth(1200.0);
         vBox.setSpacing(10.0);
-        vBox.setStyle("-fx-background-color: transparent;");
+
+        vBox.setBackground(Background.EMPTY);
+        vBox.setAlignment(Pos.TOP_CENTER);
 
         List<Company> companies = new ArrayList<>();
         try {
@@ -65,6 +67,14 @@ public abstract class PageAbonnementsBase extends AnchorPane {
         scrollPane.setContent(vBox);
 
         getChildren().add(scrollPane);
-
+        vBox.setStyle("-fx-background-color: transparent;");
+        vBox.setBackground(Background.EMPTY);
+        vBox.setSpacing(5);
+        scrollPane.setStyle("-fx-background-image: url(\"/resources/images/background_1.jpg\");-fx-background-repeat: stretch;   \n"
+                + "    -fx-background-position: center center;\n"
+                + " -fx-background-size: cover, auto;");
+        scrollPane.setPrefWidth(1300);
+        scrollPane.setStyle("-fx-background-color: transparent;");
+        vBox.setStyle("-fx-background-color: transparent;");
     }
 }

@@ -1,4 +1,4 @@
-package tarekGUItest;
+package tn.esprit.gui.pages;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -13,14 +13,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.web.HTMLEditor;
+import javax.mail.MessagingException;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Apply;
 import tn.esprit.entities.Job;
 import tn.esprit.gui.cache.Alerts;
+import tn.esprit.gui.graphic.PopUpService;
 import tn.esprit.gui.launch.App;
 import tn.esprit.gui.pages.PageViewJob;
 import tn.esprit.services.implementation.ServiceApplyImpl;
 import tn.esprit.services.interfaces.IServiceApply;
+import tn.esprit.services.util.ServiceMail;
 
 public class PageCreateApply extends AnchorPane {
 
@@ -179,18 +182,33 @@ public class PageCreateApply extends AnchorPane {
         button.setOnMouseClicked(e -> {
 
             try {
-                serviceApply.create(new Apply.Builder()
-                        .letter("")
+                PopUpService.CreatePopup(serviceApply.create(new Apply.Builder()
+                        .letter(hTMLEditor.getHtmlText())
                         .candidate(App.USER_ONLINE)
                         .job(job)
-                        .build());
+                        .build()));
+                ServiceMail.sendMail(App.USER_ONLINE.getEmail(), "Application creation",
+                        "<p><em>Dear</em> " + App.USER_ONLINE.getFirstName() + " " + App.USER_ONLINE.getLastName() + ",</p>\n"
+                        + "<p>Your application on the job " + job.getTitle() + " of " + job.getCompany().getName() + " company was succefuly created ,&nbsp;</p>\n"
+                        + "<p>&nbsp;</p>\n"
+                        + "<p><em><span style=\"font-size: 10pt;\">Kind Regards,</span></em></p>\n"
+                        + "<p><em><span style=\"font-size: 10pt;\">HordeSocialPro Support Team</span></em></p>"
+                );
+                ServiceMail.sendMail(job.getCompany().getRecruiter().getEmail(), "New Application on " + job.getTitle(),
+                        "<p><em>Dear " + job.getCompany().getRecruiter().getFirstName() + " " + job.getCompany().getRecruiter().getLastName() + ",</em></p>\n"
+                        + "<p><em>A new Application has been submited on the job, " + job.getTitle() + "</em></p>\n"
+                        + "<p><em>Please check it out.</em></p>\n"
+                        + "<p>&nbsp;</p>\n"
+                        + "<p><span style=\"font-size: 10pt;\"><em>Kind Regards,</em></span></p>\n"
+                        + "<p><span style=\"font-size: 10pt;\"><em>HordeSocialPro Support Team</em></span></p>"
+                );
+
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
                 ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewJob(job));
-                
-            } catch (DataBaseException ex) {
+
+            } catch (DataBaseException | MessagingException ex) {
                 Alerts.displayError("Database Error", ex.getMessage());
             }
-            
 
         });
 

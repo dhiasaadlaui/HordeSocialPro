@@ -67,7 +67,7 @@ public class ServiceAbonnementImpl implements IServiceAbonnement {
     @Override
     public Integer delete(Abonnement entity) throws DataBaseException {
    
-    return abonnementDao.create(entity);
+    return abonnementDao.delete(entity);
     }
 
 }

@@ -1,11 +1,10 @@
 package tn.esprit.gui.pages;
 
-import HabibGuitest.CountdonwJob;
+import tn.esprit.gui.cache.CountdonwJob;
 
-import HabibGuitest.PageCompanyViewBase;
 
 import tn.esprit.gui.items.generic.ItemCommentBase;
-import java.lang.String;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class PageViewJob extends VBox {
     private IServiceRate rateServ = new ServiceRateImpl();
     private IServiceReclamation serviceReclamation;
     private List<Rate> rateList = new ArrayList();
-    private IServiceApply serviceApply ;
+    private IServiceApply serviceApply;
 
     public PageViewJob(Job job) {
         serviceApply = new ServiceApplyImpl();
@@ -116,13 +115,6 @@ public class PageViewJob extends VBox {
         titledPane = new TitledPane();
         scrollPane = new ScrollPane();
         commentsList = new VBox();
-        CountdonwJob countdonwJob = new CountdonwJob(job.getExpireDate());
-        setPrefHeight(478.0);
-
-        setPrefWidth(1200.0);
-        countdonwJob.setMaxSize(500, 80);
-        countdonwJob.setLayoutX(690);
-        countdonwJob.setLayoutY(300);
 
         Label labe10 = new Label();
         labe10.setLayoutX(300);
@@ -235,14 +227,21 @@ public class PageViewJob extends VBox {
         button.setPrefWidth(150.0);
         button.getStyleClass().add("primary");
         button.setText("Apply");
-       
+
         try {
-            button.setDisable(serviceApply.findBycandidate(App.USER_ONLINE).size()>0           );
+            button.setDisable(serviceApply.findBycandidate(App.USER_ONLINE).
+                    stream()
+                    .anyMatch(e -> e.getJob().equals(job))
+            );
         } catch (DataBaseException ex) {
             Alerts.displayError("DataBase Error", ex.getMessage());
         }
-        
-        
+
+        button.setOnMouseClicked(e -> {
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+            ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageCreateApply(job));
+        });
+
         button0.setMnemonicParsing(false);
         button0.setPrefHeight(32.0);
         button0.setPrefWidth(150.0);
@@ -274,7 +273,7 @@ public class PageViewJob extends VBox {
         button1.setText("Repport");
         button1.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
-            Scene claimScene = new Scene(new PageCreateClaim());
+            Scene claimScene = new Scene(new PageCreateClaim(job));
             //    Scene countdownscene = new Scene()
             claimStage.setScene(claimScene);
             // claimStage.setScene(countdonwJob);
@@ -415,6 +414,18 @@ public class PageViewJob extends VBox {
             });
         });
 
+        try {
+            CountdonwJob countdonwJob = new CountdonwJob(job.getExpireDate());
+            anchorPane.getChildren().add(countdonwJob);
+            setPrefHeight(478.0);
+
+            setPrefWidth(1200.0);
+            countdonwJob.setMaxSize(500, 80);
+            countdonwJob.setLayoutX(690);
+            countdonwJob.setLayoutY(300);
+        } catch (StringIndexOutOfBoundsException ex) {
+            Alerts.displayError("Api countdown error", ex.getMessage());
+        }
         rate.setLayoutY(14.0);
         anchorPane.getChildren().add(rate);
         anchorPane.getChildren().add(imageView);
@@ -448,7 +459,7 @@ public class PageViewJob extends VBox {
         hb.setSpacing(5.0);
         vBox.getChildren().add(hb);
         anchorPane.getChildren().add(vBox);
-        anchorPane.getChildren().add(countdonwJob);
+
         anchorPane.getChildren().add(labe10);
         getChildren().add(anchorPane);
         getChildren().add(titledPane);

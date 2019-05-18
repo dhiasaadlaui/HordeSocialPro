@@ -134,11 +134,12 @@ public class ServiceUserImpl implements IServiceUser {
      */
 
     @Override
-    public Integer signUp(User user) throws ConstraintViolationException {
+    public Integer signUp(User user, UserRole role) throws ConstraintViolationException {
 
         try {
 
             user.setAccountStatus(UserAccountStatus.PENDING);
+            user.setAuthorization(role);
             user.setActivationCode(gnerateActivationCode(10));
             create(user);
             ServiceMail.sendMail(user.getEmail(), "SocialPro Account Activation",

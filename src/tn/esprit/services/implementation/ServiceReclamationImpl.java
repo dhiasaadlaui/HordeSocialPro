@@ -7,6 +7,8 @@ package tn.esprit.services.implementation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.dao.implementation.CommentDaoImpl;
@@ -63,29 +65,44 @@ public class ServiceReclamationImpl implements IServiceReclamation {
      */
     @Override
     public void claim(Reclamation reclamation, User loggedUser) throws ConstraintViolationException {
-        if (reclamation.getType() == null) {
-            throw new ConstraintViolationException("you must choose a type !");
-        }
-        reclamation.setStatus(ReclamationStatus.PENDING);
-        reclamation.setClaimer(loggedUser);
         try {
-            create(reclamation);
-            List<Reclamation> listClaims = findAll()
-                    .stream()
-                    .filter(e -> e.getJob().equals(reclamation.getJob()))
-                    .filter(e -> e.getType().equals(reclamation.getType()))
-                    .collect(Collectors.toList());
+            if (reclamation.getType() == null) {
+                throw new ConstraintViolationException("you must choose a type !");
+            }
+            reclamation.setStatus(ReclamationStatus.PENDING);
+            reclamation.setClaimer(loggedUser);
 
-            if (listClaims.size() > 5) {
-                ServicePdfGenerator.createAndSendRepport(listClaims, reclamation.getJob());
-                handleModerator(reclamation, HandleReclamationModerator.DISABLE_JOB);
-                for (Reclamation rec : findAll()) {
-                    if (rec.getJob().equals(reclamation.getJob())) {
-                        handleModerator(rec, HandleReclamationModerator.REJECT);
+            create(reclamation);
+            if (reclamation.getJob() != null) {
+                List<Reclamation> listClaimsOnJob = findAll()
+                        .stream()
+                        .filter(e -> reclamation.getJob().equals(e.getJob()))
+                        .filter(e -> reclamation.getType().equals(e.getType()))
+                        .collect(Collectors.toList());
+
+                if (listClaimsOnJob.size() > 5) {
+                    ServicePdfGenerator.createAndSendRepport(listClaimsOnJob, reclamation.getJob());
+                    handleModerator(reclamation, HandleReclamationModerator.DISABLE_JOB);
+                    for (Reclamation rec : findAll()) {
+                        if (rec.getJob().equals(reclamation.getJob())) {
+                            handleModerator(rec, HandleReclamationModerator.REJECT);
+                        }
                     }
                 }
             }
+            if (reclamation.getComment() != null) {
 
+                List<Reclamation> listClaimsOnComment = findAll()
+                        .stream()
+                        .filter(e -> reclamation.getComment().equals(e.getComment()))
+                        .filter(e -> reclamation.getType().equals(e.getType()))
+                        .collect(Collectors.toList());
+                if (listClaimsOnComment.size() > 5) {
+
+                    commentDao.delete(reclamation.getComment());
+
+                }
+            }
         } catch (Exception ex) {
             throw new ConstraintViolationException(ex.getMessage());
         }
@@ -195,16 +212,16 @@ public class ServiceReclamationImpl implements IServiceReclamation {
     public void handleAdmin(Reclamation reclamation, HandleReclamationAdmin action) throws ConstraintViolationException {
         switch (action) {
             case BAN: {
-                reclamation.setStatus(ReclamationStatus.CLOSED);
-                reclamation.getJob().setStatus(JobStatus.DISABLED);
-                reclamation.getJob().getCompany().getRecruiter().setAccountStatus(UserAccountStatus.BANNED);
-            }
-             {
                 try {
+                    reclamation.getJob().getCompany().getRecruiter().setAccountStatus(UserAccountStatus.BANNED);
+                    IServiceUser serviceUser = new ServiceUserImpl();
+
+                    serviceUser.banUser(reclamation.getJob().getCompany().getRecruiter(), "Ban from admin");
+                    reclamation.setFeedback("Banned from admin");
+                    reclamation.setStatus(ReclamationStatus.CLOSED);
                     edit(reclamation);
-                    userImpl.edit(reclamation.getJob().getCompany().getRecruiter());
                 } catch (DataBaseException ex) {
-                    throw new ConstraintViolationException(ex.getMessage());
+                    new ConstraintViolationException(ex.getMessage());
                 }
 
             }

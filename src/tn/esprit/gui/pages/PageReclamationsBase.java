@@ -46,7 +46,7 @@ public abstract class PageReclamationsBase extends BorderPane {
     public MenuButton menuButton0 = new MenuButton();
 
     public static String SEARCH_CRITERIA = "";
-    public static Predicate<Reclamation> SEARCH_PREDICATE = e -> e.getType().contains("");
+    public static Predicate<Reclamation> SEARCH_PREDICATE = e -> e.getStatus().contains(SEARCH_CRITERIA);
     public static Comparator<Reclamation> SORT_COMPARATOR = (o1, o2) -> o2.getId().compareTo(o1.getId());
 
     public PageReclamationsBase() {
@@ -64,7 +64,7 @@ public abstract class PageReclamationsBase extends BorderPane {
         vboxList.setStyle("-fx-background-color: transparent;");
         vboxList.setBackground(Background.EMPTY);
         vboxList.setPrefWidth(1300);
-
+        scrollPane.setStyle("-fx-background-color: transparent;");
         scrollPane.setPadding(new Insets(50, 50, 50, 50));
         vboxList.setPrefHeight(600.0);
         vboxList.setPrefWidth(1200.0);
@@ -148,7 +148,7 @@ public abstract class PageReclamationsBase extends BorderPane {
         menuButton0.setText("Search By");
 
         menuItem4.setMnemonicParsing(false);
-        menuItem4.setText("Category");
+        menuItem4.setText("Status");
         menuItem4.setOnAction(e -> {
 
         });
@@ -183,7 +183,7 @@ public abstract class PageReclamationsBase extends BorderPane {
         region1.setPrefWidth(100.0);
 
         btnCreate.setMnemonicParsing(false);
-
+        btnCreate.setVisible(false);
         btnCreate.setText("Create");
         btnCreate.setOnMouseClicked(e -> {
             ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
@@ -196,15 +196,10 @@ public abstract class PageReclamationsBase extends BorderPane {
 
         menuButton.getItems().add(menuItem);
         menuButton.getItems().add(menuItem0);
-        menuButton.getItems().add(menuItem1);
-        menuButton.getItems().add(menuItem2);
-        menuButton.getItems().add(menuItem3);
+  
         menuButton0.getItems().add(menuItem4);
-        menuButton0.getItems().add(menuItem5);
-        menuButton0.getItems().add(menuItem6);
-        menuButton0.getItems().add(menuItem7);
-        menuButton0.getItems().add(menuItem8);
-        searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1, btnCreate);
+  
+        searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1);
 
         textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override

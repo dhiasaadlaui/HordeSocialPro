@@ -38,7 +38,7 @@ public interface IServiceUser extends IGenericService<User>{
      * @param user
      * @throws ConstraintViolationException
      */
-    Integer signUp(User user) throws ConstraintViolationException;
+    Integer signUp(User user, UserRole role) throws ConstraintViolationException;
     
     /**
      *

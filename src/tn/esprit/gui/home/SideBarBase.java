@@ -24,6 +24,7 @@ import tn.esprit.gui.launch.App;
 import tn.esprit.gui.login.LoginGUI;
 import tn.esprit.gui.pages.PageAbonnementsBase;
 import tn.esprit.gui.pages.PageAdminManagements;
+import tn.esprit.gui.pages.PageApplicationsBase;
 import tn.esprit.gui.pages.PageModeratorProcessJobs;
 import tn.esprit.gui.pages.PageJobsBase;
 import tn.esprit.gui.pages.PageReclamationsBase;
@@ -381,8 +382,8 @@ public abstract class SideBarBase extends VBox {
                 alert.initStyle(StageStyle.UTILITY);
 
                 alert.setTitle("Confirmation");
-                alert.setHeaderText("tttttttt");
-                alert.setContentText("aaaaaa");
+                alert.setHeaderText("You are about to log out ! ");
+                alert.setContentText("Press yes to log out");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                     System.out.println("okey");
@@ -461,7 +462,15 @@ public abstract class SideBarBase extends VBox {
 
             }
         });
+        hBox0.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageApplicationsBase() {
+                });
 
+            }
+        });
         getChildren().add(imageView);
         getChildren().add(label);
         getChildren().add(separator);
@@ -471,6 +480,7 @@ public abstract class SideBarBase extends VBox {
         getChildren().add(hBox);
         hBox0.getChildren().add(imageView1);
         hBox0.getChildren().add(label2);
+        if(App.USER_ONLINE.getAuthorization().equalsIgnoreCase("CANDIDATE")||App.USER_ONLINE.getAuthorization().equalsIgnoreCase("RECRUITER"))
         getChildren().add(hBox0);
         hBox1.getChildren().add(imageView2);
         hBox1.getChildren().add(label3);

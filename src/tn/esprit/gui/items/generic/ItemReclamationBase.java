@@ -6,8 +6,12 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import tn.esprit.entities.Reclamation;
+import tn.esprit.gui.launch.App;
+import tn.esprit.gui.pages.PageApplicationsBase;
+import tn.esprit.gui.pages.PageViewReclamModeratorBase;
 
 public class ItemReclamationBase extends AnchorPane {
 
@@ -41,7 +45,9 @@ public class ItemReclamationBase extends AnchorPane {
         label.setLayoutY(28.0);
         label.setPrefHeight(18.0);
         label.setPrefWidth(48.0);
-        label.setText(reclamation.getJob().getTitle());
+
+        label.setText("REF:RC" + reclamation.getId());
+
         label.setFont(new Font("Gill Sans MT", 15.0));
 
         label0.setLayoutX(483.0);
@@ -121,7 +127,17 @@ public class ItemReclamationBase extends AnchorPane {
         getChildren().add(label0);
         getChildren().add(label1);
         getChildren().add(label2);
+        if(App.USER_ONLINE.getAuthorization().equalsIgnoreCase("MODERATOR"))
         menuButton.getItems().add(menuItem);
+        
+        menuItem.setOnAction(e->{
+             ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().remove(1);
+                ((HBox) App.GLOBAL_PANE_BORDER.getCenter()).getChildren().add(new PageViewReclamModeratorBase(reclamation) {
+                });
+        });
+        
+        
+        if(reclamation.getClaimer().equals(App.USER_ONLINE))
         menuButton.getItems().add(menuItem1);
         getChildren().add(menuButton);
         getChildren().add(separator);

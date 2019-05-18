@@ -24,53 +24,56 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import tn.esprit.dao.exceptions.DataBaseException;
 import tn.esprit.entities.Job;
+import tn.esprit.entities.Reclamation;
 import static tn.esprit.gui.pages.PageTicketsManagementsRight.countPredicate;
 import static tn.esprit.gui.pages.PageTicketsManagementsRight.gauge;
 import tn.esprit.services.implementation.SerivceJobImpl;
+import tn.esprit.services.implementation.ServiceReclamationImpl;
 import tn.esprit.services.interfaces.IServiceJob;
+import tn.esprit.services.interfaces.IServiceReclamation;
 
 /**
  *
  * @author mdsaadlaoui
  */
 public class PageTicketsManagementsLeft extends VBox {
-
+    
     static HBox searchPane;
     static TextField txtSearch;
     static Button btnSearch;
-    static TableView<Job> table;
-    IServiceJob serviceJob;
-    static ObservableList<Job> jobsList;
-    static Job SELECTED_JOB;
-
+    static TableView<Reclamation> table;
+    IServiceReclamation serviceReclamation;
+    static ObservableList<Reclamation> reclamationList;
+    static Reclamation SELECTED_RECLAMATION;
+    
     public PageTicketsManagementsLeft() {
         this.getStylesheets().add("/resources/css/theme.css");
         txtSearch = new TextField();
         btnSearch = new Button("search");
         btnSearch.getStyleClass().add("primary");
         table = new TableView();
-        serviceJob = new SerivceJobImpl();
+        serviceReclamation = new ServiceReclamationImpl();
         searchPane = new HBox();
-        jobsList = FXCollections.observableArrayList();
+        reclamationList = FXCollections.observableArrayList();
         searchPane.setStyle("-fx-background-color:#34495e");
         setStyle("-fx-background-color:#34495e");
         this.setSpacing(15);
         this.setPadding(new Insets(15));
         this.setAlignment(Pos.CENTER);
-
-        TableColumn<Job, String> columnTitle = new TableColumn("Title");
-        columnTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
-
-        TableColumn<Job, String> columnCompany = new TableColumn("Company");
-        columnCompany.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-
-        TableColumn<Job, String> columnStatus = new TableColumn("Status");
+        
+        TableColumn<Reclamation, String> columnType = new TableColumn("Type");
+        columnType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        
+        TableColumn<Reclamation, String> columnStatus = new TableColumn("Status");
         columnStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        table.getColumns().addAll(columnTitle, columnCompany, columnStatus);
-
+        
+        TableColumn<Reclamation, String> columnFeedback = new TableColumn("FeedBack");
+        columnFeedback.setCellValueFactory(new PropertyValueFactory<>("feedback"));
+        
+        table.getColumns().addAll(columnType, columnStatus, columnFeedback);
+        
         try {
-            jobsList = FXCollections.observableArrayList(serviceJob.findAll());
+            reclamationList = FXCollections.observableArrayList(serviceReclamation.findAll());
         } catch (DataBaseException ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Data error");
@@ -78,13 +81,13 @@ public class PageTicketsManagementsLeft extends VBox {
         }
         table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                SELECTED_JOB = newSelection;
-                PageTicketsManagementsRight.jobTitle.setText(SELECTED_JOB.getTitle());
-                PageTicketsManagementsRight.jobCategory.setText(SELECTED_JOB.getTitle());
-                PageTicketsManagementsRight.jobDescription.setText(SELECTED_JOB.getTitle());
-                PageTicketsManagementsRight.salary.setText(SELECTED_JOB.getSalary().toString());
+                SELECTED_RECLAMATION = newSelection;
+                PageTicketsManagementsRight.reclamationTitle.setText(SELECTED_RECLAMATION.getJob().getTitle());
+                PageTicketsManagementsRight.reclamationCategory.setText(SELECTED_RECLAMATION.getJob().getCategory().getLabel());
+                PageTicketsManagementsRight.reclamationDescription.setText(SELECTED_RECLAMATION.getDetails());
+                PageTicketsManagementsRight.salary.setText(SELECTED_RECLAMATION.getJob().getSalary().toString());
                 try {
-                    gauge.setValue(serviceJob.findAll().stream().filter(countPredicate).count());
+                    gauge.setValue(serviceReclamation.findAll().stream().filter(countPredicate).count());
                 } catch (DataBaseException ex) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setContentText(ex.getMessage());
@@ -93,14 +96,16 @@ public class PageTicketsManagementsLeft extends VBox {
                 }
             }
         });
-
-        table.setItems(jobsList);
+        
+        table.setItems(reclamationList);
         table.setPrefWidth(800);
         table.setPrefHeight(800);
-        columnTitle.setPrefWidth(500);
+        columnType.setPrefWidth(300);
+        columnFeedback.setPrefWidth(400);
+        
         searchPane.getChildren().addAll(txtSearch, btnSearch);
         getChildren().addAll(searchPane, table);
-
+        
     }
-
+    
 }

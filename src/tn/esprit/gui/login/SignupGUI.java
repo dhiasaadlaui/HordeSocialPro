@@ -364,7 +364,7 @@ public class SignupGUI extends HBox {
                         .email(EMAIL_TXT.getText())
                         .adress(ADRESS_TXT.getText())
                         .password(PASSWORD_TXT.getText())
-                        .build());
+                        .build(),UserRole.CANDIDATE);
                 if (imageId != 0) {
                     User usr = serviceUser.findByID(imageId);
                     usr.setPhoto(ServiceImageUpload.sendFileToHTTP(filePhotoProfil, "USER_" + imageId));

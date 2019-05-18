@@ -80,9 +80,10 @@ public class ItemCommentBase extends AnchorPane {
         btnClaim.setText("!");
         btnClaim.setOnMouseClicked(e -> {
             Stage claimStage = new Stage();
-            Scene claimScene = new Scene(new PageCreateClaim());
+            Scene claimScene = new Scene(new PageCreateClaim(comment));
             claimStage.setScene(claimScene);
             claimStage.show();
+            btnClaim.setDisable(true);
         });
 
         btnRepply.setLayoutX(444.0);
