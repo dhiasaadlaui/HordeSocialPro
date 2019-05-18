@@ -22,8 +22,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="38.0" layoutY="310.0" prefHeight="196.0" prefWidth="688.0" />
-            <TilePane layoutX="14.0" layoutY="13.0" prefColumns="2" prefHeight="143.0" prefWidth="688.0" tileAlignment="TOP_LEFT">
+            <HTMLEditor htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="38.0" layoutY="310.0" prefHeight="238.0" prefWidth="688.0" />
+            <TilePane layoutX="14.0" layoutY="13.0" prefColumns="2" prefHeight="278.0" prefWidth="562.0" tileAlignment="TOP_LEFT">
                <children>
                   <ImageView fitHeight="41.0" fitWidth="51.0">
                      <image>
@@ -80,15 +80,14 @@
                         <Image url="@../resources/icons/banker.png" />
                      </image>
                   </ImageView>
-                  <Label stylesheets="@../resources/css/theme.css" text="Salary : 2000 DT" textFill="#0a0000">
+                  <Label stylesheets="@../resources/css/theme.css" text="Salary : 2000 EUR" textFill="#0a0000">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                </children>
             </TilePane>
-            <Button layoutX="516.0" layoutY="517.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="84.0" styleClass="danger" stylesheets="@../resources/css/theme.css" text="Cancel" />
-            <Button layoutX="610.0" layoutY="517.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="84.0" styleClass="success" stylesheets="@../resources/css/theme.css" text="Apply" />
+            <Button layoutX="576.0" layoutY="251.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="84.0" styleClass="success" stylesheets="@../resources/css/theme.css" text="Apply" />
          </children>
       </AnchorPane>
       <Label layoutX="321.0" layoutY="22.0" prefHeight="27.0" prefWidth="84.0" stylesheets="@../resources/css/theme.css" text="Vermeg" textFill="#dddddd">
