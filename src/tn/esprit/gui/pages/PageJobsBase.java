@@ -209,6 +209,11 @@ public abstract class PageJobsBase extends BorderPane {
         menuButton0.getItems().add(menuItem6);
         menuButton0.getItems().add(menuItem7);
         menuButton0.getItems().add(menuItem8);
+        
+        
+        
+        
+        
         searchBar.getChildren().addAll(region5, menuButton, region, menuButton0, region0, textField, region1);
         if (App.USER_ONLINE.getAuthorization().equalsIgnoreCase("RECRUITER")) {
             searchBar.getChildren().add(btnCreate);
